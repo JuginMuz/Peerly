@@ -11,10 +11,8 @@
 - [Installation](#installation)
 - [CI/CD](#cicd)
 - [Project Management](#project-management)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
-- [Wireframes](#wireframes)
+
 
 ---
 
@@ -91,9 +89,6 @@ The project utilizes **GitHub Projects** for tracking tasks, milestones, and pro
 
 ---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
