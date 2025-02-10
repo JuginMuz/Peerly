@@ -94,6 +94,6 @@ The project utilizes **GitHub Projects** for tracking tasks, milestones, and pro
 For any inquiries or suggestions, feel free to reach out to the project team:
 
 - **Developers**: Gurkiratjot Singh, Sonjay Kumar, Jugin Muzhaqi, Rabia Arian
-- **Emails**: gurkiratjotsingh17@gmail.com, sonjaykumar1404@gmail.com, jugin.muzhaqi@gmail.com, sosanrabia02gmail.com
+- **Emails**: gurkiratjotsingh17@gmail.com, sonjaykumar1404@gmail.com, jugin.muzhaqi@gmail.com, sosanrabia0@gmail.com
 
 --- 
