@@ -1,6 +1,6 @@
 # Peerly - University Collaboration Platform
 
-![Peerly Logo](c:\Users\HP\Pictures\Picture1.png)
+![Peerly Logo](https://drive.google.com/uc?id=1BSvSSWSg-myOu_KGNBwrCoijy5Egjjvk)
 
 **Peerly** is an innovative educational platform that combines the best elements of social media and forums to create an engaging, interactive space for university students. It helps students collaborate with peers, share academic experiences, and participate in meaningful discussions related to their studies. Peerly enables students to connect with others in the same subject or university, share resources, and work together on projects or assignments.
 
