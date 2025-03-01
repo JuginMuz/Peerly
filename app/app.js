@@ -13,13 +13,13 @@ const app = express();
 
 // created to serve static files like (CSS, JS, images) from the "static" folder
 // using a path-safe approach:
-app.use(express.static(path.join(__dirname, "static")));
+//app.use(express.static(path.join(__dirname, "static")));
 
 // Gets the functions in the db.js file to use
 const db = require("./services/db");
 
-//registered userRoutes under the /users route so any endpoints defined in userRoutes 
-// will be available 
+//over here I mount the user routes onto a specific path with the path being /users
+//this simplifies to use this router for any requests that start with this path
 app.use("/users", userRoutes);
 
 
