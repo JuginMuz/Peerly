@@ -17,7 +17,7 @@ services:
       - ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=sd2-db
+      - MYSQL_DATABASE=sd2_db
       # optionally:
       # MYSQL_USER=admin
       # MYSQL_PASSWORD=password
@@ -27,6 +27,7 @@ services:
       - ./db:/var/lib/mysql
 
   phpmyadmin:
+    platform: linux/amd64
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     env_file:
