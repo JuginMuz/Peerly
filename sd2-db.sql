@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(25),
     email_id VARCHAR(500) NOT NULL UNIQUE,
     profile_picture VARCHAR(500),
-    gender VARCHAR(15),
+    gender VARCHAR(25),
     bio TEXT,
     field_id INT,
     dob DATE,
