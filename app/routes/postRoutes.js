@@ -6,7 +6,7 @@ const router = express.Router();
 const db = require("../services/db");
 //routes to list all posts and retrieve a specific post 
 // for which commenting can be found on user routes file 
-// as the routes here and there are the same
+// as the routes here and there are the
 router.get("/" , async (req, res) => {
     try {
     const sql = 'SELECT * FROM posts';
@@ -18,10 +18,21 @@ router.get("/" , async (req, res) => {
     }
 });
 router.get("/:id", async (req, res) => {
-    const sql = 'SELECT * FROM posts WHERE post_id = ?';
-    const post_id = req.params.id;
-    const [post] = await db.query(sql, post_id);
-    res.json(post);
+    try {
+        const sql = 'SELECT * FROM posts WHERE post_id = ?';
+        const post_id = req.params.id;
+        const [post] = await db.query(sql, [post_id]);
+        if(post.length === 0){
+            console.log("No posts found");
+            return res.status(404).json({error: 'No posts found'});
+        }
+        res.json(post[0]);
+    }
+    catch (err) {
+        console.error("query failed:",err.message);
+        return res.status(500).json({error: err.message});
+
+    }
 
 });
 module.exports = router;
