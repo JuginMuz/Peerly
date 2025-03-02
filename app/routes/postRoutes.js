@@ -4,7 +4,9 @@ const express = require("express");
 const router = express.Router();
 // Imports the database service to interact with the database
 const db = require("../services/db");
-
+//routes to list all posts and retrieve a specific post 
+// for which commenting can be found on user routes file 
+// as the routes here and there are the same
 router.get("/" , async (req, res) => {
     try {
     const sql = 'SELECT * FROM posts';
@@ -14,5 +16,12 @@ router.get("/" , async (req, res) => {
         console.error("query failed",err.message);
         res.status(500).json({error: err.message});
     }
+});
+router.get("/:id", async (req, res) => {
+    const sql = 'SELECT * FROM posts WHERE post_id = ?';
+    const post_id = req.params.id;
+    const [post] = await db.query(sql, post_id);
+    res.json(post);
+
 });
 module.exports = router;
