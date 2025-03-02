@@ -6,10 +6,13 @@ const router = express.Router();
 const db = require("../services/db");
 
 router.get("/" , async (req, res) => {
+    try {
     const sql = 'SELECT * FROM posts';
     const [posts] = await db.query(sql);
     res.json(posts);
-
-
+    } catch (err) {
+        console.error("query failed",err.message);
+        res.status(500).json({error: err.message});
+    }
 });
 module.exports = router;
