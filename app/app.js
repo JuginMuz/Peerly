@@ -7,6 +7,7 @@ const path = require("path");
 
 // Import routes as modules
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 // Create express app
 const app = express();
@@ -21,6 +22,7 @@ const db = require("./services/db");
 //over here I mount the user routes onto a specific path with the path being /users
 //this simplifies to use this router for any requests that start with this path
 app.use("/users", userRoutes);
+app.use("/posts",postRoutes)
 
 
 
