@@ -4,3 +4,12 @@ const express = require("express");
 const router = express.Router();
 // Imports the database service to interact with the database
 const db = require("../services/db");
+
+router.get("/" , async (req, res) => {
+    const sql = 'SELECT * FROM posts';
+    const [posts] = await db.query(sql);
+    res.json(posts);
+
+
+});
+module.exports = router;
