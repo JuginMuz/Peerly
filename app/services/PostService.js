@@ -11,6 +11,11 @@ class PostService {
     return Post.findById(post_id);
   }
 
+  static async getAllPosts() {
+    const [rows] = await pool.query('SELECT * FROM posts');
+    return rows;
+  }
+
   // Additional methods like update, delete, list by user can be added here.
 }
 

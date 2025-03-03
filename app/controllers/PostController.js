@@ -23,6 +23,15 @@ class PostController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  static async getAllPosts(req, res) {
+    try {
+      const users = await PostService.getAllPosts();  // This method should be implemented in your service.
+      res.status(200).json({ posts });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = PostController;
