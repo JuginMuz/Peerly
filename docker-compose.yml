@@ -4,7 +4,7 @@ services:
       context: ./
     volumes:
       - .:/src
-    command: supervisor -e 'js,pug,html' index.js
+    command: supervisor -w . -e "js,pug,html" --ignore "db" index.js
     ports:
       - "3000:3000"
     depends_on:
