@@ -20,11 +20,6 @@ class User {
     this.relationship_status = relationship_status;
   }
 
-  static async findByUserId(user_id) {
-    const sql = 'SELECT * FROM users WHERE user_id = ?';
-    const [rows] = await pool.query(sql, [user_id]);
-    return rows.length ? new User(rows[0]) : null;
-  }
 
   static async create(userData) {
     const sql = `
@@ -49,7 +44,7 @@ class User {
     ];
     await pool.query(sql, values);
     // Retrieve the inserted user by email (or use LAST_INSERT_ID logic)
-    const [rows] = await pool.query('SELECT * FROM users WHERE email_id = ?', [userData.email_id]);
+    const [rows] = await pool.query('SELECT first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status FROM users WHERE email_id = ?', [userData.email_id]);
     return rows.length ? new User(rows[0]) : null;
   }
 }
