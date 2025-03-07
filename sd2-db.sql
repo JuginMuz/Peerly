@@ -378,4 +378,3 @@ WHERE u.first_name='Bob'
 LIMIT 1;
 
 -- Done inserting sample data!
--- Try SELECT queries to verify user_id generation and relationships.
