@@ -31,6 +31,11 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/', homeRoutes);
 
+app.get('/explore', (req, res) => {
+  res.render('explore', { title: 'Peerly - Explore' });
+});
+
+
 //sets port and starts the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
