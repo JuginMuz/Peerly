@@ -3,7 +3,7 @@ const express = require('express');
 //imports path module in order to handle file and directory paths 
 const path = require('path');
 const app = express();
-
+const PostService = require('./services/PostService');
 // imports routes modules from the directory for which each route file
 //handles specific end points for different paths of the app
 const userRoutes = require('./routes/userRoutes');
@@ -31,8 +31,20 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/', homeRoutes);
 
-app.get('/explore', (req, res) => {
-  res.render('explore', { title: 'Peerly - Explore' });
+app.get('/explore', async (req, res) => {
+  try {
+    const posts = await PostService.getAllPosts();
+    res.render('explore', { 
+      title: 'Peerly - Explore',
+      posts: posts
+    });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).render('error', { 
+      title: 'Server Error',
+      message: 'Failed to load explore page'
+    });
+  }
 });
 
 
