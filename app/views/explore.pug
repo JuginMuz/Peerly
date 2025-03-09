@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="/stylesheets/explore.css")
   body
     .explore-container
-      // LEFT NAV (unchanged)
+      // LEFT NAV
       nav.left-nav
         h2.logo Peerly
         ul.nav-list
@@ -28,7 +28,6 @@ html
           li.nav-item 
             .icon-circle X
             span Settings
-          // etc...
         button.post-btn Post
 
       // MIDDLE CONTENT
@@ -39,8 +38,25 @@ html
             button.tag-btn Software Engineering
           button.filter-btn Filters
 
+        // Posts container
+        .post-grid
+          each post in posts
+            .post-card
+              .post-header
+                .avatar-circle X
+                .post-user
+                  h3= post.first_name + ' ' + post.last_name
+              .post-body
+                p= post.description
+              .post-footer
+                button.like-btn
+                  .icon-circle X
+                  span Like
+                button.comment-btn
+                  .icon-circle X
+                  span Comment
 
-      // RIGHT SIDEBAR (unchanged)
+      // RIGHT SIDEBAR
       aside.right-sidebar
         .search-box
           .icon-circle X
@@ -57,4 +73,3 @@ html
             li
               .icon-circle X
               span Account Name
-            // etc...
