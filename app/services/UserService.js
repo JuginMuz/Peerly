@@ -48,11 +48,27 @@ class UserService {
   }
 
 
-
-
   //USERS LISTING
   static async getAllUsers() {
-    const [rows] = await pool.query('SELECT first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status FROM users');
+    const [rows] = await pool.query(`
+      SELECT 
+        user_id,
+        first_name,
+        last_name,
+        email_id,
+        profile_picture,
+        gender,
+        bio,
+        field_id,
+        dob,
+        city,
+        work_at,
+        went_to,
+        goes_to,
+        relationship_status
+      FROM users
+      ORDER BY first_name ASC
+    `);
     return rows;
   }
 
