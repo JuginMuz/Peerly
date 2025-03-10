@@ -273,4 +273,11 @@ body {
       grid-template-columns: 1fr; /* single column for posts */
     }
   }
+
+  .post-media {
+    max-width: 400px;
+    height: auto;
+    /* Any other styling you want */
+  }
+  
   
