@@ -26,31 +26,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // sets up the routes alongside there urls
 app.use('/api/users', userRoutes);
-app.use('/api/posts', postRoutes);
+app.use('/api/explore', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
-app.use('/', homeRoutes);
-
-app.get('/explore', async (req, res) => {
-  try {
-    const posts = await PostService.getAllPosts();
-    res.render('explore', { 
-      title: 'Peerly - Explore',
-      posts: posts
-    });
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    res.status(500).render('error', { 
-      title: 'Server Error',
-      message: 'Failed to load explore page'
-    });
-  }
-});
+app.use('/api/home', homeRoutes);
 
 
 //sets port and starts the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Go to http://127.0.0.1:3000`);
+  console.log(`Go to http://127.0.0.1:3000/api/home`);
 });
