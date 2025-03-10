@@ -1,0 +1,165 @@
+/* public/stylesheets/explore.css */
+
+/* Overall page and background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f7f4; /* Off-white from your wireframe */
+  }
+  
+  .container {
+    display: grid;
+    /* 
+       Left nav ~220px, main content is flexible, 
+       right sidebar ~250px (adjust to your preference)
+    */
+    grid-template-columns: 220px 1fr 250px;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* ---------------------------------------- */
+  /* Left Nav */
+  /* ---------------------------------------- */
+  
+  .left-nav {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .logo {
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .nav-item.active {
+    font-weight: bold;
+  }
+  
+  .icon-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* ---------------------------------------- */
+  /* Main Profile Content */
+  /* ---------------------------------------- */
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Profile Header (cover + basic info) */
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden; /* ensures the cover photo corners match the widget */
+  }
+  
+  .cover-photo {
+    height: 200px;
+    background-color: #ccc; /* Placeholder for cover photo */
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .profile-info .avatar-circle {
+    width: 80px;
+    height: 80px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .profile-info .info-icon {
+    margin-left: auto;
+    cursor: pointer;
+  }
+  
+  /* Profile Body (info widget + posts) */
+  .profile-body {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  /* Info Widget */
+  .info-widget {
+    display: flex;
+  }
+
+  /* Generic white widget box for trending + chat */
+  .widget {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .widget h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .widget li {
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  /* If the chat items also have an icon circle */
+  .widget li .icon-circle {
+    margin-right: 0.5rem;
+  }
