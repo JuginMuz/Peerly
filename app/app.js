@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PostService = require('./services/PostService');
+const UserService = require('./services/UserService');
+
 // imports routes modules from the directory for which each route file
 //handles specific end points for different paths of the app
 const userRoutes = require('./routes/userRoutes');
@@ -43,6 +45,21 @@ app.get('/explore', async (req, res) => {
     res.status(500).render('error', { 
       title: 'Server Error',
       message: 'Failed to load explore page'
+    });
+  }
+});
+app.get('/make-friends', async (req, res) => {
+  try {
+    const users = await UserService.getAllUsers();
+    res.render('make-friends', { 
+      title: 'Peerly - Make-Friends',
+      users: users
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).render('error', { 
+      title: 'Server Error',
+      message: 'Failed to load find friends page page'
     });
   }
 });
