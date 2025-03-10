@@ -13,6 +13,7 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const homeRoutes = require('./routes/homeRoutes');
+const accountRoutes = require('./routes/accountRoutes');
 
 //sets up the pug template
 app.set('view engine', 'pug');
@@ -32,6 +33,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/', homeRoutes);
+app.use('/user-account', accountRoutes);
 
 app.get('/explore', async (req, res) => {
   try {
@@ -64,6 +66,19 @@ app.get('/make-friends', async (req, res) => {
   }
 });
 
+app.get('/user-account', async (req, res) => {
+    try {
+      res.render('account', { 
+        title: 'Peerly - Account',
+      });
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).render('error', { 
+        title: 'Server Error',
+        message: 'Failed to load explore page'
+      });
+    }
+  });
 
 //sets port and starts the server
 const PORT = process.env.PORT || 3000;
