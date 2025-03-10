@@ -1,0 +1,69 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Account Page
+    link(rel="stylesheet", href="/stylesheets/user-account.css")
+  body
+    .container
+      // LEFT NAV
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            span Home
+          li.nav-item
+            .icon-circle ℹ
+            span Explore
+          li.nav-item
+            .icon-circle ℹ
+            span Messages
+          li.nav-item
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item.active
+            .icon-circle ℹ
+            span Profile
+          li.nav-item
+            .icon-circle ℹ
+            span Settings
+
+      // MAIN CONTENT
+      main.profile-content
+        // Profile Header
+        .profile-header.widget
+          .cover-photo
+          .profile-info
+            .avatar-circle
+            h2 Account Name
+            i.info-icon ℹ
+        
+        // Profile Body (Info widget + Post feed)
+        .profile-body
+          .info-widget.widget
+            h3 Info
+            i.info-icon ℹ
+            ul
+              li  Field of Study
+              li  DOB
+              li  City
+              li  Work
+              li  Relationship
+          .post-feed
+            .post-card.widget
+              .post-header
+                .avatar-circle
+                .post-user
+                  h3 Account Name
+                  p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                i.more-options ⋮
+              .post-image
+
+      // RIGHT SIDEBAR
+      aside.right-sidebar.widget
+        h3 Chat
+        ul
+          li
+            .icon-circle ℹ
+            span Account Name
