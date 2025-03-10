@@ -1,0 +1,75 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet", href="/stylesheets/explore.css")
+  body
+    .explore-container
+      // LEFT NAV
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle X
+            span Home
+          li.nav-item 
+            .icon-circle X
+            span Explore
+          li.nav-item 
+            .icon-circle X
+            span Messages
+          li.nav-item 
+            .icon-circle X
+            span Notifications
+          li.nav-item 
+            .icon-circle X
+            span Profile 
+          li.nav-item 
+            .icon-circle X
+            span Settings
+        button.post-btn Post
+
+      // MIDDLE CONTENT
+      main.main-feed
+        .top-bar
+          .tag-buttons
+            button.tag-btn Computing
+            button.tag-btn Software Engineering
+          button.filter-btn Filters
+
+        // Posts container
+        .post-grid
+          each post in posts
+            .post-card
+              .post-header
+                .avatar-circle X
+                .post-user
+                  h3= post.first_name + ' ' + post.last_name
+              .post-body
+                p= post.description
+              .post-footer
+                button.like-btn
+                  .icon-circle X
+                  span Like
+                button.comment-btn
+                  .icon-circle X
+                  span Comment
+
+      // RIGHT SIDEBAR
+      aside.right-sidebar
+        .search-box
+          .icon-circle X
+          input(type="text" placeholder="Search")
+        .widget
+          h3 See what's trending
+          ul
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+        .widget
+          h3 Chat
+          ul
+            li
+              .icon-circle X
+              span Account Name

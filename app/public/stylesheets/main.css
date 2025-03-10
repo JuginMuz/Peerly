@@ -1,0 +1,116 @@
+/* public/stylesheets/main.css */
+
+/* Overall page styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f7f4; /* matches the off-white in your mockup */
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* fill the vertical space */
+}
+
+/* Left side with big green box labeled "Logo" */
+.left-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.logo-box {
+  width: 350px;
+  height: 350px;
+  background-color: #6FCF97; /* bright green from the mockup */
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right side with the sign-up card */
+.right-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-card {
+  background-color: #fff;
+  width: 350px;  /* adjust as needed */
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.signup-card h1 {
+  margin-bottom: 0.5rem;
+  font-size: 1.75rem;
+}
+
+.signup-card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: #17a2b8; /* teal-ish */
+}
+
+/* Buttons */
+.signup-card button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button.sign-google {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+button.create-account {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* "OR" line in the middle */
+p.or {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+p.or::before,
+p.or::after {
+  content: "";
+  display: inline-block;
+  width: 40%;
+  height: 1px;
+  background: #ccc;
+  vertical-align: middle;
+  margin: 0 0.5rem;
+}
+
+/* "Already have an account? Sign in" */
+p.already {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+p.already a {
+  color: #17a2b8;
+  text-decoration: none;
+}
+p.already a:hover {
+  text-decoration: underline;
+}

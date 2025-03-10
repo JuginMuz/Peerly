@@ -57,7 +57,19 @@ class PostService {
 
   //LISTING PAGE
   static async getAllPosts() {
-    const [rows] = await pool.query('SELECT description, media_url FROM posts');
+    const [rows] = await pool.query(`
+      SELECT 
+        p.post_id,
+        p.description,
+        p.media_url,
+        p.created_at,
+        u.user_id,
+        u.first_name,
+        u.last_name
+      FROM posts p
+      JOIN users u ON p.user_id = u.user_id
+      ORDER BY p.created_at DESC
+    `);
     return rows;
   }
 

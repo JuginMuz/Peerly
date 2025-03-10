@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    // Loads the css i made for the file
+    link(rel="stylesheet" href="/stylesheets/main.css")
+  body
+    .container 
+      // created container and organised it by having a left and right
+      // side where the logo is on the left and the sign up detials
+      //are on the right
+      .left-side
+        img.logo-box(src="/images/Peerly-Logo.png" alt="Peerly Logo")
+
+      .right-side
+        .signup-card
+          h1 Peerly
+          h2 Sign up now
+          button.sign-google Sign up with Google
+          // "OR" with horizontal lines
+          p.or OR
+          button.create-account Create account
+          p.already
+            | Already have an account?
+            a(href="/explore") Sign in
