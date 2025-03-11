@@ -21,7 +21,7 @@ class User {
   }
 
 
-  static async create(userData) {
+  /* static async create(userData) {
     const sql = `
       INSERT INTO users 
       (first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status)
@@ -46,7 +46,7 @@ class User {
     // Retrieve the inserted user by email (or use LAST_INSERT_ID logic)
     const [rows] = await pool.query('SELECT first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status FROM users WHERE email_id = ?', [userData.email_id]);
     return rows.length ? new User(rows[0]) : null;
-  }
+  } */
 }
 
 module.exports = User;

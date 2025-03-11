@@ -3,7 +3,6 @@ const express = require('express');
 //imports path module in order to handle file and directory paths 
 const path = require('path');
 const app = express();
-const PostService = require('./services/PostService');
 // imports routes modules from the directory for which each route file
 //handles specific end points for different paths of the app
 const userRoutes = require('./routes/userRoutes');
@@ -27,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // sets up the routes alongside there urls
 app.use('/api/users', userRoutes);
 app.use('/api/home', postRoutes);
-app.use('/api/comments', commentRoutes);
+// app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/signin', homeRoutes);
 

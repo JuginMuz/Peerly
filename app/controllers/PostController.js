@@ -4,30 +4,38 @@ const PostService = require('../services/PostService');
 class PostController {
 
   //ADD POST
-  static async createPost(req, res) {
+  /* static async createPost(req, res) {
     try {
       const newPost = await PostService.createPost(req.body);
       res.status(201).json({ message: 'Post created successfully', post: newPost });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  } */
 
 
 
   //GET POST
-  static async getPost(req, res) {
+  static async getPostDetails(req, res) {
     try {
-      const post = await PostService.getPostById(req.params.post_id);
+      const postId = req.params.post_id;
+      const post = await PostService.getPostById(postId);
       if (!post) {
-        res.status(404).json({ error: 'Post not found' });
-      } else {
-        res.status(200).json({ post });
+        return res.status(404).render('error', { 
+          title: 'Post Not Found', 
+          message: `Post with ID ${postId} not found.` 
+        });
       }
+      const comments = await CommentService.getByPostId(postId);
+      res.render('posts_details', { title: 'Post Details', post, comments });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).render('error', { 
+        title: 'Server Error', 
+        message: error.message 
+      });
     }
   }
+  
 
 
 
@@ -52,7 +60,7 @@ class PostController {
 
 
   //DELETE A POST
-  static async deletePost(req, res) {
+  /* static async deletePost(req, res) {
     try {
       const postId = req.params.post_id;
       const result = await PostService.deletePost(postId);
@@ -65,25 +73,14 @@ class PostController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  }*/
 
 
-
-  //GET POSTS BY USER
-  static async getPostsByUser(req, res) {
-    try {
-      const userId = req.params.user_id;
-      const posts = await PostService.getPostsByUser(userId);
-      res.status(200).json({ posts });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
 
 
 
   //GET POSTS BY TAGS
-  static async getPostsByTags(req, res) {
+  /* static async getPostsByTags(req, res) {
     try {
       let { tags } = req.query;
       if (!tags) {
@@ -98,7 +95,7 @@ class PostController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  } */
 }
 
 module.exports = PostController;

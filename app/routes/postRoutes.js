@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const PostController = require('../controllers/PostController');
 
-router.post('/create', PostController.createPost);
-router.get('/:post_id', PostController.getPost);
+// router.post('/create', PostController.createPost);
+// router.delete('/:post_id', PostController.deletePost);
+router.get('/:post_id', PostController.getPostDetails);
 router.get('/', PostController.getAllPosts);
-router.delete('/:post_id', PostController.deletePost);
-router.get('/tags', PostController.getPostsByTags)
+
 
 module.exports = router;
