@@ -1,0 +1,224 @@
+/* public/stylesheets/explore.css */
+
+/* Overall page and background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f7f4; /* Off-white from your wireframe */
+  }
+  
+  .container {
+    display: grid;
+    /* 
+       Left nav ~220px, main content is flexible, 
+       right sidebar ~250px (adjust to your preference)
+    */
+    grid-template-columns: 220px 1fr 250px;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* ---------------------------------------- */
+  /* Left Nav */
+  /* ---------------------------------------- */
+  
+  .left-nav {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .logo {
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+ 
+  .nav-item.active {
+    font-weight: bold;
+  }
+  
+  .icon-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* ---------------------------------------- */
+  /* Main Profile Content */
+  /* ---------------------------------------- */
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Profile Header (cover + basic info) */
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden; /* ensures the cover photo corners match the widget */
+  }
+  
+  .cover-photo {
+    height: 200px;
+    background-color: #ccc; /* Placeholder for cover photo */
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center; /* Aligns profile picture and name */
+    gap: 1.5rem; /* Increases space between profile picture and name */
+}
+  
+  .profile-info .avatar-circle {
+    width: 80px;
+    height: 80px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .profile-info .info-icon {
+    margin-left: auto;
+    cursor: pointer;
+  }
+  
+  /* Profile Body (info widget + posts) */
+  .profile-body {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  /* Info Widget */
+  /* Info Widget */
+.info-widget {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    gap: 1.5rem;
+    flex: 0 0 200px; /* This sets a fixed width of 400px */
+    /* Alternatively, you can use: width: 400px; */
+  }
+  
+
+  /* Generic white widget box for trending + chat */
+  .widget {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .widget h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .widget li {
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+ 
+  /* If the chat items also have an icon circle */
+  .widget li .icon-circle {
+    margin-right: 0.5rem;
+  }
+
+.profile-info img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image perfectly round */
+    border: 3px solid #ddd; /* Adds a subtle border */
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+/* Ensure the post header aligns elements in a row */
+.post-header {
+    display: flex;
+    align-items: center; /* Align avatar and name in the same line */
+    gap: 10px; /* Space between profile picture and name */
+  }
+  
+  /* Make the profile picture circular and size it the same as the name */
+  .post-header .avatar-circle img {
+    width: 40px; /* Adjust size to match text height */
+    height: 40px; /* Ensure width and height are equal */
+    border-radius: 50%; /* Makes it circular */
+    object-fit: cover; /* Ensures the image fills the circle */
+  }
+  
+  /* Ensure the username is aligned properly */
+  .post-user h3 {
+    font-size: 1.1rem; /* Adjust size as needed */
+    margin: 0; /* Remove default margin */
+  }
+
+  .post-image img {
+    width: 100%;         /* Makes the image fill its container */
+    max-width: 500px;    /* Prevents the image from becoming too large */
+    height: auto;        /* Maintains aspect ratio */
+    border-radius: 8px;  /* Optional: adds rounded corners */
+  }
+  
+  
+.nav-list a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the same color as the parent element */
+    font-size: inherit; /* Keep the same font size */
+    display: flex; /* Align with icon-circle */
+    align-items: center; /* Align text vertically */
+    gap: 8px; /* Space between icon and text */
+  }
+  
+  .nav-list a:hover {
+    opacity: 0.8; /* Add a slight hover effect */
+  }

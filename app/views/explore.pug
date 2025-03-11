@@ -1,0 +1,64 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Users Profiles
+    link(rel="stylesheet", href="/stylesheets/explore.css")
+  body
+    .explore-container
+      // LEFT NAVIGATION
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item 
+            .icon-circle ℹ
+            a(href="/api/users") Explore
+          li.nav-item 
+            .icon-circle ℹ
+            span Messages
+          li.nav-item 
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item 
+            .icon-circle ℹ
+            span Profile
+          li.nav-item 
+            .icon-circle ℹ
+            span Settings
+
+      // MAIN FEED (CENTER COLUMN)
+      main.main-feed
+        // PROFILES CONTAINER
+        .profiles-grid
+          each user in users
+            .profile-card
+              .profile-header
+                .avatar-circle
+                  if user.profile_picture
+                    img(src=user.profile_picture, alt=user.first_name + " " + user.last_name)
+                  else
+                    // Fallback initials if no profile picture
+                    | #{user.first_name[0]}#{user.last_name[0]}
+                .profile-info
+                  h3 
+                    a(href="/api/users/" + user.user_id)= user.first_name + " " + user.last_name
+              .profile-footer
+                button.friend-request-btn Send Friend Request
+
+      // RIGHT SIDEBAR
+      aside.right-sidebar
+        .widget
+          h3 See what's trending
+          ul
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+        .widget
+          h3 Chat
+          ul
+            li
+              .icon-circle X
+              span Account Name

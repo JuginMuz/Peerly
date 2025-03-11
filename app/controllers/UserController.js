@@ -50,14 +50,21 @@ class UserController {
   //GET PROFILE
   static async getProfile(req, res) {
     try {
-      const user = await UserService.findByUserId(req.params.user_id);
+      const { user_id } = req.params; // Get userId from the URL
+      const user = await UserService.findByUserId(user_id); // Fetch user details
       if (!user) {
-        res.status(404).json({ error: 'User not found' });
-      } else {
-        res.status(200).json({ user });
+        return res.status(404).render('error', { 
+          title: 'User Not Found',
+          message: `User with ID ${user_id} not found.`
+        });
       }
+      res.render('user-account', { 
+        title: 'Peerly - Account',
+        user // Pass user data to Pug template
+      });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error('Error fetching user data:', error);
+    
     }
   }
 
@@ -67,10 +74,13 @@ class UserController {
   //USERS LISTING
   static async getAllUsers(req, res) {
     try {
-      const users = await UserService.getAllUsers();  // This method should be implemented in your service.
-      res.status(200).json({ users });
+      const users = await UserService.getAllUsers();
+      res.render('explore', { 
+        title: 'Peerly - Make-Friends',
+        users: users
+      });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error('Error fetching users:', error);
     }
   }
 
