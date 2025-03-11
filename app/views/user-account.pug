@@ -14,8 +14,8 @@ html
             .icon-circle ℹ
             span Home
           li.nav-item
-            .icon-circle ℹ
-            span Explore
+            .icon-circle ℹ  
+            a(href="/explore") Explore
           li.nav-item
             .icon-circle ℹ
             span Messages
@@ -32,24 +32,35 @@ html
       // MAIN CONTENT
       main.profile-content
         // Profile Header
-        .profile-header.widget
-          .cover-photo
-          .profile-info
-            .avatar-circle
-            h2 Account Name
-            i.info-icon ℹ
         
+        .profile-header.widget
+        .cover-photo
+
+        .profile-info
+            if users && users.profile_picture
+            img.profile-pic(src=users.profile_picture, alt="Profile Picture")
+
+            if users
+                h2= users.first_name + " " + users.last_name
+            else 
+                h2 User Not Found 
+            
+
+
         // Profile Body (Info widget + Post feed)
         .profile-body
           .info-widget.widget
             h3 Info
-            i.info-icon ℹ
-            ul
-              li  Field of Study
-              li  DOB
-              li  City
-              li  Work
-              li  Relationship
+            if users
+              ul
+                li Field of Study: #{users.field_id}
+                li DOB: #{users.dob}
+                li City: #{users.city}
+                li Work: #{users.work_at}
+                li Relationship: #{users.relationship_status}
+            else 
+              p User data is not available.
+              
           .post-feed
             .post-card.widget
               .post-header
@@ -57,7 +68,7 @@ html
                 .post-user
                   h3 Account Name
                   p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                i.more-options ⋮
+                //i.more-options ⋮
               .post-image
 
       // RIGHT SIDEBAR
