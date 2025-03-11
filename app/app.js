@@ -26,15 +26,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // sets up the routes alongside there urls
 app.use('/api/users', userRoutes);
-app.use('/api/explore', postRoutes);
+app.use('/api/home', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
-app.use('/api/home', homeRoutes);
+app.use('/api/signin', homeRoutes);
 
 
 //sets port and starts the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Go to http://127.0.0.1:3000/api/home`);
+  console.log(`Go to http://127.0.0.1:3000/api/signin`);
 });

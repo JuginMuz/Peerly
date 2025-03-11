@@ -5,9 +5,9 @@ class HomeController {
         //so its able to handle asynchronous operations if needed
       try {
         //renders the homepage using pug
-        res.render('homepage', { title: 'Peerly - Home' });
+        res.render('signin', { title: 'Peerly - SignIn' });
       } catch (error) {
-        res.status(500).send('Error rendering home page');
+        res.status(500).send('Error rendering SignIn page');
       }
     }
   }

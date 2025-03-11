@@ -35,15 +35,15 @@ class PostController {
     static async getAllPosts(req, res) {
       try {
         const posts = await PostService.getAllPosts();
-        res.render('explore', { 
-          title: 'Peerly - Explore',
+        res.render('Home', { 
+          title: 'Peerly - Home',
           posts: posts
         });
       } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(500).render('error', { 
           title: 'Server Error',
-          message: 'Failed to load explore page'
+          message: 'Failed to load home page'
         });
       }
     }

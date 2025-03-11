@@ -279,5 +279,18 @@ body {
     height: auto;
     /* Any other styling you want */
   }
+
+  .nav-list a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the same color as the parent element */
+    font-size: inherit; /* Keep the same font size */
+    display: flex; /* Align with icon-circle */
+    align-items: center; /* Align text vertically */
+    gap: 8px; /* Space between icon and text */
+  }
+  
+  .nav-list a:hover {
+    opacity: 0.8; /* Add a slight hover effect */
+  }
   
   
