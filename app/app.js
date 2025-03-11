@@ -14,6 +14,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 const accountRoutes = require('./routes/accountRoutes');
+const UserController = require('./controllers/UserController');
 
 //sets up the pug template
 app.set('view engine', 'pug');
@@ -50,6 +51,7 @@ app.get('/explore', async (req, res) => {
     });
   }
 });
+
 app.get('/make-friends', async (req, res) => {
   try {
     const users = await UserService.getAllUsers();
@@ -66,19 +68,28 @@ app.get('/make-friends', async (req, res) => {
   }
 });
 
-app.get('/user-account', async (req, res) => {
+app.get('/user-account/:user_id', async (req, res) => {
     try {
-      res.render('account', { 
-        title: 'Peerly - Account',
-      });
+        const {user_id} = req.params;  // Get userId from the URL
+        const users = await UserService.findByUserId(user_id);  // Fetch user details
+        if (!users) {
+            return res.status(404).render('error', { 
+                title: 'User Not Found',
+                message: `User with ID ${user_id} not found.`
+            });
+        }
+        res.render('user-account', { 
+            title: 'Peerly - Account',
+            users // Pass user data to Pug template
+        });
     } catch (error) {
-      console.error('Error fetching posts:', error);
-      res.status(500).render('error', { 
-        title: 'Server Error',
-        message: 'Failed to load explore page'
-      });
+        console.error('Error fetching user data:', error);
+        res.status(500).render('error', { 
+            title: 'Server Error',
+            message: 'Failed to load user account page'
+        });
     }
-  });
+});
 
 //sets port and starts the server
 const PORT = process.env.PORT || 3000;
