@@ -49,8 +49,9 @@ body {
     margin-bottom: 1rem;
     cursor: pointer;
     font-size: 1rem;
+    text-decoration: none;
   }
-  
+ 
   .nav-item.active {
     font-weight: bold;
   }
@@ -94,9 +95,9 @@ body {
   
   .profile-info {
     display: flex;
-    align-items: center;
-    padding: 1rem;
-  }
+    align-items: center; /* Aligns profile picture and name */
+    gap: 1.5rem; /* Increases space between profile picture and name */
+}
   
   .profile-info .avatar-circle {
     width: 80px;
@@ -130,6 +131,7 @@ body {
   /* Info Widget */
   .info-widget {
     display: flex;
+    gap: 1.5rem
   }
 
   /* Generic white widget box for trending + chat */
@@ -158,8 +160,20 @@ body {
     align-items: center;
     font-size: 0.9rem;
   }
-  
+ 
   /* If the chat items also have an icon circle */
   .widget li .icon-circle {
     margin-right: 0.5rem;
   }
+
+.profile-info img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image perfectly round */
+    border: 3px solid #ddd; /* Adds a subtle border */
+    padding: 5px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
