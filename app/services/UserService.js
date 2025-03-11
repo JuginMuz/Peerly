@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 class UserService {
 
   // REGISTER
-  static async register(userData) {
+  /* static async register(userData) {
     // Hash the password (assume userData contains plainTextPassword)
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userData.plainTextPassword, saltRounds);
@@ -16,13 +16,13 @@ class UserService {
     // Save authentication record
     await Authentication.setPassword(newUser.user_id, hashedPassword);
     return newUser;
-  }
+  } */
 
 
 
   
   //LOGIN
-  static async login(email, plainTextPassword) {
+  /* static async login(email, plainTextPassword) {
     // Find user by email
     const pool = require('../models/db');
     const [rows] = await pool.query('SELECT * FROM users WHERE email_id = ?', [email]);
@@ -36,7 +36,7 @@ class UserService {
       throw new Error('Invalid password');
     }
     return user;
-  }
+  } */
 
 
   static formatDate = (dateString) => {
@@ -50,7 +50,7 @@ class UserService {
   };
 
   //GET USER PROFILE
-  static async findByUserId(user_id) {
+ /* static async findByUserId(user_id) {
     const sql = `
       SELECT 
         u.first_name, u.last_name, u.email_id, u.profile_picture, u.gender, 
@@ -94,7 +94,50 @@ class UserService {
     };
   
     return userInfo;
+  } */
+
+    
+  static async findByUserId(user_id) {
+    const sql = `
+      SELECT 
+        u.first_name, 
+        u.last_name, 
+        u.email_id, 
+        u.profile_picture, 
+        u.gender, 
+        u.bio, 
+        f.field_name AS field_of_study, 
+        u.dob, 
+        u.city, 
+        u.work_at, 
+        u.went_to, 
+        u.goes_to, 
+        u.relationship_status
+      FROM users u
+      LEFT JOIN fields_of_study f ON u.field_id = f.field_id
+      WHERE u.user_id = ?;
+    `;
+    const [rows] = await pool.query(sql, [user_id]);
+    if (!rows.length) return null;
+
+    // Optionally format date using a helper function, e.g., formatDate()
+    return {
+      first_name: rows[0].first_name,
+      last_name: rows[0].last_name,
+      email_id: rows[0].email_id,
+      profile_picture: rows[0].profile_picture,
+      gender: rows[0].gender,
+      bio: rows[0].bio,
+      field_of_study: rows[0].field_of_study,
+      dob: this.formatDate(rows[0].dob), // You can format this if needed
+      city: rows[0].city,
+      work_at: rows[0].work_at,
+      went_to: rows[0].went_to,
+      goes_to: rows[0].goes_to,
+      relationship_status: rows[0].relationship_status
+    };
   }
+
   
   
 
@@ -111,7 +154,7 @@ class UserService {
 
 
   //UPDATE USER PROFILE
-  static async updateUserProfile(user_id, updatedData) {
+  /* static async updateUserProfile(user_id, updatedData) {
     // Build SET clause dynamically from updatedData keys
     const fields = Object.keys(updatedData)
       .map(key => `${key} = ?`)
@@ -123,13 +166,13 @@ class UserService {
     const sql = `UPDATE users SET ${fields} WHERE user_id = ?`;
     const [result] = await pool.query(sql, values);
     return result;
-  }
+  } */
 
 
 
 
   //DELETE ACCOUNT
-  static async deleteUserAccount(user_id) {
+  /* static async deleteUserAccount(user_id) {
     const connection = await pool.getConnection();
     try {
       await connection.beginTransaction();
@@ -159,7 +202,7 @@ class UserService {
     } finally {
       connection.release();
     }
-  }
+  } */
 }
 
 module.exports = UserService;

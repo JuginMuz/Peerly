@@ -1,10 +1,12 @@
 // controllers/UserController.js
 const UserService = require('../services/UserService');
+const PostService = require('../services/PostService');
+
 
 class UserController {
 
   //REGISTER
-  static async register(req, res) {
+  /* static async register(req, res) {
     try {
       const newUser = await UserService.register(req.body);
       res.status(201).json({ message: 'User registered successfully', user: newUser });
@@ -12,10 +14,10 @@ class UserController {
       res.status(500).json({ error: error.message });
     }
   }
-
+ */
 
   //LOGIN
-  static async login(req, res) {
+  /* static async login(req, res) {
     try {
       const { email, plainTextPassword } = req.body;
       const user = await UserService.login(email, plainTextPassword);
@@ -23,13 +25,13 @@ class UserController {
     } catch (error) {
       res.status(401).json({ error: error.message });
     }
-  }
+  } */
 
 
 
 
   //UPDATE PROFILE
-  static async updateProfile(req, res) {
+  /* static async updateProfile(req, res) {
     try {
       const userId = req.params.user_id;
       const updatedData = req.body; // The fields to update (e.g., first_name, bio, etc.)
@@ -42,13 +44,13 @@ class UserController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  } */
 
 
 
 
   //GET PROFILE
-  static async getProfile(req, res) {
+  /* static async getProfile(req, res) {
     try {
       const { user_id } = req.params; // Get userId from the URL
       const user = await UserService.findByUserId(user_id); // Fetch user details
@@ -66,10 +68,33 @@ class UserController {
       console.error('Error fetching user data:', error);
     
     }
-  }
+  } */
 
 
 
+    static async getProfile(req, res) {
+      try {
+        const user_id = req.params.user_id;
+        // Retrieve user details
+        const userDetails = await UserService.findByUserId(user_id);
+        if (!userDetails) {
+          return res.status(404).render('error', { 
+            title: 'User Not Found', 
+            message: `User with ID ${user_id} not found.`
+          });
+        }
+        // Retrieve posts for this user
+        const userPosts = await PostService.getPostsByUser(user_id);
+        // Combine user details with posts
+        userDetails.posts = userPosts;
+        // Render the account page with user details and their posts
+        res.render('user-account', { title: 'Peerly - Account', user: userDetails });
+      } catch (error) {
+        console.error('Error in getAccountPage:', error);
+        
+      }
+    }
+  
 
   //USERS LISTING
   static async getAllUsers(req, res) {
@@ -87,7 +112,7 @@ class UserController {
 
 
   //DELETE ACCOUNT
-  static async deleteAccount(req, res) {
+  /* static async deleteAccount(req, res) {
     try {
       const userId = req.params.user_id;
       const result = await UserService.deleteUserAccount(userId);
@@ -100,7 +125,7 @@ class UserController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  } */
 }
 
 module.exports = UserController;

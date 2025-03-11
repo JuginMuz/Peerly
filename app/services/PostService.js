@@ -5,7 +5,7 @@ const Post = require('../models/Post');
 class PostService {
 
   //ADD POST
-  static async createPost(postData) {
+  /* static async createPost(postData) {
     // postData should include:
     // - user_id: the ID of the post's author
     // - description: post content
@@ -43,7 +43,7 @@ class PostService {
     } finally {
       connection.release();
     }
-  }
+  } */
 
 
 
@@ -75,7 +75,7 @@ class PostService {
 
 
   //DELETE A POST
-  static async deletePost(post_id) {
+  /* static async deletePost(post_id) {
     const connection = await pool.getConnection();
     try {
       await connection.beginTransaction();
@@ -100,24 +100,12 @@ class PostService {
     } finally {
       connection.release();
     }
-  }
-
-
- // GET POSTS BY USER
-static async getPostsByUser(user_id) {
-  const [rows] = await pool.query(
-    `SELECT u.first_name, u.last_name, p.media_url, p.description, p.created_at
-     FROM posts p
-     JOIN users u ON p.user_id = u.user_id
-     WHERE p.user_id = ?`,
-    [user_id]
-  );
-  return rows;
-}
+  } */
 
 
 
-  static async getPostsByTags(tags) {
+
+  /* static async getPostsByTags(tags) {
     // Ensure tags is an array
     if (!Array.isArray(tags)) {
       tags = [tags];
@@ -139,7 +127,18 @@ static async getPostsByUser(user_id) {
     `;
     const [rows] = await pool.query(sql, tags);
     return rows;
-  }
-}
+  } */
+
+      static async getPostsByUser(user_id) {
+        const sql = `
+          SELECT media_url, description, created_at
+          FROM posts
+          WHERE user_id = ?;
+        `;
+        const [rows] = await pool.query(sql, [user_id]);
+        return rows;
+      }
+    }
+
 
 module.exports = PostService;
