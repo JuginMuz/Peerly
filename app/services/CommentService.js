@@ -9,7 +9,7 @@ class CommentService {
 
     static async getByPostId(post_id) {
       const sql = `
-        SELECT c.description, u.first_name, u.last_name, c.created_at
+        SELECT c.description, u.first_name, u.last_name, c.created_at, u.profile_picture
         FROM comments c
         JOIN users u ON c.user_id = u.user_id
         WHERE c.post_id = ?
