@@ -79,7 +79,8 @@ class PostService {
         p.created_at,
         u.user_id,
         u.first_name,
-        u.last_name
+        u.last_name,
+        u.profile_picture
       FROM posts p
       JOIN users u ON p.user_id = u.user_id
       ORDER BY p.created_at DESC
