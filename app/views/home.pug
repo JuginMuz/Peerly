@@ -41,7 +41,10 @@ html
         // Posts container
         .post-grid
           each post in posts
-            .post-card
+            a.post-card(
+              href=`/api/home/${post.post_id}`, 
+              style="display: block; text-decoration: none; color: inherit; cursor: pointer;"
+            )
               .post-header
                 .avatar-circle X
                 .post-user
