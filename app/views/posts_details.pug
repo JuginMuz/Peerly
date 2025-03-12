@@ -2,12 +2,10 @@ doctype html
 html
   head
     meta(charset="UTF-8")
-    title #{title}  // e.g. "Post Details"
-    // Reuse the same stylesheet as explore:
+    title= title
     link(rel="stylesheet", href="/stylesheets/explore.css")
   body
     .explore-container
-
       // LEFT NAVIGATION
       nav.left-nav
         h2.logo Peerly
@@ -33,23 +31,27 @@ html
 
       // MAIN FEED (CENTER COLUMN)
       main.main-feed
-        // SINGLE POST CONTAINER
         if post
           .post-card
             .post-header
-              // Optional: If you want user info, add it here
-              // e.g. an avatar or user name if you have that data
-              
-              // If you store the posting user's name in post:
-              // h3= post.first_name + " " + post.last_name
-              
-            .post-body
-              // Post description
-              p= post.description
+              // AVATAR + User Info
+              .avatar-circle
+                if post.profile_picture
+                  img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
+                else
+                  // Fallback that uses initials if no profile_picture
+                  | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
 
+              .poster-info
+                // Shows the poster's name
+                h3= post.first_name + ' ' + post.last_name
+
+            .post-body
+              p= post.description
+              p= 'Created At : ' + post.created_at
               // If there's a media URL:
               if post.media_url
-                img(src=post.media_url, alt="Post Image", style="max-width: 100%; border-radius: 8px;")
+                img(src=post.media_url, alt="Post Image")
 
           // COMMENTS SECTION
           .comments-section
@@ -57,12 +59,15 @@ html
             if comments && comments.length
               each comment in comments
                 .comment-card
-                  // Show comment author
-                  h4 #{comment.first_name} #{comment.last_name}
-                  // Show comment text
+                  .comment-header
+                    .comment-avatar-circle
+                      if comment.profile_picture
+                        img(src=comment.profile_picture, alt=comment.first_name + ' ' + comment.last_name)
+                      else
+                        | #{comment.first_name ? comment.first_name[0] : ''}#{comment.last_name ? comment.last_name[0] : ''}
+                    h4= comment.first_name + ' ' + comment.last_name
+
                   p= comment.description
-                  // Optional date/time:
-                  // p= comment.created_at
                   hr
             else
               p No comments yet.
