@@ -49,10 +49,24 @@ class PostService {
 
   //GET POST
   static async getPostById(post_id) {
-    const sql = 'SELECT description, media_url FROM posts WHERE post_id = ?';
+    const sql = `
+      SELECT 
+        p.post_id,
+        p.description,
+        p.media_url,
+        p.created_at,
+        u.user_id,
+        u.first_name,
+        u.last_name,
+        u.profile_picture
+      FROM posts p
+      JOIN users u ON p.user_id = u.user_id
+      WHERE p.post_id = ?
+    `;
     const [rows] = await pool.query(sql, [post_id]);
     return rows.length ? new Post(rows[0]) : null;
   }
+  
 
 
   //LISTING PAGE
