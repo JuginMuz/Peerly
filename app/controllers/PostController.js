@@ -1,6 +1,6 @@
 // controllers/PostController.js
+const CommentService = require('../services/CommentService');
 const PostService = require('../services/PostService');
-
 class PostController {
 
   //ADD POST
