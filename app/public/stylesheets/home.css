@@ -293,4 +293,20 @@ body {
     opacity: 0.8; /* Add a slight hover effect */
   }
   
-  
+  .avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* crops the image to fill the circle */
+    display: block;
+  }
+  .avatar-circle {
+    width: 50px;        /* styling and sizes for avatar pic where its small
+    rounded aligned alongside including a fall back incase there is no image */
+    height: 50px;
+    border-radius: 50%; /* makes it round */
+    overflow: hidden;   /* ensures the image is clipped to a circle */
+    display: flex;     
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc; /* fallback if no image */
+  }
