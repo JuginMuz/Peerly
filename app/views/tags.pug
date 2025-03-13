@@ -1,0 +1,52 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Peerly - Tags
+    link(rel="stylesheet", href="/stylesheets/tags.css")
+    script(src="/scripts/tags.js" defer)
+  body
+    .explore-container
+      // LEFT NAV
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle X
+            a(href="/explore") Home
+          li.nav-item 
+            .icon-circle X
+            a(href="/make-friends") Make Friends
+          li.nav-item 
+            .icon-circle X
+            span Messages
+          li.nav-item 
+            .icon-circle X
+            span Notifications
+          li.nav-item 
+            .icon-circle X
+            span Profile 
+          li.nav-item 
+            .icon-circle X
+            span Settings
+        button.post-btn Post
+
+      // MIDDLE CONTENT
+      main.main-feed
+        .top-bar
+          .tag-buttons
+            each tag in tags
+                button.tag-btn(onclick=`window.location.href='/tags?tags=${tag.tag_id}'`)= tag.tag_name
+          button.filter-btn Filters
+
+        .posts-container
+          if posts.length > 0
+            each post in posts
+              .post
+                h3= post.first_name + " " + post.last_name
+                p= post.description
+                if post.media_url
+                  img(src=post.media_url, alt="Post Image")
+                p.small= new Date(post.created_at).toLocaleString()
+          else
+            p No posts available.
