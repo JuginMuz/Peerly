@@ -39,15 +39,7 @@ class UserService {
   } */
 
 
-  static formatDate = (dateString) => {
-    if (!dateString) return "N/A"; // Handle null/undefined dates
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }); // Example output: "May 10, 2000"
-  };
+  
 
   //GET USER PROFILE
  /* static async findByUserId(user_id) {

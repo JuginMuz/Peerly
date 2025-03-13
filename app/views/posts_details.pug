@@ -1,0 +1,90 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title= title
+    link(rel="stylesheet", href="/stylesheets/explore.css")
+  body
+    .explore-container
+      // LEFT NAVIGATION
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/users") Explore
+          li.nav-item
+            .icon-circle ℹ
+            span Messages
+          li.nav-item
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item
+            .icon-circle ℹ
+            span Profile
+          li.nav-item
+            .icon-circle ℹ
+            span Settings
+
+      // MAIN FEED (CENTER COLUMN)
+      main.main-feed
+        if post
+          .post-card
+            .post-header
+              // AVATAR + User Info
+              .avatar-circle
+                if post.profile_picture
+                  img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
+                else
+                  // Fallback that uses initials if no profile_picture
+                  | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
+
+              .poster-info
+                // Shows the poster's name
+                h3= post.first_name + ' ' + post.last_name
+
+            .post-body
+              p= post.description
+              p.posted-at Posted At: #{post.created_at}
+              // If there's a media URL:
+              if post.media_url
+                img(src=post.media_url, alt="Post Image")
+
+          // COMMENTS SECTION
+          .comments-section
+            h3 Comments
+            if comments && comments.length
+              each comment in comments
+                .comment-card
+                  .comment-header
+                    .comment-avatar-circle
+                      if comment.profile_picture
+                        img(src=comment.profile_picture, alt=comment.first_name + ' ' + comment.last_name)
+                      else
+                        | #{comment.first_name ? comment.first_name[0] : ''}#{comment.last_name ? comment.last_name[0] : ''}
+                    h4= comment.first_name + ' ' + comment.last_name
+                  p= comment.description
+                  p.posted-at Commented At: #{comment.created_at}
+                  hr
+            else
+              p No comments yet.
+        else
+          h2 No post found
+
+      // RIGHT SIDEBAR
+      aside.right-sidebar
+        .widget
+          h3 See what's trending
+          ul
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+            li Lorem ipsum dolor
+        .widget
+          h3 Chat
+          ul
+            li
+              .icon-circle X
+              span Account Name

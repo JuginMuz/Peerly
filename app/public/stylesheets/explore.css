@@ -1,8 +1,14 @@
+img { /* Set max width for images to maintain consistancy */
+  max-width: 800px;    
+  height: auto; 
+  object-fit: cover;  
+}
+
 /* Overall page and background */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f9f7f4; /* Off-white background */
+    background-color: #f9f7f4; 
   }
   
   /* Main container: 3 columns layout */
@@ -124,17 +130,24 @@ body {
   }
   
   .avatar-circle {
-    width: 40px;
-    height: 40px;
-    background-color: #ccc;
-    color: #fff;
-    border-radius: 50%;
-    margin-right: 0.75rem;
-    display: flex;
+    width: 50px;        /* styling and sizes for avatar pic where its small
+    rounded aligned alongside including a fall back incase there is no image */
+    height: 50px;
+    border-radius: 50%; /* makes it round */
+    overflow: hidden;   /* ensures the image is clipped to a circle */
+    display: flex;     
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    background-color: #ccc; /* fallback if no image */
   }
+  
+  .avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* crops the image to fill the circle */
+    display: block;
+  }
+  
   
   .profile-info h3 {
     margin: 0;
@@ -221,35 +234,91 @@ body {
   }
 
   .nav-list a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Use the same color as the parent element */
-    font-size: inherit; /* Keep the same font size */
-    display: flex; /* Align with icon-circle */
-    align-items: center; /* Align text vertically */
-    gap: 8px; /* Space between icon and text */
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Uses the same color as the parent element */
+    font-size: inherit; /* Keeps the same font size */
+    display: flex; 
+    align-items: center; 
+    gap: 8px; /* Spaces icon and text */
   }
   
   .nav-list a:hover {
-    opacity: 0.8; /* Add a slight hover effect */
+    opacity: 0.8; /* Adds a slight hover effect */
   }
 
-  /* Remove default link styling for user profile links */
+  /* Removes default link styling for user profile links */
 .profiles-grid a {
-    color: inherit; /* Inherit color from the parent element */
-    text-decoration: none; /* Remove underline */
-    font-weight: bold; /* Optional: Make it stand out */
+    color: inherit; /* Inherits color from the parent element */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; 
   }
   
-  /* Optional: Add a hover effect for better user experience */
   .profiles-grid a:hover {
-    text-decoration: underline; /* Add underline only on hover if needed */
-    color: #333; /* Change color on hover if desired */
+    text-decoration: underline; 
+    color: #333; 
   }
 
   .profiles-grid .avatar-circle img {
-    width: 40px; /* Adjust size to match text height */
-    height: 40px; /* Ensure width and height are equal */
+    width: 40px; /* Adjusts size to match text height */
+    height: 40px; /* Ensures width and height are equal */
     border-radius: 50%; /* Makes it circular */
     object-fit: cover; /* Ensures the image fills the circle */
   }
-  
+  /* Single post card styling, similar to .profile-card */
+.post-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem; /* space after the post */
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  /* If you want an avatar or user name here, style it similarly to .profile-header */
+}
+
+.post-body p {
+  margin: 0.5rem 0;
+}
+.posted-at {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.comments-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.comment-card {
+  margin-bottom: 1rem;
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* spaces pic and name */
+  margin-bottom: 0.5rem; /* optional */
+}
+
+.comment-avatar-circle {
+  width: 35px; 
+  height: 35px; 
+  border-radius: 50%; 
+  overflow: hidden; 
+  background-color: #ccc; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.comment-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

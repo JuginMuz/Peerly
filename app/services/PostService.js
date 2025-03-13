@@ -1,7 +1,7 @@
 // services/PostService.js
 const pool = require('../models/db');
 const Post = require('../models/Post');
-
+const formatDate = require('./utils/FormatDate.js');
 class PostService {
 
   //ADD POST
@@ -49,10 +49,30 @@ class PostService {
 
   //GET POST
   static async getPostById(post_id) {
-    const sql = 'SELECT description, media_url FROM posts WHERE post_id = ?';
+    const sql = `
+      SELECT 
+        p.post_id,
+        p.description,
+        p.media_url,
+        p.created_at,
+        u.user_id,
+        u.first_name,
+        u.last_name,
+        u.profile_picture
+      FROM posts p
+      JOIN users u ON p.user_id = u.user_id
+      WHERE p.post_id = ?
+    `;
     const [rows] = await pool.query(sql, [post_id]);
-    return rows.length ? new Post(rows[0]) : null;
+    if (rows.length) {
+      // Format the created_at for the single post row
+      rows[0].created_at = formatDate(rows[0].created_at);
+      return new Post(rows[0]);
+    }
+
+    return null;
   }
+  
 
 
   //LISTING PAGE
@@ -65,12 +85,16 @@ class PostService {
         p.created_at,
         u.user_id,
         u.first_name,
-        u.last_name
+        u.last_name,
+        u.profile_picture
       FROM posts p
       JOIN users u ON p.user_id = u.user_id
       ORDER BY p.created_at DESC
     `);
-    return rows;
+    return rows.map(row => {
+      row.created_at = formatDate(row.created_at);
+      return row;
+    });
   }
 
 

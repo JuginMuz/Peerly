@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="/stylesheets/home.css")
   body
     .explore-container
-      // LEFT NAV
+      // LEFT NAVIGATION
       nav.left-nav
         h2.logo Peerly
         ul.nav-list
@@ -24,7 +24,7 @@ html
             span Notifications
           li.nav-item 
             .icon-circle ℹ
-            span Profile 
+            span Profile
           li.nav-item 
             .icon-circle ℹ
             span Settings
@@ -41,13 +41,22 @@ html
         // Posts container
         .post-grid
           each post in posts
-            .post-card
+            a.post-card(
+              href=`/api/home/${post.post_id}`, 
+              style="display: block; text-decoration: none; color: inherit; cursor: pointer;"
+            )
               .post-header
-                .avatar-circle X
+                .avatar-circle
+                  if post.profile_picture
+                    img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
+                  else
+                    // Fallback that uses initials if no profile_picture
+                    | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
                 .post-user
                   h3= post.first_name + ' ' + post.last_name
+                  p= 'Posted At: ' + post.created_at
               .post-body
-                // Render image only if media_url exists
+                // Renders image only if media_url exists
                 if post.media_url
                   img.post-media(src=post.media_url, alt="Post Media")
                 p= post.description
