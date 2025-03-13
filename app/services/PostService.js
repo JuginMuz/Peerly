@@ -45,15 +45,12 @@ class PostService {
     }
   }
 
-
-
   //GET POST
   static async getPostById(post_id) {
     const sql = 'SELECT description, media_url FROM posts WHERE post_id = ?';
     const [rows] = await pool.query(sql, [post_id]);
     return rows.length ? new Post(rows[0]) : null;
   }
-
 
   //LISTING PAGE
   static async getAllPosts() {
@@ -72,7 +69,6 @@ class PostService {
     `);
     return rows;
   }
-
 
   //DELETE A POST
   static async deletePost(post_id) {
@@ -102,7 +98,6 @@ class PostService {
     }
   }
 
-
  // GET POSTS BY USER
 static async getPostsByUser(user_id) {
   const [rows] = await pool.query(
@@ -114,8 +109,6 @@ static async getPostsByUser(user_id) {
   );
   return rows;
 }
-
-
 
   static async getPostsByTags(tags) {
     // Ensure tags is an array
