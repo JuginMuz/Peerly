@@ -283,6 +283,11 @@ body {
 .post-body p {
   margin: 0.5rem 0;
 }
+.posted-at {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
 
 .comments-section {
   background-color: #fff;
@@ -297,7 +302,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem; /* spaces pic and name */
-  margin-bottom: 0.5rem; 
+  margin-bottom: 0.5rem; /* optional */
 }
 
 .comment-avatar-circle {
