@@ -54,6 +54,7 @@ html
                     | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
                 .post-user
                   h3= post.first_name + ' ' + post.last_name
+                  p= 'Posted At: ' + post.created_at
               .post-body
                 // Renders image only if media_url exists
                 if post.media_url
