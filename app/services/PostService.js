@@ -1,7 +1,7 @@
 // services/PostService.js
 const pool = require('../models/db');
 const Post = require('../models/Post');
-
+const formatDate = require('./utils/FormatDate.js');
 class PostService {
 
   //ADD POST
@@ -64,7 +64,13 @@ class PostService {
       WHERE p.post_id = ?
     `;
     const [rows] = await pool.query(sql, [post_id]);
-    return rows.length ? new Post(rows[0]) : null;
+    if (rows.length) {
+      // Format the created_at for the single post row
+      rows[0].created_at = formatDate(rows[0].created_at);
+      return new Post(rows[0]);
+    }
+
+    return null;
   }
   
 
@@ -85,7 +91,10 @@ class PostService {
       JOIN users u ON p.user_id = u.user_id
       ORDER BY p.created_at DESC
     `);
-    return rows;
+    return rows.map(row => {
+      row.created_at = formatDate(row.created_at);
+      return row;
+    });
   }
 
 
