@@ -1,6 +1,7 @@
 // services/CommentService.js
 const pool = require('../models/db');
 const Comment = require('../models/Comment');
+const formatDate = require('./utils/FormatDate.js');
 
 class CommentService {
   /* static async addComment(commentData) {
@@ -16,7 +17,10 @@ class CommentService {
         ORDER BY c.created_at ASC
       `;
       const [rows] = await pool.query(sql, [post_id]);
-      return rows; // returns an array of objects containing description, first_name, last_name, and created_at
+      return rows.map(row => ({
+        ...row,
+        created_at: formatDate(row.created_at),
+      }));
     }
     
     
