@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const PostService = require('./services/PostService');
 const UserService = require('./services/UserService');
+const TagService = require('./services/TagService');
 
 // imports routes modules from the directory for which each route file
 //handles specific end points for different paths of the app
@@ -87,6 +88,34 @@ app.get('/user-account/:user_id', async (req, res) => {
         res.status(500).render('error', { 
             title: 'Server Error',
             message: 'Failed to load user account page'
+        });
+    }
+});
+
+app.get('/tags', async (req, res) => {
+    try {
+        let selectedTags = req.query.tags ? req.query.tags.split(',') : [];
+        // Convert query string values to integers
+        selectedTags = selectedTags.map(tag => parseInt(tag, 10)).filter(tag => !isNaN(tag));
+        console.log("Selected Tags:", selectedTags); // Debugging step
+        let posts = [];
+        if (selectedTags.length > 0) {
+            posts = await TagService.getPostsByTags(selectedTags); // Fetch posts by tag ID
+            console.log("Fetched Posts:", posts);
+        } else {
+            posts = await PostService.getAllPosts();
+        }
+        const tags = await TagService.getAllTags();
+        res.render('tags', { 
+            title: 'Peerly - Tags',
+            posts: posts,
+            tags: tags
+        });
+    } catch (error) {
+        console.error('Error fetching posts by tags:', error);
+        res.status(500).render('error', { 
+            title: 'Server Error',
+            message: 'Failed to load tagged posts'
         });
     }
 });
