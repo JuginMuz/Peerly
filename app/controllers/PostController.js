@@ -1,6 +1,7 @@
 // controllers/PostController.js
 const CommentService = require('../services/CommentService');
 const PostService = require('../services/PostService');
+const TagService = require('../services/TagService');
 class PostController {
 
   //ADD POST
@@ -40,21 +41,24 @@ class PostController {
 
 
   //LISTING PAGE
-    static async getAllPosts(req, res) {
-      try {
+  static async getAllPosts(req, res) {
+    try {
         const posts = await PostService.getAllPosts();
+        const tags = await TagService.getAllTags();
         res.render('Home', { 
           title: 'Peerly - Home',
-          posts: posts
-        });
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-        res.status(500).render('error', { 
-          title: 'Server Error',
-          message: 'Failed to load home page'
+          posts: posts,
+          tags: tags
         });
       }
+     catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).render('error', { 
+        title: 'Server Error',
+        message: 'Failed to load home page'
+      });
     }
+  }
 
 
 
