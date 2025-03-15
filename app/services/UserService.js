@@ -2,6 +2,7 @@
 const pool = require('../models/db');
 const User = require('../models/User');
 const Authentication = require('../models/Authentication');
+const formatDate = require('./utils/FormatDate.js');
 const bcrypt = require('bcryptjs');
 
 class UserService {
@@ -121,7 +122,7 @@ class UserService {
       gender: rows[0].gender,
       bio: rows[0].bio,
       field_of_study: rows[0].field_of_study,
-      dob: this.formatDate(rows[0].dob), // You can format this if needed
+      dob: formatDate(rows[0].dob), // You can format this if needed
       city: rows[0].city,
       work_at: rows[0].work_at,
       went_to: rows[0].went_to,
