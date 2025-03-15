@@ -155,7 +155,7 @@ class PostService {
 
       static async getPostsByUser(user_id) {
         const sql = `
-          SELECT media_url, description, created_at
+          SELECT post_id, media_url, description, created_at
           FROM posts
           WHERE user_id = ?;
         `;
