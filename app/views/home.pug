@@ -34,12 +34,13 @@ html
       main.main-feed
         .top-bar
           .tag-buttons
-            button.tag-btn Computing
-            button.tag-btn Software Engineering
+            each tag in tags || []
+                button.tag-btn(onclick=`window.location.replace('/api/tags/tags?tags=${tag.tag_id}')`)= tag.tag_name
           button.filter-btn Filters
 
         // Posts container
         .post-grid
+        if posts && posts.length > 0
           each post in posts
             a.post-card(
               href=`/api/home/${post.post_id}`, 
@@ -67,6 +68,9 @@ html
                 button.comment-btn
                   .icon-circle X
                   span Comment
+
+        else
+            p No posts associated with this tag
 
       // RIGHT SIDEBAR
       aside.right-sidebar
