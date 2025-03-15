@@ -70,7 +70,10 @@ html
           .post-feed
             if user && user.posts.length
               each post in user.posts
-                .post-card.widget
+                a.post-card(
+                  href=`/api/home/${post.post_id}`, 
+                  style="display: block; text-decoration: none; color: inherit; cursor: pointer;"
+                )
                   .post-header
                     .avatar-circle
                       if user.profile_picture
