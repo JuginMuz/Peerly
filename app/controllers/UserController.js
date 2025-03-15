@@ -91,7 +91,10 @@ class UserController {
         res.render('user-account', { title: 'Peerly - Account', user: userDetails });
       } catch (error) {
         console.error('Error in getAccountPage:', error);
-        
+        res.status(500).render('error', { 
+          title: 'Server Error', 
+          message: error.message 
+        });
       }
     }
   
@@ -106,6 +109,10 @@ class UserController {
       });
     } catch (error) {
       console.error('Error fetching users:', error);
+      res.status(500).render('error', { 
+        title: 'Server Error', 
+        message: error.message 
+      });
     }
   }
 
