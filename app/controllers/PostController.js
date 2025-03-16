@@ -16,42 +16,53 @@ class PostController {
 
 
 
-  //GET POST
-  static async getPostDetails(req, res) {
-    try {
-      const postId = req.params.post_id;
-      const post = await PostService.getPostById(postId);
-      if (!post) {
-        return res.status(404).render('error', { 
-          title: 'Post Not Found', 
-          message: `Post with ID ${postId} not found.` 
-        });
-      }
-      const comments = await CommentService.getByPostId(postId);
-      res.render('posts_details', { title: 'Post Details', post, comments });
-    } catch (error) {
-      res.status(500).render('error', { 
-        title: 'Server Error', 
-        message: error.message 
+ // GET POST DETAILS
+static async getPostDetails(req, res) {
+  try {
+    // First off, I grab the post ID from the route parameters.
+    const postId = req.params.post_id;
+    
+    // Next, I fetch the post details using our PostService.
+    const post = await PostService.getPostById(postId);
+    
+    // If the post doesn't exist, I render a 404 error page with a friendly message.
+    if (!post) {
+      return res.status(404).render('error', { 
+        title: 'Post Not Found', 
+        message: `Post with ID ${postId} not found.` 
       });
     }
+    
+    // Then, I get all the comments related to this post.
+    const comments = await CommentService.getByPostId(postId);
+    
+    // Finally, I render the post details page, passing in the post data and its comments.
+    res.render('posts_details', { title: 'Post Details', post, comments });
+  } catch (error) {
+    // If something goes sideways, I render an error page with the error message.
+    res.status(500).render('error', { 
+      title: 'Server Error', 
+      message: error.message 
+    });
   }
-  
-
+}
 
 
   //LISTING PAGE
   static async getAllPosts(req, res) {
     try {
-        const posts = await PostService.getAllPosts();
-        const tags = await TagService.getAllTags();
-        res.render('Home', { 
-          title: 'Peerly - Home',
-          posts: posts,
-          tags: tags
-        });
-      }
-     catch (error) {
+      // Fetch all posts using our PostService.
+      const posts = await PostService.getAllPosts();
+      // Also, fetch all the tags from TagService.
+      const tags = await TagService.getAllTags();
+      // Render the home page with the posts and tags we've retrieved.
+      res.render('Home', { 
+        title: 'Peerly - Home',
+        posts: posts,
+        tags: tags
+      });
+    } catch (error) {
+      // Log the error for debugging and show an error page if something goes wrong.
       console.error('Error fetching posts:', error);
       res.status(500).render('error', { 
         title: 'Server Error',
@@ -59,6 +70,7 @@ class PostController {
       });
     }
   }
+  
 
 
 

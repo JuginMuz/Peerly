@@ -280,16 +280,16 @@ body {
   .post-media {
     max-width: 400px;
     height: auto;
-    /* Any other styling you want */
+    
   }
 
   .nav-list a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Use the same color as the parent element */
-    font-size: inherit; /* Keep the same font size */
-    display: flex; /* Align with icon-circle */
-    align-items: center; /* Align text vertically */
-    gap: 8px; /* Space between icon and text */
+    text-decoration: none; /* Removs underline */
+    color: inherit; /* Uses the same color as the parent element */
+    font-size: inherit; /* Keeps the same font size */
+    display: flex; /* Aligns with icon-circle */
+    align-items: center; /* Aligns text vertically */
+    gap: 8px; /* Spaces between icon and text */
   }
   
   .nav-list a:hover {

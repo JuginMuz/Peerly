@@ -1,6 +1,11 @@
 // models/Post.js
 const pool = require('./db');
 
+/**
+ * The Post class represents a post made by a user on our platform.
+ * It includes details about the post as well as some user info for convenience.
+ */
+
 class Post {
   constructor({
     post_id,

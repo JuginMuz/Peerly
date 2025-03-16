@@ -72,49 +72,61 @@ class UserController {
 
 
 
-    static async getProfile(req, res) {
-      try {
-        const user_id = req.params.user_id;
-        // Retrieve user details
-        const userDetails = await UserService.findByUserId(user_id);
-        if (!userDetails) {
-          return res.status(404).render('error', { 
-            title: 'User Not Found', 
-            message: `User with ID ${user_id} not found.`
-          });
-        }
-        // Retrieve posts for this user
-        const userPosts = await PostService.getPostsByUser(user_id);
-        // Combine user details with posts
-        userDetails.posts = userPosts;
-        // Render the account page with user details and their posts
-        res.render('user-account', { title: 'Peerly - Account', user: userDetails });
-      } catch (error) {
-        console.error('Error in getAccountPage:', error);
-        res.status(500).render('error', { 
-          title: 'Server Error', 
-          message: error.message 
-        });
-      }
-    }
-  
-
-  //USERS LISTING
-  static async getAllUsers(req, res) {
-    try {
-      const users = await UserService.getAllUsers();
-      res.render('explore', { 
-        title: 'Peerly - Make-Friends',
-        users: users
-      });
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      res.status(500).render('error', { 
-        title: 'Server Error', 
-        message: error.message 
+// Retrieves a single user's profile along with their posts
+static async getProfile(req, res) {
+  try {
+    // Gets the user ID from the request parameters
+    const user_id = req.params.user_id;
+    
+    // Fetchs user details from the database using the UserService
+    const userDetails = await UserService.findByUserId(user_id);
+    
+    // If no user is found, show a 404 page with a friendly message
+    if (!userDetails) {
+      return res.status(404).render('error', { 
+        title: 'User Not Found', 
+        message: `User with ID ${user_id} not found.`
       });
     }
+    
+    // Gets all posts made by this user
+    const userPosts = await PostService.getPostsByUser(user_id);
+    
+    // Attachs the posts to the user's details so we can show everything on one page
+    userDetails.posts = userPosts;
+    
+    // Renders the user account page with all the details we just fetched
+    res.render('user-account', { title: 'Peerly - Account', user: userDetails });
+  } catch (error) {
+    // Logs any errors and show a 500 error page with the error message
+    console.error('Error in getAccountPage:', error);
+    res.status(500).render('error', { 
+      title: 'Server Error', 
+      message: error.message 
+    });
   }
+}
+
+// Fetches and displays a list of all users
+static async getAllUsers(req, res) {
+  try {
+    // Retrieves all users from the database
+    const users = await UserService.getAllUsers();
+    
+    // Renders the explore page to display the list of users for making friends
+    res.render('explore', { 
+      title: 'Peerly - Make-Friends',
+      users: users
+    });
+  } catch (error) {
+    // If something goes wrong, log the error and render an error page
+    console.error('Error fetching users:', error);
+    res.status(500).render('error', { 
+      title: 'Server Error', 
+      message: error.message 
+    });
+  }
+}
 
 
 
