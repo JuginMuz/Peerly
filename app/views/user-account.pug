@@ -1,0 +1,107 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Account Page
+    link(rel="stylesheet", href="/stylesheets/user-accounts.css")
+  body
+    .container
+      // LEFT NAV
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item
+            .icon-circle ℹ  
+            a(href="/api/users") Explore
+          li.nav-item
+            .icon-circle ℹ
+            span Messages
+          li.nav-item
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item
+            .icon-circle ℹ
+            span Profile
+          li.nav-item
+            .icon-circle ℹ
+            span Settings
+
+      // MAIN CONTENT
+      main.profile-content
+        // Profile Header
+        
+        .profile-header.widget
+        .cover-photo
+
+        .profile-info
+            if user && user.profile_picture
+            img.profile-pic(src=user.profile_picture, alt="Profile Picture")
+
+            if user
+                h2= user.first_name + " " + user.last_name
+            else 
+                h2 User Not Found 
+            
+
+
+        // Profile Body (Info widget + Post feed)
+        .profile-body
+          .info-widget.widget
+            h3 Info
+            if user
+              ul
+                li Bio: #{user.bio}
+                li DOB: #{user.dob}
+                li City: #{user.city}
+                li Work: #{user.work_at}
+                li Relationship: #{user.relationship_status}
+                li Field of Study: #{user.field_id}
+      
+                li Went To: #{user.went_to}
+                li Goes To: #{user.goes_to}
+                li Email: #{user.email_id}
+                
+            else 
+              p User data is not available.
+              
+          .post-feed
+            if user && user.posts.length
+              each post in user.posts
+                a.post-card(
+                  href=`/api/home/${post.post_id}`, 
+                  style="display: block; text-decoration: none; color: inherit; cursor: pointer;"
+                )
+                  .post-header
+                    .avatar-circle
+                      if user.profile_picture
+                        img(src=user.profile_picture, alt=user.first_name + " " + user.last_name)
+                      else
+                        // Fallback initials if no profile picture
+                        | #{user.first_name[0]}#{user.last_name[0]}
+                    
+                    .post-user
+                      h3= user.first_name + " " + user.last_name
+                      
+                      
+                    //i.more-options ⋮
+                    
+                  if post.media_url
+                    .post-image
+                      img(src=post.media_url, alt="User Post Image")
+
+                  p= post.description
+            else
+              p No posts available.
+
+
+
+      // RIGHT SIDEBAR
+      aside.right-sidebar.widget
+        h3 Chat
+        ul
+          li
+            .icon-circle ℹ
+            span Account Name

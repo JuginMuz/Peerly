@@ -1,0 +1,230 @@
+/* public/stylesheets/explore.css */
+
+/* Overall page styling and background */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f7f4; /* Off-white tone from my wireframe */
+}
+
+/* Main container for the page layout */
+.container {
+  display: grid;
+  /* 
+     I'm setting up a 3-column layout:
+     - Left nav: fixed at about 220px,
+     - Main content: flexible,
+     - Right sidebar: around 250px.
+     Feel free to adjust these values if needed.
+  */
+  grid-template-columns: 220px 1fr 250px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ---------------------------------------- */
+/* Left Navigation Section                */
+/* ---------------------------------------- */
+
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.logo {
+  margin: 0 0 2rem 0;
+  font-size: 1.5rem;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.nav-item.active {
+  font-weight: bold;
+}
+
+/* Small circle for icons in the navigation items */
+.icon-circle {
+  width: 24px;
+  height: 24px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------- */
+/* Main Profile Content Section           */
+/* ---------------------------------------- */
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Profile Header: Contains the cover photo and basic info */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden; /* Clips the cover photo to match the widget's rounded corners */
+}
+
+.cover-photo {
+  height: 200px;
+  background-color: #ccc; /* This is just a placeholder for the cover photo */
+}
+
+/* Profile info: holds the avatar and the user’s name */
+.profile-info {
+  display: flex;
+  align-items: center; /* Vertically aligns the avatar with the name */
+  gap: 1.5rem; /* Adds extra space between the avatar and text */
+}
+
+/* Styling for the circular avatar in the profile info */
+.profile-info .avatar-circle {
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.profile-info .info-icon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+/* Profile Body: Combines the info widget and posts side by side */
+.profile-body {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Info Widget: For additional profile details or extra content */
+.info-widget {
+  display: flex;
+  flex-direction: column; /* Stack the items vertically */
+  gap: 1.5rem;
+  flex: 0 0 200px; /* Fixes the width; you might also set a specific width like 400px if preferred */
+}
+
+/* Generic widget for trending topics, chat, etc. */
+.widget {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.widget h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget li {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* If a widget list item has an icon, this adds some spacing */
+.widget li .icon-circle {
+  margin-right: 0.5rem;
+}
+
+/* Profile image adjustments */
+.profile-info img {
+  width: 100px; /* Adjust the size as needed */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%; /* Makes the image perfectly round */
+  border: 3px solid #ddd; /* Adds a light, subtle border */
+  padding: 5px;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Post header: Ensures the avatar and username sit neatly in one row */
+.post-header {
+  display: flex;
+  align-items: center; /* Keeps the avatar and name aligned */
+  gap: 10px; /* Adds a bit of spacing between them */
+}
+
+/* Post header avatar: Making sure the image is round and sized appropriately */
+.post-header .avatar-circle img {
+  width: 40px; /* Adjusts to match the text height */
+  height: 40px; /* Ensures the image remains square */
+  border-radius: 50%; /* Rounds the image into a circle */
+  object-fit: cover; /* Makes sure the image fills the circle properly */
+}
+
+/* Styling for the username in the post header */
+.post-user h3 {
+  font-size: 1.1rem; /* A bit larger for clarity */
+  margin: 0; /* Removes default margins for a cleaner look */
+}
+
+.post-image img {
+  width: 100%;         /* Ensures the image fills its container */
+  max-width: 500px;    /* Prevents it from getting too large */
+  height: auto;        /* Maintains the original aspect ratio */
+  border-radius: 8px;  /* Optional rounded corners for a softer look */
+}
+
+/* Navigation links: Keeping them clean and in line with the design */
+.nav-list a {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Uses the parent element's color */
+  font-size: inherit; /* Matches the font size of its parent */
+  display: flex; /* Allows for proper alignment with icon circles */
+  align-items: center; /* Vertically centers the text and icons */
+  gap: 8px; /* Adds space between the icon and the text */
+}
+
+.nav-list a:hover {
+  opacity: 0.8; /* A gentle hover effect for better user feedback */
+}

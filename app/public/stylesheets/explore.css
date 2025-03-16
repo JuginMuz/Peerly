@@ -1,0 +1,350 @@
+img { /* Set max width for images to maintain consistency */
+  max-width: 800px;    
+  height: auto; 
+  object-fit: cover;  
+}
+
+/* Overall page and background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f7f4; 
+  }
+  
+  /* Main container with a 3-column grid layout */
+  .explore-container {
+    display: grid;
+    grid-template-columns: 200px 1fr 250px;
+    gap: 2rem;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* LEFT NAVIGATION */
+  .left-nav {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    padding: 2rem;
+  }
+  
+  .logo {
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    /* Each navigation item is set to display horizontally with proper spacing */
+  }
+  
+  .icon-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Circular container for icons within navigation items */
+  }
+  
+  .post-btn {
+    background-color: #6FCF97;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    /* Button styling for post actions */
+  }
+  
+  /* MAIN FEED (CENTER COLUMN) */
+  .main-feed {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-bar {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Top bar containing filters, tags, or search options */
+  }
+  
+  .tag-buttons {
+    display: flex;
+    gap: 0.5rem;
+    /* Container for tag filter buttons */
+  }
+  
+  .tag-btn {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    /* Individual tag button styling */
+  }
+  
+  .filter-btn {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 0.9rem;
+    cursor: pointer;
+    /* Minimalist styling for filter buttons */
+  }
+  
+  /* PROFILES CONTAINER */
+  .profiles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Vertical stacking of profile cards with spacing */
+  }
+  
+  .profile-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    /* Card styling for individual user profiles */
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    /* Header section in the profile card for avatar and name */
+  }
+  
+  .avatar-circle {
+    width: 50px;        /* Styling and size for small avatar; ensures fallback styling if no image is available */
+    height: 50px;
+    border-radius: 50%; /* Creates a round shape */
+    overflow: hidden;   /* Clips the image to maintain the circular shape */
+    display: flex;     
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc; /* Fallback background color when no image is provided */
+  }
+  
+  .avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* Ensures the image fills the circle without distortion */
+    display: block;
+  }
+  
+  .profile-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    /* Styling for the profile name */
+  }
+  
+  .profile-info p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+    color: #666;
+    /* Additional profile details styling */
+  }
+  
+  .friend-request-btn {
+    background-color: #6FCF97;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    /* Button styling for sending friend requests */
+  }
+  
+  /* RIGHT SIDEBAR */
+  .right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Sidebar layout for additional widgets or search functionality */
+  }
+  
+  .search-box {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    /* Container styling for the search input area */
+  }
+  
+  .search-box .icon-circle {
+    margin-right: 0.5rem;
+    /* Adjusts spacing for the search icon within the input area */
+  }
+  
+  .search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.9rem;
+    /* Input field styling: borderless and flexible to fill available space */
+  }
+  
+  .widget {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    /* General widget container styling for sidebar elements */
+  }
+  
+  .widget h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    /* Widget title styling */
+  }
+  
+  .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* Resets list styling for widget content */
+  }
+  
+  .widget li {
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    /* Styling for each list item within widgets */
+  }
+  
+  .widget li .icon-circle {
+    margin-right: 0.5rem;
+    /* Spacing for icons inside widget list items */
+  }
+  
+  /* Responsive: stack columns on smaller screens */
+  @media (max-width: 992px) {
+    .explore-container {
+      grid-template-columns: 1fr;
+      /* On smaller screens, the grid becomes a single column layout */
+    }
+  }
+
+  .nav-list a {
+    text-decoration: none; /* Removes underline from navigation links */
+    color: inherit; /* Inherits text color from the parent element */
+    font-size: inherit; /* Maintains the parent's font size */
+    display: flex; 
+    align-items: center; 
+    gap: 8px; /* Provides space between icons and text */
+  }
+  
+  .nav-list a:hover {
+    opacity: 0.8; /* Subtle hover effect for better interactivity */
+  }
+
+  /* Removes default link styling for user profile links */
+  .profiles-grid a {
+    color: inherit; /* Inherits color from the parent element */
+    text-decoration: none; /* Removes underline for a cleaner look */
+    font-weight: bold; 
+  }
+  
+  .profiles-grid a:hover {
+    text-decoration: underline; 
+    color: #333; 
+    /* Hover effect for profile links to enhance visibility */
+  }
+
+  .profiles-grid .avatar-circle img {
+    width: 40px; /* Adjusts avatar image size to match text height */
+    height: 40px; /* Keeps the width and height consistent */
+    border-radius: 50%; /* Ensures the image remains circular */
+    object-fit: cover; /* Makes sure the image fills the circle properly */
+  }
+  
+  /* Single post card styling, similar to .profile-card */
+.post-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem; /* Adds space below each post */
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  /* Header section for posts; similar layout to profile headers for consistency */
+}
+
+.post-body p {
+  margin: 0.5rem 0; /* Adds vertical spacing for paragraphs within the post content */
+}
+.posted-at {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666; /* Timestamp styling with a subtle, lighter color */
+}
+
+.comments-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  /* Container for the comments section under each post */
+}
+
+.comment-card {
+  margin-bottom: 1rem; /* Spacing between individual comments */
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Provides space between the comment avatar and the commenter's name */
+  margin-bottom: 0.5rem; /* Optional spacing below the comment header */
+}
+
+.comment-avatar-circle {
+  width: 35px; 
+  height: 35px; 
+  border-radius: 50%; 
+  overflow: hidden; 
+  background-color: #ccc; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  /* Styling for small, circular comment avatars */
+}
+
+.comment-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the comment avatar image covers the container */
+  display: block;
+}
+

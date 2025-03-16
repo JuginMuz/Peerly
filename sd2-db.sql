@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Oct 30, 2022 at 09:54 AM
+-- Generation Time: March 11, 2025 at 20:34
 -- Server version: 8.0.24
 -- PHP Version: 7.4.20
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sd2-db`
+-- Database: `sd2_db`
 --
 
 -- ======================================================
@@ -88,13 +88,19 @@ CREATE TRIGGER trg_auto_user_id
 BEFORE INSERT ON users
 FOR EACH ROW
 BEGIN
-    -- 1) Convert up to first 3 letters of first_name to uppercase
-    SET @prefix = UPPER(LEFT(NEW.first_name, 3));
+    DECLARE prefix VARCHAR(3);
+    DECLARE countForPrefix INT;
 
-    -- 2) Concatenate prefix + 4-digit left-padded sequence
-    SET NEW.user_id = CONCAT(@prefix, LPAD(NEW.user_seq, 4, '0'));
-
-    -- (Optional) If you want to ensure it’s at least 2 letters, adjust the check:
+    -- Extract the first three letters (or fewer if name is shorter) and convert to uppercase.
+    SET prefix = UPPER(LEFT(NEW.first_name, 3));
+    
+    -- Count existing users whose user_id starts with the prefix.
+    SELECT COUNT(*) INTO countForPrefix FROM users WHERE user_id LIKE CONCAT(prefix, '%');
+    
+    -- Generate a new user_id: prefix + (count + 1), padded to 4 digits.
+    SET NEW.user_id = CONCAT(prefix, LPAD(countForPrefix + 1, 4, '0'));
+    
+    -- Optional: Verify that the generated user_id matches the expected pattern.
     IF NEW.user_id NOT REGEXP '^[A-Z]{2,3}[0-9]{4}$' THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Invalid user_id format.';
@@ -102,6 +108,7 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
 
 -- ======================================================
 -- 5. Create table: authentication (1-to-1 with users.user_id)
@@ -371,4 +378,3 @@ WHERE u.first_name='Bob'
 LIMIT 1;
 
 -- Done inserting sample data!
--- Try SELECT queries to verify user_id generation and relationships.

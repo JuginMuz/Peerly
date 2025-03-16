@@ -4,7 +4,7 @@ services:
       context: ./
     volumes:
       - .:/src
-    command: supervisor -e 'js,pug,html' index.js
+    command: supervisor -w . -e "js,pug,html" --ignore "db" index.js
     ports:
       - "3000:3000"
     depends_on:
@@ -18,13 +18,11 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=sd2_db
-      # optionally:
-      # MYSQL_USER=admin
-      # MYSQL_PASSWORD=password
     ports:
       - "3308:3306"
     volumes:
       - ./db:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   phpmyadmin:
     platform: linux/amd64
