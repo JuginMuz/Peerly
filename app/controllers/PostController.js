@@ -16,16 +16,16 @@ class PostController {
 
 
 
- // GET POST DETAILS
+ // GET POST DETAILS// Retrieves and displays details for a specific post, including its comments.
 static async getPostDetails(req, res) {
   try {
-    // First off, I grab the post ID from the route parameters.
+    // Extracts the post ID from the request parameters.
     const postId = req.params.post_id;
     
-    // Next, I fetch the post details using our PostService.
+    // Fetchs the post details using the PostService.
     const post = await PostService.getPostById(postId);
     
-    // If the post doesn't exist, I render a 404 error page with a friendly message.
+    // If the post is not found, return a 404 error with a relevant message.
     if (!post) {
       return res.status(404).render('error', { 
         title: 'Post Not Found', 
@@ -33,19 +33,20 @@ static async getPostDetails(req, res) {
       });
     }
     
-    // Then, I get all the comments related to this post.
+    // Retrieves all comments associated with the post.
     const comments = await CommentService.getByPostId(postId);
     
-    // Finally, I render the post details page, passing in the post data and its comments.
+    // Render the post details page, passing the retrieved post and comments.
     res.render('posts_details', { title: 'Post Details', post, comments });
   } catch (error) {
-    // If something goes sideways, I render an error page with the error message.
+    // Handles any unexpected errors by displaying a server error page.
     res.status(500).render('error', { 
       title: 'Server Error', 
       message: error.message 
     });
   }
 }
+
 
 
   //LISTING PAGE
