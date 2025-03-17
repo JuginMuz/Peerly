@@ -18,11 +18,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sd2_db`
+-- Create Database: `sd2_db`
 --
+CREATE DATABASE sd2_db;
 
--- --------------------------------------------------------
-
+-- 
+-- Selecting sd2_db
+--
+USE sd2_db;
 --
 -- Table structure for table `authentication`
 --
