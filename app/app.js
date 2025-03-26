@@ -28,7 +28,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/home', postRoutes);
 // app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
-app.use('/api/signin', homeRoutes);
+app.use('/api', homeRoutes);
 
 
 //sets port and starts the server
