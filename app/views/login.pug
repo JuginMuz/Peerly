@@ -1,0 +1,45 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= title
+
+    // Shared main site CSS
+    link(rel="stylesheet", href="/stylesheets/main.css")
+
+    // Page-specific login CSS
+    link(rel="stylesheet", href="/stylesheets/login.css")
+
+  body
+    .login-container
+      // Logo & Branding
+      img.logo(src='/images/Peerly-Logo.png' alt='Peerly Logo')
+      .brand-text Peerly
+
+      // Form
+      form(action='/api/auth/login' method='POST')
+        // Email field
+        .form-group
+          label(for='email') Email:
+          input#email(type='email' name='email' placeholder='Enter your email')
+
+        // Password field
+        .form-group
+          label(for='password') Password:
+          input#password(type='password' name='password' placeholder='Enter your password')
+
+        // Options row (Remember Me / Forgot Password)
+        .options
+          div
+            input#rememberMe(type='checkbox' name='rememberMe')
+            label(for='rememberMe') Remember me
+
+          a(href='/reset') Forgot your password?
+
+        button.login-btn(type='submit') Log In
+
+      // Sign Up link
+      .signup-link
+        | Don’t have an account?
+        a(href='/api/signin') Sign up
