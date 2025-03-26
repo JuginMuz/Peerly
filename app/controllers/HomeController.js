@@ -10,7 +10,18 @@ class HomeController {
         res.status(500).send('Error rendering SignIn page');
       }
     }
+    static async renderLoginPage(req, res) {
+      try {
+        // Render our new 'login' pug template
+        res.render('login', { title: 'Peerly - Login' });
+      } catch (error) {
+        res.status(500).send('Error rendering login page');
+      }
+    }
+    
   }
+  
+  
   
 module.exports = HomeController;
   
