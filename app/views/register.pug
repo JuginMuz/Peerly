@@ -1,0 +1,65 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= title
+    // Shared main site CSS
+    link(rel="stylesheet", href="/stylesheets/main.css")
+    // Page-specific login CSS (reused for registration)
+    link(rel="stylesheet", href="/stylesheets/login.css")
+  body
+    .login-container
+      // Logo & Branding
+      img.logo(src='/images/Peerly-Logo.png' alt='Peerly Logo')
+      .brand-text Peerly
+      // Registration Form
+      form(action='/api/auth/register' method='POST')
+        .form-group
+          label(for='first_name') First Name:
+          input#first_name(type='text' name='first_name' placeholder='Enter your first name' required)
+        .form-group
+          label(for='last_name') Last Name:
+          input#last_name(type='text' name='last_name' placeholder='Enter your last name' required)
+        .form-group
+          label(for='email') Email:
+          input#email(type='email' name='email' placeholder='Enter your email' required)
+        .form-group
+          label(for='password') Password:
+          input#password(type='password' name='password' placeholder='Enter your password' required)
+        .form-group
+          label(for='confirm_password') Confirm Password:
+          input#confirm_password(type='password' name='confirm_password' placeholder='Confirm your password' required)
+        .form-group
+          label(for='gender') Gender:
+          select#gender(name='gender')
+            option(value='') Select your gender
+            option(value='Male') Male
+            option(value='Female') Female
+            option(value='Other') Other
+        .form-group
+          label(for='dob') Date of Birth:
+          input#dob(type='date' name='dob')
+        .form-group
+          label(for='city') City:
+          input#city(type='text' name='city' placeholder='Enter your city')
+        .form-group
+          label(for='bio') Bio:
+          textarea#bio(name='bio' placeholder='Tell us a little about yourself')
+        .form-group
+          label(for='work_at') Work At:
+          input#work_at(type='text' name='work_at' placeholder='Your workplace')
+        .form-group
+          label(for='went_to') Went To:
+          input#went_to(type='text' name='went_to' placeholder='School/University attended')
+        .form-group
+          label(for='goes_to') Goes To:
+          input#goes_to(type='text' name='goes_to' placeholder='Current school/college (if applicable)')
+        .form-group
+          label(for='relationship_status') Relationship Status:
+          input#relationship_status(type='text' name='relationship_status' placeholder='e.g., Single, Married')
+        button.login-btn(type='submit') Create Account
+      .signup-link
+        | Already have an account?
+        a(href='/api/login') Log In
+
