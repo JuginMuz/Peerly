@@ -3,6 +3,7 @@ const pool = require('../models/db');
 const User = require('../models/User');
 const Authentication = require('../models/Authentication');
 const bcrypt = require('bcryptjs');
+const formatDate = require('./utils/formatDate.js');
 
 class UserService {
   static async register(userData) {
