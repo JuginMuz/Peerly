@@ -1,5 +1,6 @@
 // models/Authentication.js
 const pool = require('./db');
+const bcrypt = require('bcryptjs');
 
 // This class handles authentication tasks like storing and fetching user passwords.
 class Authentication {
@@ -20,13 +21,16 @@ class Authentication {
 
   // Retrieve the hashed password for a given user.
   static async getPasswordByUserId(user_id) {
-    // SQL query to fetch the password for the specified user_id.
     const sql = 'SELECT password FROM authentication WHERE user_id = ?';
-    // Runs the query with the provided user_id.
     const [rows] = await pool.query(sql, [user_id]);
-    // Returns the password if found; otherwise, return null.
     return rows.length ? rows[0].password : null;
   }
-}
 
+  // Compares an incoming plain password to the stored hashed password
+  static async verifyPassword(user_id, plainPassword) {
+    const hashedPassword = await this.getPasswordByUserId(user_id);
+    if (!hashedPassword) return false;
+    return await bcrypt.compare(plainPassword, hashedPassword);
+  }
+}
 module.exports = Authentication;
