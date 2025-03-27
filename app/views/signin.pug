@@ -1,30 +1,24 @@
-doctype html
 html
   head
     title= title
     meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
-    // Link to the main CSS file
+    // Loads the css i made for the file
     link(rel="stylesheet" href="/stylesheets/main.css")
   body
-    .container
-      // Left side with a full-height background and centered logo
+    .container 
+      // Left side with the logo
       .left-side
-        .logo-container
-          img.logo(src="/images/Peerly-Logo.png" alt="Peerly Logo")
-      // Right side with the sign-up card
+        img.logo-box(src="/images/Peerly-Logo.png" alt="Peerly Logo")
+      // Right side with the signup card
       .right-side
         .signup-card
           h1 Peerly
-          h2 Welcome!
-          p.lead Sign up now to join our community.
-          // Button that redirects to /api/login for existing users
-          a.button(href="/api/login") Login
-          // OR separator with lines
+          h2 Sign up now
+          // Login button redirects to /api/login
+          a(href="/api/login")
+            button.sign-google Login
+          // "OR" separator
           p.or OR
-          // Button that redirects to /api/register for new users
-          a.button(href="/api/register") Create Account
-          
-          p.already
-            | Already have an account? 
-            a(href="/api/login") Sign in
+          // Create Account button redirects to /api/register
+          a(href="/api/register")
+            button.create-account Create account /* 
