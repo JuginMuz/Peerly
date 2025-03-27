@@ -18,7 +18,14 @@ class HomeController {
         res.status(500).send('Error rendering login page');
       }
     }
-    
+    static async renderRegisterPage(req, res) {
+      try {
+        // renders the register pug"
+        res.render('register', { title: 'Peerly - Create Account' });
+      } catch (error) {
+        res.status(500).send('Error rendering register page');
+      }
+    }
   }
   
   
