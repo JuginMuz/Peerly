@@ -3,24 +3,28 @@ html
   head
     title= title
     meta(charset="utf-8")
-    // Loads the css i made for the file
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    // Link to the main CSS file
     link(rel="stylesheet" href="/stylesheets/main.css")
   body
-    .container 
-      // created container and organised it by having a left and right
-      // side where the logo is on the left and the sign up detials
-      //are on the right
+    .container
+      // Left side with a full-height background and centered logo
       .left-side
-        img.logo-box(src="/images/Peerly-Logo.png" alt="Peerly Logo")
-
+        .logo-container
+          img.logo(src="/images/Peerly-Logo.png" alt="Peerly Logo")
+      // Right side with the sign-up card
       .right-side
         .signup-card
           h1 Peerly
-          h2 Sign up now
-          button.sign-google Login
-          // "OR" with horizontal lines
+          h2 Welcome!
+          p.lead Sign up now to join our community.
+          // Button that redirects to /api/login for existing users
+          a.button(href="/api/login") Login
+          // OR separator with lines
           p.or OR
-          button.create-account Create account
+          // Button that redirects to /api/register for new users
+          a.button(href="/api/register") Create Account
+          
           p.already
-            | Already have an account?
-            a(href="/api/home") Sign in
+            | Already have an account? 
+            a(href="/api/login") Sign in
