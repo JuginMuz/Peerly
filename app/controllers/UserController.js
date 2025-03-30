@@ -31,7 +31,7 @@ class UserController {
 
 
   //UPDATE PROFILE
-  /* static async updateProfile(req, res) {
+  static async updateProfile(req, res) {
     try {
       const userId = req.params.user_id;
       const updatedData = req.body; // The fields to update (e.g., first_name, bio, etc.)
@@ -44,7 +44,7 @@ class UserController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  } */
+  } 
 
 
 
@@ -127,11 +127,35 @@ static async getAllUsers(req, res) {
     });
   }
 }
+static async getSettingsPage(req, res) {
+  try {
+    const userId = req.params.user_id;
+    // Fetch user data from the DB
+    const userData = await UserService.findByUserId(userId);
+
+    if (!userData) {
+      return res.status(404).render('error', {
+        title: 'User Not Found',
+        message: `User with ID ${userId} not found.`
+      });
+    }
+
+    // Render the Pug template for user settings
+    // Pass the user object so Pug can prefill the form fields
+    res.render('user-settings', { user: userData });
+  } catch (error) {
+    console.error('Error in getSettingsPage:', error);
+    res.status(500).render('error', {
+      title: 'Server Error',
+      message: error.message
+    });
+  }
+}
 
 
 
   //DELETE ACCOUNT
-  /* static async deleteAccount(req, res) {
+  static async deleteAccount(req, res) {
     try {
       const userId = req.params.user_id;
       const result = await UserService.deleteUserAccount(userId);
@@ -144,7 +168,7 @@ static async getAllUsers(req, res) {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  } */
-}
+  } 
 
+}
 module.exports = UserController;
