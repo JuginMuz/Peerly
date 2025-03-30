@@ -199,7 +199,7 @@ class UserService {
   
   
     //UPDATE USER PROFILE
-    /* static async updateUserProfile(user_id, updatedData) {
+     static async updateUserProfile(user_id, updatedData) {
       // Build SET clause dynamically from updatedData keys
       const fields = Object.keys(updatedData)
         .map(key => `${key} = ?`)
@@ -211,13 +211,13 @@ class UserService {
       const sql = `UPDATE users SET ${fields} WHERE user_id = ?`;
       const [result] = await pool.query(sql, values);
       return result;
-    } */
+    } 
   
   
   
   
     //DELETE ACCOUNT
-    /* static async deleteUserAccount(user_id) {
+    static async deleteUserAccount(user_id) {
       const connection = await pool.getConnection();
       try {
         await connection.beginTransaction();
@@ -247,7 +247,7 @@ class UserService {
       } finally {
         connection.release();
       }
-    } */
+    } 
   }
 
 
