@@ -9,7 +9,7 @@ const PostController = require('../controllers/PostController');
 // router.delete('/:user_id', UserController.deleteAccount);
 router.get('/:user_id', UserController.getProfile);
 router.get('/', UserController.getAllUsers);
-// New routes for settings page functionality
+// routes for settings page functionality
 router.post('/:user_id/updateProfile', UserController.updateProfile);
 router.post('/:user_id/deleteAccount', UserController.deleteAccount);
 router.post('/:user_id/deletePost/:post_id', PostController.deletePost);
