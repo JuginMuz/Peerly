@@ -77,7 +77,7 @@ static async getPostDetails(req, res) {
 
 
   //DELETE A POST
-  /* static async deletePost(req, res) {
+  static async deletePost(req, res) {
     try {
       const postId = req.params.post_id;
       const result = await PostService.deletePost(postId);
@@ -90,7 +90,7 @@ static async getPostDetails(req, res) {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }*/
+  }
 
 
 
