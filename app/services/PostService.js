@@ -99,7 +99,7 @@ class PostService {
 
 
   //DELETE A POST
-  /* static async deletePost(post_id) {
+   static async deletePost(post_id) {
     const connection = await pool.getConnection();
     try {
       await connection.beginTransaction();
@@ -124,7 +124,7 @@ class PostService {
     } finally {
       connection.release();
     }
-  } */
+  } 
 
 
 
