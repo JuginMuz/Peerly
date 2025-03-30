@@ -14,6 +14,12 @@ app.use(
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
   })
 );
+// middleware that makes sessionUserId available in all Pug templates
+app.use((req, res, next) => {
+  // If there's a user_id in the session it will set it to res.locals; otherwise null
+  res.locals.sessionUserId = req.session.user_id || null;
+  next();
+});
 
 // imports routes modules from the directory for which each route file
 //handles specific end points for different paths of the app
@@ -42,6 +48,7 @@ app.use('/api/home', postRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api', homeRoutes);
 app.use('/api/auth', authRoutes);
+
 
 
 //sets port and starts the server
