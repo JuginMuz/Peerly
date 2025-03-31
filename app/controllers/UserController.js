@@ -1,74 +1,54 @@
 // controllers/UserController.js
 const UserService = require('../services/UserService');
 const PostService = require('../services/PostService');
+const Authentication = require('../models/Authentication');
 
 
 class UserController {
 
   //REGISTER
-  /* static async register(req, res) {
+  static async register(req, res) {
     try {
-      const newUser = await UserService.register(req.body);
-      res.status(201).json({ message: 'User registered successfully', user: newUser });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    await UserService.register(req.body);
+    // Redirects to login after successful registration
+    return res.redirect('/api/login');
+  } catch (err) {
+    console.error("Registration error:", err);
+    return res.status(500).send("Server error during registration");
   }
- */
+};
 
-  //LOGIN
-  /* static async login(req, res) {
+
+
+
+  //Login
+  static async login(req, res) {
     try {
-      const { email, plainTextPassword } = req.body;
-      const user = await UserService.login(email, plainTextPassword);
-      res.status(200).json({ message: 'Login successful', user });
-    } catch (error) {
-      res.status(401).json({ error: error.message });
-    }
-  } */
-
-
-
-
-  //UPDATE PROFILE
-  /* static async updateProfile(req, res) {
-    try {
-      const userId = req.params.user_id;
-      const updatedData = req.body; // The fields to update (e.g., first_name, bio, etc.)
-
-      const result = await UserService.updateUserProfile(userId, updatedData);
-      res.status(200).json({ 
-        message: 'Profile updated successfully', 
-        updatedUser 
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } */
-
-
-
-
-  //GET PROFILE
-  /* static async getProfile(req, res) {
-    try {
-      const { user_id } = req.params; // Get userId from the URL
-      const user = await UserService.findByUserId(user_id); // Fetch user details
+      const { email, password } = req.body;
+  
+      // Finds the user by email
+      const user = await UserService.findByEmail(email);
       if (!user) {
-        return res.status(404).render('error', { 
-          title: 'User Not Found',
-          message: `User with ID ${user_id} not found.`
-        });
+        return res.status(401).send('Invalid email or password.');
       }
-      res.render('user-account', { 
-        title: 'Peerly - Account',
-        user // Pass user data to Pug template
-      });
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    
+  
+      // Verify's password
+      const validPassword = await Authentication.verifyPassword(user.user_id, password);
+      if (!validPassword) {
+        return res.status(401).send('Invalid email or password.');
+      }
+  
+      // If valid, stores user info in the session
+      req.session.userId = user.user_id; // user_id from the DB
+      req.session.email = user.email_id;  // for quick reference
+  
+      //Redirects to home page
+      return res.redirect('/api/home');
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Server error');
     }
-  } */
+  };
 
 
 
