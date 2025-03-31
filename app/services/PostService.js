@@ -4,48 +4,6 @@ const Post = require('../models/Post');
 const formatDate = require('./utils/FormatDate.js');
 class PostService {
 
-  //ADD POST
-  /* static async createPost(postData) {
-    // postData should include:
-    // - user_id: the ID of the post's author
-    // - description: post content
-    // - media_url: (optional) URL for any media
-    // - tags: an array of tag IDs (selected from a dropdown list on the frontend)
-    
-    const connection = await pool.getConnection();
-    try {
-      await connection.beginTransaction();
-
-      // Insert the post into the posts table.
-      const postSql = 'INSERT INTO posts (user_id, description, media_url) VALUES (?, ?, ?)';
-      const [postResult] = await connection.query(postSql, [
-        postData.user_id,
-        postData.description,
-        postData.media_url
-      ]);
-      const postId = postResult.insertId;
-
-      // If tags are provided, insert relationships into post_tags.
-      if (postData.tags && Array.isArray(postData.tags) && postData.tags.length > 0) {
-        for (const tagId of postData.tags) {
-          const tagSql = 'INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)';
-          await connection.query(tagSql, [postId, tagId]);
-        }
-      }
-
-      await connection.commit();
-
-      // Retrieve and return the newly created post.
-      return await Post.findById(postId);
-    } catch (error) {
-      await connection.rollback();
-      throw error;
-    } finally {
-      connection.release();
-    }
-  } */
-
-
 
   //GET POST
   static async getPostById(post_id) {
@@ -129,29 +87,6 @@ class PostService {
 
 
 
-  /* static async getPostsByTags(tags) {
-    // Ensure tags is an array
-    if (!Array.isArray(tags)) {
-      tags = [tags];
-    }
-    // Create placeholders for the query based on the number of tags
-    const placeholders = tags.map(() => '?').join(', ');
-    // Query: join posts with users to get user's first_name and last_name
-    const sql = `
-      SELECT DISTINCT 
-        u.first_name, 
-        u.last_name, 
-        p.media_url, 
-        p.description, 
-        p.created_at
-      FROM posts p
-      JOIN users u ON p.user_id = u.user_id
-      JOIN post_tags pt ON p.post_id = pt.post_id
-      WHERE pt.tag_id IN (${placeholders})
-    `;
-    const [rows] = await pool.query(sql, tags);
-    return rows;
-  } */
 
       static async getPostsByUser(user_id) {
         const sql = `
