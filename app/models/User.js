@@ -20,13 +20,7 @@ class User {
     this.goes_to = goes_to;
     this.relationship_status = relationship_status;
   }
-  // Find user by email
-  static async findByEmail(email) {
-    const sql = 'SELECT * FROM users WHERE email_id = ?';
-    const [rows] = await pool.query(sql, [email]);
-    return rows.length ? new User(rows[0]) : null;
-  }
-}
+ 
 
 
   /* static async create(userData) {
@@ -55,6 +49,6 @@ class User {
     const [rows] = await pool.query('SELECT first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status FROM users WHERE email_id = ?', [userData.email_id]);
     return rows.length ? new User(rows[0]) : null;
   } */
-
+}
 
 module.exports = User;

@@ -102,6 +102,14 @@ class UserService {
       throw err;
     }
   }
+
+   // Find user by email
+   static async findByEmail(email) {
+    const sql = 'SELECT * FROM users WHERE email_id = ?';
+    const [rows] = await pool.query(sql, [email]);
+    return rows.length ? new User(rows[0]) : null;
+  }
+
    //GET USER PROFILE
  /* static async findByUserId(user_id) {
     const sql = `
