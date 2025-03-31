@@ -1,0 +1,214 @@
+
+/* user-settings.css                               
+
+
+/* Base styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f7f4;  
+    color: #333;
+  }
+  
+  /*  same grid layout as the explore/account pages */
+  .explore-container {
+    display: grid;
+    grid-template-columns: 200px 1fr 250px;
+    gap: 2rem;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* nav bar on left hand side */
+  .left-nav {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .left-nav .logo {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+  
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .icon-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+  
+  /*main content area */
+  .settings-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .settings-card {
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Settings page header */
+  .settings-card h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Section headers */
+  .settings-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  
+  /* Form styling */
+  .settings-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .settings-card input[type="text"],
+  .settings-card textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .settings-card textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  /* Button styling */
+  .settings-card button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .settings-card button:hover {
+    background-color: #218838;
+  }
+  
+  /* Horizontal rule for separation */
+  .settings-card hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+  }
+  
+  /* Post list styling for the delete a post section */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .post-list li {
+    background-color: #f1f1f1;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .post-list li span {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .post-list li form {
+    margin: 0;
+  }
+  
+  /* Delete Account button styling */
+  .settings-card button.danger {
+    background-color: #dc3545;
+  }
+  
+  .settings-card button.danger:hover {
+    background-color: #c82333;
+  }
+  
+  .right-sidebar {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    height: fit-content;
+  }
+  
+  .right-sidebar .widget {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .right-sidebar .widget h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .right-sidebar .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .right-sidebar .widget li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* css for responsive design */
+  @media (max-width: 600px) {
+    .explore-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    .settings-card {
+      padding: 1.5rem 2rem;
+    }
+  }
+  
