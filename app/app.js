@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 //handles specific end points for different paths of the app
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
-const commentRoutes = require('./routes/commentRoutes');
+const LoginRoutes = require('./routes/authRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 
@@ -47,7 +47,7 @@ app.use('/api/home', postRoutes);
 // app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api', homeRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', LoginRoutes);
 
 
 
