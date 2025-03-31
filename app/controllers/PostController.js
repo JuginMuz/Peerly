@@ -4,16 +4,6 @@ const PostService = require('../services/PostService');
 const TagService = require('../services/TagService');
 class PostController {
 
-  //ADD POST
-  /* static async createPost(req, res) {
-    try {
-      const newPost = await PostService.createPost(req.body);
-      res.status(201).json({ message: 'Post created successfully', post: newPost });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } */
-
 
 
  // GET POST DETAILS// Retrieves and displays details for a specific post, including its comments.
@@ -91,28 +81,6 @@ static async getPostDetails(req, res) {
       res.status(500).json({ error: error.message });
     }
   }
-
-
-
-
-
-  //GET POSTS BY TAGS
-  /* static async getPostsByTags(req, res) {
-    try {
-      let { tags } = req.query;
-      if (!tags) {
-        return res.status(400).json({ error: 'No tags provided' });
-      }
-      // Convert comma-separated string to an array if necessary.
-      if (typeof tags === 'string') {
-        tags = tags.split(',').map(tag => tag.trim());
-      }
-      const posts = await PostService.getPostsByTags(tags);
-      res.status(200).json({ posts });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } */
 }
 
 module.exports = PostController;
