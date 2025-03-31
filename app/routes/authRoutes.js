@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
     }
 
     // If valid, stores user info in the session
-    req.session.userId = user.user_id; // user_id from the DB
+    req.session.user_id = user.user_id; // user_id from the DB
     req.session.email = user.email_id;  // for quick reference
 
     //Redirects to home page
