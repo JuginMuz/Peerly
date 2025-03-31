@@ -3,7 +3,7 @@ const pool = require('../models/db');
 const User = require('../models/User');
 const Authentication = require('../models/Authentication');
 const bcrypt = require('bcryptjs');
-const formatDate = require('./utils/formatDate.js');
+const formatDate = require('./utils/FormatDate.js');
 
 class UserService {
   static async register(userData) {
@@ -101,6 +101,13 @@ class UserService {
       connection.release();
       throw err;
     }
+  }
+
+   // Find user by email
+   static async findByEmail(email) {
+    const sql = 'SELECT * FROM users WHERE email_id = ?';
+    const [rows] = await pool.query(sql, [email]);
+    return rows.length ? new User(rows[0]) : null;
   }
    //GET USER PROFILE
  /* static async findByUserId(user_id) {
