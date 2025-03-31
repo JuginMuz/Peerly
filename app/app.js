@@ -22,6 +22,7 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const homeRoutes = require('./routes/homeRoutes');
+const loginRoutes = require('./routes/authRoutes');
 
 //sets up the pug template
 app.set('view engine', 'pug');
@@ -41,7 +42,7 @@ app.use('/api/home', postRoutes);
 // app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api', homeRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', loginRoutes);
 
 
 //sets port and starts the server
