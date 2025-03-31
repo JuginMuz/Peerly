@@ -25,9 +25,10 @@ html
           li.nav-item 
             .icon-circle ℹ
             span Profile
-          li.nav-item 
+          li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
 
       // MAIN FEED (CENTER COLUMN)
       main.main-feed
