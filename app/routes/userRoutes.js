@@ -7,6 +7,7 @@ const PostController = require('../controllers/PostController');
 // router.post('/login', UserController.login);
 // router.patch('/:user_id', UserController.updateProfile);
 // router.delete('/:user_id', UserController.deleteAccount);
+router.get('/:user_id/settings', UserController.getSettingsPage);
 router.get('/:user_id', UserController.getProfile);
 router.get('/', UserController.getAllUsers);
 // routes for settings page functionality
@@ -17,6 +18,6 @@ router.post('/:user_id/deletePost/:post_id', PostController.deletePost);
 router.get('/:user_id', UserController.getProfile);
 router.get('/', UserController.getAllUsers);
 
-router.get('/:user_id/settings', UserController.getSettingsPage);
+
 
 module.exports = router;
