@@ -153,6 +153,7 @@ class UserService {
     static async findByUserId(user_id) {
       const sql = `
         SELECT 
+          u.user_id,
           u.first_name, 
           u.last_name, 
           u.email_id, 
@@ -175,6 +176,7 @@ class UserService {
   
       // Optionally format date using a helper function, e.g., formatDate()
       return {
+        user_id: rows[0].user_id,
         first_name: rows[0].first_name,
         last_name: rows[0].last_name,
         email_id: rows[0].email_id,
