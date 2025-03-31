@@ -5,6 +5,8 @@ html
     title= title
     link(rel="stylesheet", href="/stylesheets/home.css")
   body
+  p Logged in as: #{sessionUserId}
+
     .explore-container
       // LEFT NAVIGATION
       nav.left-nav
@@ -25,9 +27,10 @@ html
           li.nav-item 
             .icon-circle ℹ
             span Profile
-          li.nav-item 
+          li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
         button.post-btn Post
 
       // MIDDLE CONTENT
@@ -35,48 +38,42 @@ html
         .top-bar
           .tag-buttons
             each tag in tags || []
-                button.tag-btn(onclick=`window.location.replace('/api/tags/tags?tags=${tag.tag_id}')`)= tag.tag_name
+              button.tag-btn(onclick=`window.location.replace('/api/tags/tags?tags=${tag.tag_id}')`)= tag.tag_name
           button.filter-btn Filters
 
         // Posts container
         .post-grid
-        if posts && posts.length > 0
-          each post in posts
-            a.post-card(
-              href=`/api/home/${post.post_id}`, 
-              style="display: block; text-decoration: none; color: inherit; cursor: pointer;"
-            )
-              .post-header
-                .avatar-circle
-                  if post.profile_picture
-                    img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
-                  else
-                    // Fallback that uses initials if no profile_picture
-                    | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
-                .post-user
-                  h3= post.first_name + ' ' + post.last_name
-                  p= 'Posted At: ' + post.created_at
-              .post-body
-                // Renders image only if media_url exists
-                if post.media_url
-                  img.post-media(src=post.media_url, alt="Post Media")
-                p= post.description
-              .post-footer
-                button.like-btn
-                  .icon-circle X
-                  span Like
-                button.comment-btn
-                  .icon-circle X
-                  span Comment
-
-        else
+          if posts && posts.length > 0
+            each post in posts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit; cursor: pointer;")
+                .post-header
+                  .avatar-circle
+                    if post.profile_picture
+                      img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
+                    else
+                      | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
+                  .post-user
+                    h3= post.first_name + ' ' + post.last_name
+                    p= 'Posted At: ' + post.created_at
+                .post-body
+                  if post.media_url
+                    img.post-media(src=post.media_url, alt="Post Media")
+                  p= post.description
+                .post-footer
+                  button.like-btn
+                    .icon-circle X
+                    span Like
+                  button.comment-btn
+                    .icon-circle X
+                    span Comment
+          else
             p No posts associated with this tag
 
       // RIGHT SIDEBAR
       aside.right-sidebar
         .search-box
           .icon-circle X
-          input(type="text" placeholder="Search")
+          input(type="text", placeholder="Search")
         .widget
           h3 See what's trending
           ul

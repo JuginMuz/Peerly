@@ -27,7 +27,11 @@ html
             span Profile
           li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
+
+  
+    span Settings
 
       // MAIN CONTENT
       main.profile-content
@@ -44,6 +48,9 @@ html
                 h2= user.first_name + " " + user.last_name
             else 
                 h2 User Not Found 
+            if sessionUserId && sessionUserId === user.user_id
+                a(href=`/api/users/${user.user_id}/settings`) Settings
+
             
 
 

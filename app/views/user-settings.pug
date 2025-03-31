@@ -1,0 +1,91 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title User Settings
+    link(rel="stylesheet", href="/stylesheets/user-settings.css")
+  body
+    // Debug: Output the user ID for testing
+    p User ID: #{user.user_id}
+
+    .explore-container
+      // LEFT NAVIGATION – identical to your other pages
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/users") Explore
+          li.nav-item
+            .icon-circle ℹ
+            span Messages
+          li.nav-item
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item
+            .icon-circle ℹ
+            span Profile
+          li.nav-item
+            .icon-circle ℹ
+            if sessionUserId
+              a(href="/api/users/#{sessionUserId}/settings") Settings
+      // MAIN CONTENT – the Settings Card
+      main.settings-content
+        .settings-card
+          h1 Settings
+          
+          // SECTION 1: Edit Profile
+          form.update-profile(method="POST", action="/api/users/" + user.user_id + "/updateProfile")
+            h2 Update Profile
+            label(for="first_name") First Name:
+            input#first_name(type="text", name="first_name", value=user.first_name)
+            
+            label(for="last_name") Last Name:
+            input#last_name(type="text", name="last_name", value=user.last_name)
+            
+            label(for="bio") Bio:
+            textarea#bio(name="bio") #{user.bio}
+            
+            label(for="city") City:
+            input#city(type="text", name="city", value=user.city)
+            
+            label(for="work_at") Work:
+            input#work_at(type="text", name="work_at", value=user.work_at)
+            
+            // Additional fields can be added here (e.g., relationship_status, went_to, goes_to)
+            
+            label(for="profile_picture") Profile Picture URL:
+            input#profile_picture(type="text", name="profile_picture", value=user.profile_picture)
+            
+            button(type="submit") Save Changes
+          
+          hr
+          
+          // SECTION 2: Delete a Post
+          h2 Delete a Post
+          if user.posts && user.posts.length
+            ul.post-list
+              each post in user.posts
+                li
+                  span Post ID: #{post.post_id} | #{post.description}
+                  form.delete-post(method="POST", action="/api/users/#{user.user_id}/deletePost/#{post.post_id}")
+                    button(type="submit") Delete
+          else
+            p No posts to show.
+          
+          hr
+          
+          // SECTION 3: Danger Zone – Delete Entire Account
+          h2 Danger Zone
+          form.delete-account(method="POST", action="/api/users/#{user.user_id}/deleteAccount")
+            button(type="submit", class="danger") Delete My Entire Account
+      // RIGHT SIDEBAR – Optional widget area
+      aside.right-sidebar
+        .widget
+          h3 Quick Links
+          ul
+            li: a(href="/api/home") Home
+            li: a(href="/api/users") Explore
