@@ -42,7 +42,7 @@ jobs:
       # Spin up containers using the alternative compose file
       - uses: hoverkraft-tech/compose-action@v2.0.1
         with:
-          compose-file: "./docker-compose-deploy.yml"
+          compose-file: "./docker-compose.yml"
 
       # If you have Nightwatch or other tests:
       - name: get dependencies for tests
