@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  web:
+    build:
+      context: ./
+    # Runs index.js
+    command: node index.js
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "3308:3306"
+    volumes:
+      # Auto-load initialization SQL files 
+      - ./database-file:/docker-entrypoint-initdb.d
+      # Persist MySQL data between container restarts
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: ${DB_CONTAINER}        # Should resolve to "db"
+      PMA_PORT: ${DB_PORT}             # 3306
+      PMA_USER: ${MYSQL_ROOT_USER}     # e.g. "root"
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # e.g. "password"
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
