@@ -22,9 +22,10 @@ html
           li.nav-item 
             .icon-circle ℹ
             span Notifications
-          li.nav-item 
+          li.nav-item
             .icon-circle ℹ
-            span Profile
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
           li.nav-item
             .icon-circle ℹ
             if sessionUserId

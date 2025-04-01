@@ -24,14 +24,15 @@ html
           li.nav-item 
             .icon-circle ℹ
             span Notifications
-          li.nav-item 
+          li.nav-item
             .icon-circle ℹ
-            span Profile
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
           li.nav-item
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
-        button.post-btn Post
+          button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
 
       // MIDDLE CONTENT
       main.main-feed
