@@ -8,7 +8,13 @@ const PostController = require('../controllers/PostController');
 
 router.get('/:post_id', PostController.getPostDetails);
 router.get('/', PostController.getAllPosts);
-
+router.get('/create/Post', (req, res) => {
+    // Render form for creating a post
+    res.render('create_post'); 
+  });
+  
+  router.post('/create/NewPost', PostController.createPost);
+  
 
 
 
