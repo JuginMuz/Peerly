@@ -31,7 +31,7 @@ html
           li.nav-item
             .icon-circle ℹ
             if sessionUserId
-              a(href="/api/users/#{sessionUserId}/settings") Settings
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
       // MAIN CONTENT – the Settings Card
       main.settings-content
         .settings-card

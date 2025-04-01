@@ -27,7 +27,8 @@ html
             span Profile
           li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
 
       // MAIN CONTENT
       main.profile-content
