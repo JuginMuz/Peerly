@@ -207,8 +207,7 @@ class UserService {
     }
   
   
-    //UPDATE USER PROFILE
-     static async updateUserProfile(user_id, updatedData) {
+    static async updateUserProfile(user_id, updatedData) {
       // Build SET clause dynamically from updatedData keys
       const fields = Object.keys(updatedData)
         .map(key => `${key} = ?`)
@@ -216,11 +215,13 @@ class UserService {
       const values = Object.values(updatedData);
       // Add user_id as the last parameter
       values.push(user_id);
-  
+    
       const sql = `UPDATE users SET ${fields} WHERE user_id = ?`;
       const [result] = await pool.query(sql, values);
       return result;
-    } 
+    }
+    
+    
   
   
   
