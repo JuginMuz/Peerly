@@ -5,6 +5,37 @@ const formatDate = require('./utils/FormatDate.js');
 class PostService {
 
 
+  static async createPost(user_id, description, media_url, tag_ids = []) {
+    const connection = await pool.getConnection(); // Get a database connection
+    try {
+        await connection.beginTransaction(); // Start a transaction
+        
+        // Insert the new post
+        const postQuery = `INSERT INTO posts (user_id, description, media_url) VALUES (?, ?, ?)`;
+        const [postResult] = await connection.query(postQuery, [user_id, description, media_url]);
+
+        const post_id = postResult.insertId; // Get the new post's ID
+
+        // Associate the post with the selected tags (if any)
+        if (tag_ids.length > 0) {
+            const tagQuery = `INSERT INTO post_tags (post_id, tag_id) VALUES ?`;
+            const tagValues = tag_ids.map(tag_id => [post_id, tag_id]);
+            await connection.query(tagQuery, [tagValues]);
+        }
+
+        await connection.commit(); // Commit the transaction
+        return { success: true, message: 'Post created successfully', post_id };
+
+    } catch (error) {
+        await connection.rollback(); // Rollback in case of an error
+        console.error("Error creating post:", error);
+        return { success: false, message: 'Failed to create post' };
+
+    } finally {
+        connection.release(); // Release the connection
+    }
+}
+
   //GET POST
   static async getPostById(post_id) {
     const sql = `

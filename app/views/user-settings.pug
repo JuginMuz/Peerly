@@ -27,11 +27,12 @@ html
             span Notifications
           li.nav-item
             .icon-circle ℹ
-            span Profile
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
           li.nav-item
             .icon-circle ℹ
             if sessionUserId
-              a(href="/api/users/#{sessionUserId}/settings") Settings
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
       // MAIN CONTENT – the Settings Card
       main.settings-content
         .settings-card
