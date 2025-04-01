@@ -55,7 +55,15 @@ html
             label(for="work_at") Work:
             input#work_at(type="text", name="work_at", value=user.work_at)
             
-            // Additional fields can be added here (e.g., relationship_status, went_to, goes_to)
+            // Additional fields for extended details
+            label(for="relationship_status") Relationship Status:
+            input#relationship_status(type="text", name="relationship_status", value=user.relationship_status)
+            
+            label(for="went_to") Went To:
+            input#went_to(type="text", name="went_to", value=user.went_to)
+            
+            label(for="goes_to") Goes To:
+            input#goes_to(type="text", name="goes_to", value=user.goes_to)
             
             label(for="profile_picture") Profile Picture URL:
             input#profile_picture(type="text", name="profile_picture", value=user.profile_picture)

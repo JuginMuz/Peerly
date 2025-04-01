@@ -28,23 +28,28 @@ class UserController {
   } */
 
 
+  
+  // UPDATE PROFILE
+static async updateProfile(req, res) {
+  try {
+    const userId = req.params.user_id;
+    const updatedData = req.body; // The fields to update
 
-
-  //UPDATE PROFILE
-  static async updateProfile(req, res) {
-    try {
-      const userId = req.params.user_id;
-      const updatedData = req.body; // The fields to update (e.g., first_name, bio, etc.)
-
-      const result = await UserService.updateUserProfile(userId, updatedData);
-      res.status(200).json({ 
-        message: 'Profile updated successfully', 
-        updatedUser 
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } 
+    // Update the user profile in the database
+    await UserService.updateUserProfile(userId, updatedData);
+    
+    // Fetch the updated user data from the DB
+    const updatedUser = await UserService.findByUserId(userId);
+    
+    res.status(200).json({ 
+      message: 'Profile updated successfully', 
+      updatedUser 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+  
 
 
 
