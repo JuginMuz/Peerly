@@ -1,0 +1,54 @@
+# This is a workflow that is manually triggered to test the docker build
+
+name: Manual workflow for docker
+
+on:
+  workflow_dispatch:  # triggers only when you click “Run workflow”
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Quick check to show the workflow is running
+      - name: check
+        run: echo "First job done!"
+
+      # Pull down your repo code
+      - uses: actions/checkout@v4
+
+      # Install Node
+      - uses: actions/setup-node@v4
+
+      # Confirm Node is set up
+      - name: check node
+        run: node --version
+
+      - name: check dir
+        run: ls
+
+      # Create .env from your secret
+      - name: Create the .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      # (Optional) Show the .env content for debugging
+      - name: Check
+        run: cat .env
+
+      # Install dependencies (Node packages)
+      - name: Install dependencies
+        run: npm install
+
+      # Spin up containers using the alternative compose file
+      - uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker-compose-deploy.yml"
+
+      # If you have Nightwatch or other tests:
+      - name: get dependencies for tests
+        run: sudo apt-get install -y xvfb
+
+      - name: run the nightwatch tests
+        run: xvfb-run --auto-servernum npm test -- --env chrome
+
+
