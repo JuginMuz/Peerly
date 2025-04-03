@@ -50,8 +50,13 @@ html
               .profile-footer
                 button.friend-request-btn Send Friend Request
 
+    
       // RIGHT SIDEBAR
       aside.right-sidebar
+        .search-box
+          form(action="/api/users/search/byword", method="GET")
+            .icon-circle X
+            input(type="text", name="q", placeholder="Search users...", required)
         .widget
           h3 See what's trending
           ul
