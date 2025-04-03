@@ -113,6 +113,32 @@ class PostController {
     }
   }
 
+  static async search(req, res) {
+    try {
+      const query = req.query.q;
+  
+      const posts = await PostService.searchPosts(query);
+      const tags = await TagService.getAllTags(); // 👈 fetch tags
+
+      
+  
+      res.render('home', {
+        title: `Search Results for "${query}"`,
+        query,
+        posts,
+        tags, // 👈 pass it to the view
+      });
+      
+    } catch (error) {
+      console.error('Search error:', error);
+      res.status(500).render('error', {
+        title: 'Search Error',
+        message: error.message
+      });
+    }
+  }
+  
+
   // DELETE A POST
   static async deletePost(req, res) {
     try {
