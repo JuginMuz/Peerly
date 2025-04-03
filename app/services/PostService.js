@@ -128,6 +128,36 @@ class PostService {
         const [rows] = await pool.query(sql, [user_id]);
         return rows;
       }
+
+
+
+      static async searchPosts(query) {
+        const [rows] = await pool.query(`
+          SELECT 
+            p.post_id,
+            p.description,
+            p.media_url,
+            p.created_at,
+            u.user_id,
+            u.first_name,
+            u.last_name,
+            u.profile_picture
+          FROM posts p
+          JOIN users u ON p.user_id = u.user_id
+          WHERE 
+            p.description LIKE ? OR 
+            u.first_name LIKE ? OR 
+            u.last_name LIKE ?
+          ORDER BY p.created_at DESC
+        `, [`%${query}%`, `%${query}%`, `%${query}%`]);
+      
+        return rows.map(row => {
+          row.created_at = formatDate(row.created_at);
+          return row;
+        });
+      }
+      
+      
     }
 
 
