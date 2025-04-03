@@ -73,8 +73,11 @@ html
       // RIGHT SIDEBAR
       aside.right-sidebar
         .search-box
-          .icon-circle X
-          input(type="text", placeholder="Search")
+          form(action="/api/home/posts/search", method="GET")
+            .icon-circle X
+            input(type="text", name="q", placeholder="Search posts...", required)
+           
+
         .widget
           h3 See what's trending
           ul
