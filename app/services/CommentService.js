@@ -22,6 +22,14 @@ class CommentService {
         created_at: formatDate(row.created_at),
       }));
     }
+
+    static async addComment({ post_id, user_id, description }) {
+      await pool.query(`
+        INSERT INTO comments (post_id, user_id, description)
+        VALUES (?, ?, ?)
+      `, [post_id, user_id, description]);
+    }
+    
     
     
 
