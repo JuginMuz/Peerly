@@ -17,6 +17,7 @@ router.post('/:user_id/deletePost/:post_id', PostController.deletePost);
 
 router.get('/:user_id', UserController.getProfile);
 router.get('/', UserController.getAllUsers);
+router.get('/search/byword', UserController.search);
 
 
 
