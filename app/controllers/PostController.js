@@ -99,8 +99,8 @@ class PostController {
       const tags = await TagService.getAllTags();
 
       // Render the home page with the posts and tags
-      res.render('Home', {
-        title: 'Peerly - Home',
+      res.render('home', {
+        title: 'Peerly - home',
         posts,
         tags
       });
