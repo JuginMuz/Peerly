@@ -348,3 +348,38 @@ body {
   display: block;
 }
 
+
+/* COMMENT FORM TEXTAREA STYLING */
+.comment-form textarea {
+  width: 100%;               /* Full width of its container */
+  min-height: 70px;          /* Adequate height for comments */
+  border: 1px solid #ccc;    /* Light gray border */
+  border-radius: 4px;        /* Slightly rounded corners */
+  padding: 0.5rem;           /* Internal padding for better readability */
+  font-size: 0.9rem;         /* Consistent font size */
+  resize: vertical;          /* Allow vertical resizing only */
+  box-sizing: border-box;    /* Ensures padding is included in the width */
+}
+
+.comment-form textarea:focus {
+  outline: none;             /* Remove default focus outline */
+  border-color: #28a745;     /* Green border on focus to match the button */
+}
+
+/* COMMENT BUTTON STYLING */
+.comment-btn {
+  background-color: #28a745; /* Bright green background */
+  color: #fff;               /* White text */
+  border: none;              /* No border */
+  padding: 0.5rem 1rem;       /* Comfortable padding */
+  border-radius: 4px;        /* Rounded corners */
+  cursor: pointer;           /* Pointer cursor on hover */
+  font-size: 0.9rem;         /* Consistent font size */
+  font-weight: bold;         /* Bold text */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.comment-btn:hover {
+  background-color: #218838; /* Slightly darker green on hover */
+}
+
