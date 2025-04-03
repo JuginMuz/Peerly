@@ -13,7 +13,10 @@ router.get('/create/Post', (req, res) => {
     res.render('create_post'); 
   });
   
-  router.post('/create/NewPost', PostController.createPost);
+router.post('/create/NewPost', PostController.createPost);
+router.get('/posts/search', PostController.search);
+
+
   
 
 
