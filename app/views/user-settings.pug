@@ -80,7 +80,7 @@ html
               each post in user.posts
                 li
                   span Post ID: #{post.post_id} | #{post.description}
-                  form.delete-post(method="POST", action="/api/users/#{user.user_id}/deletePost/#{post.post_id}")
+                  form.delete-post(method="POST", action="/api/users/" + user.user_id + "/deletePost/#{post.post_id}")
                     button(type="submit") Delete
           else
             p No posts to show.
@@ -89,7 +89,7 @@ html
           
           // SECTION 3: Danger Zone – Delete Entire Account
           h2 Danger Zone
-          form.delete-account(method="POST", action="/api/users/#{user.user_id}/deleteAccount")
+          form.delete-account(method="POST", action="/api/users/" + user.user_id + "/deleteAccount")
             button(type="submit", class="danger") Delete My Entire Account
       // RIGHT SIDEBAR – Optional widget area
       aside.right-sidebar
