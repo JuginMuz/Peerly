@@ -5,6 +5,7 @@ html
     title= title
     link(rel="stylesheet", href="/stylesheets/explore.css")
   body
+  p Logged in as: #{sessionUserId}
     .explore-container
       // LEFT NAVIGATION
       nav.left-nav
@@ -73,6 +74,12 @@ html
                   hr
             else
               p No comments yet.
+
+            // COMMENT FORM
+            form(action=`/api/comments/${post.post_id}`, method="POST", class="comment-form")
+              textarea(name="description", placeholder="Write a comment...", required)
+              button(type="submit") Post Comment
+
         else
           h2 No post found
 
