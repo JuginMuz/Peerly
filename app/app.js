@@ -18,6 +18,7 @@ app.use(
 app.use((req, res, next) => {
   // If there's a user_id in the session it will set it to res.locals; otherwise null
   res.locals.sessionUserId = req.session.user_id || null;
+  res.locals.sessionProfilePic = req.session.profile_picture || null;
   next();
 });
 
