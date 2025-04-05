@@ -162,18 +162,25 @@ class UserService {
   
   
     static async updateUserProfile(user_id, updatedData) {
-      // Build SET clause dynamically from updatedData keys
-      const fields = Object.keys(updatedData)
-        .map(key => `${key} = ?`)
-        .join(', ');
-      const values = Object.values(updatedData);
-      // Add user_id as the last parameter
+      // Get keys for the fields to update
+      const fields = Object.keys(updatedData);
+      
+      // If there are no fields, simply return without executing an update.
+      if (fields.length === 0) {
+        return { affectedRows: 0 };
+      }
+      
+      // Build the SET clause dynamically, e.g., "first_name = ?, last_name = ?"
+      const setClause = fields.map(field => `${field} = ?`).join(', ');
+      const values = fields.map(field => updatedData[field]);
+      // Append user_id for the WHERE clause
       values.push(user_id);
     
-      const sql = `UPDATE users SET ${fields} WHERE user_id = ?`;
+      const sql = `UPDATE users SET ${setClause} WHERE user_id = ?`;
       const [result] = await pool.query(sql, values);
       return result;
     }
+    
     
     
   
@@ -231,6 +238,11 @@ class UserService {
       return rows;
     }
     
+    static async getAllFields() {
+      const sql = `SELECT field_id, field_name FROM fields_of_study`; // Adjust table name if needed
+      const [rows] = await pool.query(sql);
+      return rows;
+    }
     
     
   }
