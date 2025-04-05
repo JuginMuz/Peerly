@@ -5,8 +5,6 @@ html
     title User Settings
     link(rel="stylesheet", href="/stylesheets/user-settings.css")
   body
-    // Debug: Output the user ID for testing
-    p User ID: #{user.user_id}
 
     .explore-container
       // LEFT NAVIGATION – identical to your other pages
@@ -16,13 +14,13 @@ html
           li.nav-item
             .icon-circle ℹ
             a(href="/api/home") Home
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             a(href="/api/users") Explore
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Messages
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Notifications
           li.nav-item
@@ -33,13 +31,29 @@ html
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+      
       // MAIN CONTENT – the Settings Card
       main.settings-content
         .settings-card
           h1 Settings
-          
+
           // SECTION 1: Edit Profile
-          form.update-profile(method="POST", action="/api/users/" + user.user_id + "/updateProfile")
+          form.update-profile(method="POST", action="/api/users/" + user.user_id + "/updateProfile", enctype="multipart/form-data")
             h2 Update Profile
             label(for="first_name") First Name:
             input#first_name(type="text", name="first_name", value=user.first_name)
@@ -56,7 +70,6 @@ html
             label(for="work_at") Work:
             input#work_at(type="text", name="work_at", value=user.work_at)
             
-            // Additional fields for extended details
             label(for="relationship_status") Relationship Status:
             input#relationship_status(type="text", name="relationship_status", value=user.relationship_status)
             
@@ -66,35 +79,33 @@ html
             label(for="goes_to") Goes To:
             input#goes_to(type="text", name="goes_to", value=user.goes_to)
             
-            label(for="profile_picture") Profile Picture URL:
-            input#profile_picture(type="text", name="profile_picture", value=user.profile_picture)
+            // New dropdown for Field of Study
+            label(for="field_id") Field of Study:
+            select#field_id(name="field_id", required)
+              option(value="", disabled selected) -- Select Field of Study --
+              each field in (fields || [])
+                if user.field_of_study && user.field_of_study === field.field_name
+                  option(value=field.field_id, selected)= field.field_name
+                else
+                  option(value=field.field_id)= field.field_name
+                  
+            label(for="profile_picture") Upload Profile Picture:
+            input#profile_picture(type="file", name="profilePic", accept="image/*")
             
+            <br>
+            <br>
             button(type="submit") Save Changes
           
           hr
           
-          // SECTION 2: Delete a Post
-          h2 Delete a Post
-          if user.posts && user.posts.length
-            ul.post-list
-              each post in user.posts
-                li
-                  span Post ID: #{post.post_id} | #{post.description}
-                  form.delete-post(method="POST", action="/api/users/" + user.user_id + "/deletePost/#{post.post_id}")
-                    button(type="submit") Delete
-          else
-            p No posts to show.
-          
-          hr
-          
-          // SECTION 3: Danger Zone – Delete Entire Account
+          // SECTION 2: Danger Zone – Delete Entire Account
           h2 Danger Zone
           form.delete-account(method="POST", action="/api/users/" + user.user_id + "/deleteAccount")
             button(type="submit", class="danger") Delete My Entire Account
+      
       // RIGHT SIDEBAR – Optional widget area
-      aside.right-sidebar
-        .widget
-          h3 Quick Links
-          ul
-            li: a(href="/api/home") Home
-            li: a(href="/api/users") Explore
+      aside.right-sidebar.widget
+        h3 Quick Links
+        ul
+          li: a(href="/api/home") Home
+          li: a(href="/api/users") Explore

@@ -3,9 +3,9 @@ html
   head
     meta(charset="UTF-8")
     title= title
-    link(rel="stylesheet", href="/stylesheets/explore.css")
+    link(rel="stylesheet", href="/stylesheets/post_details.css")
   body
-  p Logged in as: #{sessionUserId}
+  
     .explore-container
       // LEFT NAVIGATION
       nav.left-nav
@@ -14,13 +14,13 @@ html
           li.nav-item
             .icon-circle ℹ
             a(href="/api/home") Home
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             a(href="/api/users") Explore
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Messages
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Notifications
           li.nav-item
@@ -31,6 +31,21 @@ html
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
 
       // MAIN FEED (CENTER COLUMN)
       main.main-feed
@@ -41,20 +56,24 @@ html
               .avatar-circle
                 if post.profile_picture
                   img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
+                  
                 else
                   // Fallback that uses initials if no profile_picture
                   | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
-
-              .poster-info
-                // Shows the poster's name
-                h3= post.first_name + ' ' + post.last_name
+                  
+              .post-user
+                  h3= post.first_name + ' ' + post.last_name
+                  p= 'Posted At: ' + post.created_at
 
             .post-body
-              p= post.description
-              p.posted-at Posted At: #{post.created_at}
+             
+              
               // If there's a media URL:
               if post.media_url
                 img(src=post.media_url, alt="Post Image")
+
+              h4= post.first_name + ' ' + post.last_name
+              p= post.description
 
           // COMMENTS SECTION
           .comments-section
