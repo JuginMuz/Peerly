@@ -107,6 +107,11 @@ body {
     min-height: 100px;
     resize: vertical;
   }
+
+  .settings-card select#field_id {
+    margin-bottom: 1rem; /* Adjust the value if you need more or less space */
+  }
+  
   
   /* Button styling */
   .settings-card button {
@@ -131,32 +136,6 @@ body {
     margin: 2rem 0;
   }
   
-  /* Post list styling for the delete a post section */
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .post-list li {
-    background-color: #f1f1f1;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .post-list li span {
-    flex: 1;
-    font-size: 0.95rem;
-    color: #555;
-  }
-  
-  .post-list li form {
-    margin: 0;
-  }
   
   /* Delete Account button styling */
   .settings-card button.danger {
@@ -200,6 +179,57 @@ body {
     align-items: center;
     cursor: pointer;
   }
+
+  /* LEFT NAV */
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-self: start; /* This makes it only as tall as its content */
+  padding: 2rem;
+}
+
+/* Styling for the logged-in section */
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+/* Avatar styling for the logged-in user */
+.logged-in .logged-in-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged-in .logged-in-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-btn {
+  background-color: #6FCF97; /* Green color for emphasis */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem; /* Some spacing above */
+}
+
+.post-btn:hover {
+  background-color: #218838 !important; /* Darker green on hover */
+}
   
   /* css for responsive design */
   @media (max-width: 600px) {
