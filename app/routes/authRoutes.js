@@ -7,7 +7,7 @@ const pool = require('../models/db'); // Database connection
 const UserService = require('../services/UserService'); // New registration service
 
 // POST /login route 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -32,8 +32,7 @@ router.post('/login', async (req, res) => {
     //Redirects to home page
     return res.redirect('/api/home');
   } catch (err) {
-    console.error(err);
-    return res.status(500).send('Server error');
+    next(err);
   }
 });
 

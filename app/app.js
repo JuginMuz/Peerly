@@ -51,6 +51,23 @@ app.use('/api/tags', tagRoutes);
 app.use('/api', homeRoutes);
 app.use('/api/auth', LoginRoutes);
 
+// Catch 404
+app.use((req, res, next) => {
+  const err = new Error('Page Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack); // For debugging
+  res.status(err.status || 500);
+  res.render('error', {
+    message: 'Something went wrong',
+    status: err.status || 500
+  });
+});
+
 
 
 
