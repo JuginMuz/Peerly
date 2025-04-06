@@ -43,7 +43,7 @@ html(lang="en")
         //- Form group for selecting gender.
         .form-group
           label(for='gender') Gender:
-          select#gender(name='gender')
+          select#gender(name='gender' required)
             option(value='') Select your gender
             option(value='Male') Male
             option(value='Female') Female
@@ -51,7 +51,7 @@ html(lang="en")
         //- Form group for entering date of birth.
         .form-group
           label(for='dob') Date of Birth:
-          input#dob(type='date' name='dob')
+          input#dob(type='date' name='dob' required)
         //- Form group for entering city.
         .form-group
           label(for='city') City:
