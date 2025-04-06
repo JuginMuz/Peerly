@@ -93,4 +93,27 @@ body {
       font-size: 20px;
     }
   }
+
+  /* Terms and Conditions Section */
+.form-group.terms .terms {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group.terms input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.form-group.terms label {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.form-group.terms label a {
+  color: #6FCF97;
+  text-decoration: underline;
+}
   
