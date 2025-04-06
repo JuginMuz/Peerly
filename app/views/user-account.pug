@@ -62,7 +62,7 @@ html
           .profile-info
             //- If the user exists and has a profile picture, display it.
             if user && user.profile_picture
-              img.profile-pic(src=user.profile_picture, alt="Profile Picture")
+            img.profile-pic(src=user.profile_picture, alt="Profile Picture")
             //- Display the user's full name along with their user ID.
             if user
               h2= user.first_name + " " + user.last_name + " (" + user.user_id + ")"
