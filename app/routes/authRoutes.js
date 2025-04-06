@@ -26,15 +26,21 @@ router.post('/login', async (req, res, next) => {
     const user = await UserService.findByEmail(email);
     if (!user) {
       // If no user is found, respond with a 401 Unauthorized status.
-      return res.status(401).send('Invalid email or password.');
+      return res.status(401).render('error', {
+        title: 'Unauthorized',
+        message: 'Invalid email or password.'
     }
+)}
 
     // Verify that the provided password matches the stored hashed password.
     const validPassword = await Authentication.verifyPassword(user.user_id, password);
     if (!validPassword) {
       // If the password doesn't match, respond with a 401 Unauthorized status.
-      return res.status(401).send('Invalid email or password.');
+      return res.status(401).render('error', {
+        title: 'Unauthorized',
+        message: 'Invalid email or password.'
     }
+)}
 
     // If authentication is successful, store user details in the session.
     req.session.user_id = user.user_id; // Store user ID from the database.
@@ -60,7 +66,10 @@ router.post('/register', async (req, res) => {
     // Log any registration errors to the console for debugging.
     console.error("Registration error:", err);
     // Respond with a 500 status code and a generic error message.
-    return res.status(500).send("Server error during registration");
+    return res.status(500).render('error', {
+      title: 'Registration Error',
+      message: 'Sorry! But we could not register you. Please try again'
+    })
   }
 });
 
