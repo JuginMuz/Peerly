@@ -1,7 +1,11 @@
 doctype html
 html
   head
-    title= title
+    title Error
+    meta(charset="UTF-8")
+    link(rel="stylesheet", href="/stylesheets/error.css")
   body
-    h1= title
-    p= message
+    .container
+      h1 Ops! 
+      p #{message}
+      a(href="/api/signin") ← Go back to Home
