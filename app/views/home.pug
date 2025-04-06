@@ -99,16 +99,21 @@ html
             input(type="text", name="q", placeholder="Search posts...", required)
         .widget
           h3 See what's trending
-          ul
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-        .widget
-          h3 Chat
-          ul
-            li
-              .icon-circle X
-              span Account Name
+          - // Sort posts by likeCount in descending order and take the first 5
+          - var trendingPosts = posts.sort((a, b) => b.likeCount - a.likeCount).slice(0, 5);
+
+          ul.trending-list
+            each post in trendingPosts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if post.profile_picture
+                      img(src=post.profile_picture, alt="User Avatar")
+                    else
+                      | #{post.first_name[0]}
+                  h2= post.first_name + " " + post.last_name
+                p.post-description= post.description
+        
 
     // Client-side JavaScript to intercept the like form submission and update UI without redirect
     script.

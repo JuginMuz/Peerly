@@ -75,6 +75,15 @@ html
               h4= post.first_name + ' ' + post.last_name
               p= post.description
 
+          .post-footer
+              // Like section with like count above buttons
+              .like-section
+                p.like-count #{likecount || 0} Likes
+                p.comment-count #{commentcount || 0} Comments
+                
+
+                
+
           // COMMENTS SECTION
           .comments-section
             h3 Comments
@@ -106,13 +115,55 @@ html
       aside.right-sidebar
         .widget
           h3 See what's trending
-          ul
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-        .widget
-          h3 Chat
-          ul
-            li
-              .icon-circle X
-              span Account Name
+          - // Sort posts by likeCount in descending order and take the first 5
+          - var trendingPosts = posts.sort((a, b) => b.likeCount - a.likeCount).slice(0, 5);
+
+          ul.trending-list
+            each post in trendingPosts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if post.profile_picture
+                      img(src=post.profile_picture, alt="User Avatar")
+                    else
+                      | #{post.first_name[0]}
+                  h2= post.first_name + " " + post.last_name
+                p.post-description= post.description
+    // Client-side JavaScript to intercept the like form submission and update UI without redirect
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const likeForms = document.querySelectorAll('.like-form');
+        likeForms.forEach(form => {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const action = form.getAttribute('action');
+            try {
+              const res = await fetch(action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+              });
+              const data = await res.json();
+              if (res.ok) {
+                // Update the like count text in the closest .like-section
+                const likeSection = form.closest('.like-section');
+                if (likeSection) {
+                  const likeCountElem = likeSection.querySelector('.like-count');
+                  if (likeCountElem) {
+                    likeCountElem.textContent = data.likeCount + ' Likes';
+                  }
+                }
+                // Update the button text
+                const btnTextElem = form.querySelector('.like-btn span');
+                if (btnTextElem) {
+                  btnTextElem.textContent = data.likedByUser ? 'Unlike' : 'Like';
+                }
+              } else {
+                console.error('Error toggling like:', data.error);
+              }
+            } catch (err) {
+              console.error('Fetch error:', err);
+            }
+          });
+        });
+      });

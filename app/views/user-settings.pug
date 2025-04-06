@@ -97,8 +97,46 @@ html
             button(type="submit") Save Changes
           
           hr
+
+
+          // SECTION 2: Display My Posts
+          h2 My Posts
+          if posts && posts.length > 0
+            each post in posts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if user.profile_picture
+                      img(src=user.profile_picture, alt=user.first_name + ' ' + user.last_name)
+                    else
+                      | #{user.first_name ? user.first_name[0] : ''}
+                  .post-user
+                    h3= user.first_name + ' ' + user.last_name
+                    p= 'Posted At: ' + post.created_at
+                .post-body
+                  if post.media_url
+                    img(src=post.media_url, alt="Post Image")
+                  h4= user.first_name + ' ' + user.last_name
+                  p= post.description
+
+                .post-footer
+                  .interaction-counts
+                    span.like-count #{post.likeCount || 0} Likes
+                    span.comment-count #{post.commentCount || 0} Comments
+
+                .deletebutton-row
+     
+                    // Delete Button
+                    form.delete-form(action=`/api/users/${sessionUserId}/deletePost/${post.post_id}`, method="POST")
+                      button.delete-btn(type="submit") Delete
+                
+                hr
+          else
+            p You haven't created any posts yet.
+
+            hr
           
-          // SECTION 2: Danger Zone – Delete Entire Account
+          // SECTION 3: Danger Zone – Delete Entire Account
           h2 Danger Zone
           form.delete-account(method="POST", action="/api/users/" + user.user_id + "/deleteAccount")
             button(type="submit", class="danger") Delete My Entire Account
