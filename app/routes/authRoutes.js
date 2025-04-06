@@ -73,5 +73,9 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/terms-and-conditions', (req, res) => {
+  res.render('terms', { title: 'Terms and Conditions' });
+});
+
 // Export the router so it can be used in the main app.
 module.exports = router;
