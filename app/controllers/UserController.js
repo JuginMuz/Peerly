@@ -1,6 +1,7 @@
 // controllers/UserController.js
 const UserService = require('../services/UserService');
 const PostService = require('../services/PostService');
+const CommentService = require('../services/CommentService');
 const { query } = require('../models/db');
 
 
@@ -80,11 +81,14 @@ static async getAllUsers(req, res) {
   try {
     // Retrieves all users from the database
     const users = await UserService.getAllUsers();
+    const posts = await PostService.getAllPosts();
     
     // Renders the explore page to display the list of users for making friends
     res.render('explore', { 
       title: 'Peerly - Make-Friends',
-      users: users
+      users: users,
+      posts: posts
+
     });
   } catch (error) {
     // If something goes wrong, log the error and render an error page
@@ -126,9 +130,12 @@ static async search(req, res) {
 static async getSettingsPage(req, res) {
   try {
     const userId = req.params.user_id;
+    const post_id = req.params.post_id;
     // Fetch user data from the DB
+   
     const userData = await UserService.findByUserId(userId);
     const fields = await UserService.getAllFields(); // Or however you fetch available fields
+    
 
     if (!userData) {
       return res.status(404).render('error', {
@@ -137,9 +144,11 @@ static async getSettingsPage(req, res) {
       });
     }
 
+    const posts = await PostService.getPostsByUser(userId);
+    const comments = await CommentService.countComments(post_id);
     // Render the Pug template for user settings
     // Pass the user object so Pug can prefill the form fields
-    res.render('user-settings', { user: userData, fields });
+    res.render('user-settings', { user: userData, fields, posts, comments });
   } catch (error) {
     console.error('Error in getSettingsPage:', error);
     res.status(500).render('error', {
