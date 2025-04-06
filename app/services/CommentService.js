@@ -29,6 +29,19 @@ class CommentService {
         VALUES (?, ?, ?)
       `, [post_id, user_id, description]);
     }
+
+    // In CommentService.js (or wherever appropriate)
+    static async countComments(post_id) {
+      const sql = `
+        SELECT COUNT(*) AS commentCount
+        FROM comments
+        WHERE post_id = ?
+      `;
+      const [rows] = await pool.query(sql, [post_id]);
+      // Return the count (rows[0].commentCount should hold the number)
+      return rows[0].commentCount;
+    }
+
     
     
     
