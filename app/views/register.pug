@@ -1,35 +1,46 @@
+//- Define the document type as HTML5 and set language to English.
 doctype html
 html(lang="en")
   head
+    //- Specify the character encoding as UTF-8.
     meta(charset="UTF-8")
+    //- Set the viewport for responsive design.
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    //- Dynamically set the title using the provided title variable.
     title= title
-    // Shared main site CSS
+    //- Link to the shared main site CSS for overall styling.
     link(rel="stylesheet", href="/stylesheets/main.css")
-    // Page-specific login CSS (reused for registration)
+    //- Link to the login CSS which is reused for the registration page.
     link(rel="stylesheet", href="/stylesheets/login.css")
   body
+    //- Main container for the login/registration form.
     .login-container
-      // Logo & Branding
+      //- Logo and branding section at the top.
       img.logo(src='/images/Peerly-Logo.png' alt='Peerly Logo')
       .brand-text Peerly
-      // Registration Form
+      //- Registration form that submits to the registration endpoint.
       form(action='/api/auth/register' method='POST')
+        //- Form group for first name input.
         .form-group
           label(for='first_name') First Name:
           input#first_name(type='text' name='first_name' placeholder='Enter your first name' required)
+        //- Form group for last name input.
         .form-group
           label(for='last_name') Last Name:
           input#last_name(type='text' name='last_name' placeholder='Enter your last name' required)
+        //- Form group for email input.
         .form-group
           label(for='email') Email:
           input#email(type='email' name='email' placeholder='Enter your email' required)
+        //- Form group for password input.
         .form-group
           label(for='password') Password:
           input#password(type='password' name='password' placeholder='Enter your password' required)
+        //- Form group for password confirmation.
         .form-group
           label(for='confirm_password') Confirm Password:
           input#confirm_password(type='password' name='confirm_password' placeholder='Confirm your password' required)
+        //- Form group for selecting gender.
         .form-group
           label(for='gender') Gender:
           select#gender(name='gender')
@@ -37,29 +48,37 @@ html(lang="en")
             option(value='Male') Male
             option(value='Female') Female
             option(value='Other') Other
+        //- Form group for entering date of birth.
         .form-group
           label(for='dob') Date of Birth:
           input#dob(type='date' name='dob')
+        //- Form group for entering city.
         .form-group
           label(for='city') City:
           input#city(type='text' name='city' placeholder='Enter your city')
+        //- Form group for entering a short bio.
         .form-group
           label(for='bio') Bio:
           textarea#bio(name='bio' placeholder='Tell us a little about yourself')
+        //- Form group for entering workplace information.
         .form-group
           label(for='work_at') Work At:
           input#work_at(type='text' name='work_at' placeholder='Your workplace')
+        //- Form group for entering school/university attended.
         .form-group
           label(for='went_to') Went To:
           input#went_to(type='text' name='went_to' placeholder='School/University attended')
+        //- Form group for entering current school/college if applicable.
         .form-group
           label(for='goes_to') Goes To:
           input#goes_to(type='text' name='goes_to' placeholder='Current school/college (if applicable)')
+        //- Form group for entering relationship status.
         .form-group
           label(for='relationship_status') Relationship Status:
           input#relationship_status(type='text' name='relationship_status' placeholder='e.g., Single, Married')
+        //- Submit button to create the account.
         button.login-btn(type='submit') Create Account
+      //- Link to redirect users to the login page if they already have an account.
       .signup-link
         | Already have an account?
         a(href='/api/login') Log In
-

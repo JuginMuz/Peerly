@@ -1,45 +1,60 @@
+//- Define the document type as HTML5.
 doctype html
+//- Start the HTML document with language set to English.
 html(lang="en")
   head
+    //- Specify the character encoding for the document.
     meta(charset="UTF-8")
+    //- Set the viewport settings for responsive design.
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    //- Set the page title dynamically using the 'title' variable.
     title= title
 
-    // Shared main site CSS
+    //- Link to the shared main CSS for the overall site styling.
     link(rel="stylesheet", href="/stylesheets/main.css")
-
-    // Page-specific login CSS
+    //- Link to the page-specific CSS for styling the login page.
     link(rel="stylesheet", href="/stylesheets/login.css")
 
   body
+    //- Main container for the login page.
     .login-container
-      // Logo & Branding
+      //- Logo & Branding section: displays the site's logo image and brand text.
       img.logo(src='/images/Peerly-Logo.png' alt='Peerly Logo')
       .brand-text Peerly
 
-      // Form
+      //- Login form begins here.
       form(action='/api/auth/login' method='POST')
-        // Email field
+        //- Email field container.
         .form-group
+          //- Label for the email input.
           label(for='email') Email:
+          //- Email input field with a placeholder.
           input#email(type='email' name='email' placeholder='Enter your email')
 
-        // Password field
+        //- Password field container.
         .form-group
+          //- Label for the password input.
           label(for='password') Password:
+          //- Password input field with a placeholder.
           input#password(type='password' name='password' placeholder='Enter your password')
 
-        // Options row (Remember Me / Forgot Password)
+        //- Options row: includes the "Remember Me" checkbox and a "Forgot Password?" link.
         .options
           div
+            //- Checkbox for "Remember me" functionality.
             input#rememberMe(type='checkbox' name='rememberMe')
+            //- Label for the "Remember me" checkbox.
             label(for='rememberMe') Remember me
 
+          //- Link to the forgot password page.
           a(href='/api/login') Forgot your password?
 
+        //- Submit button for the login form.
         button.login-btn(type='submit') Log In
 
-      // Sign Up link
+      //- Sign Up link for users who don't have an account yet.
       .signup-link
+        //- Text prompting users to sign up.
         | Don’t have an account?
+        //- Link directing to the registration page.
         a(href='/api/register') Sign up

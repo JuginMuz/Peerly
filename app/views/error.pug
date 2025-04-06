@@ -1,11 +1,22 @@
+//- Define the document type as HTML5.
 doctype html
+//- Start the HTML document.
 html
+  //- Head section: contains the title, character set, and linked CSS.
   head
+    //- Set the title of the page to "Error".
     title Error
+    //- Specify UTF-8 as the character encoding for proper text rendering.
     meta(charset="UTF-8")
+    //- Link an external CSS file for styling the error page.
     link(rel="stylesheet", href="/stylesheets/error.css")
+  //- Body section: contains the visible content of the error page.
   body
+    //- A container div to wrap the error message content.
     .container
+      //- Main heading displaying "Ops!" to indicate an error occurred.
       h1 Ops! 
+      //- Paragraph that dynamically displays the error message passed from the server.
       p #{message}
-      a(href="/api/signin") ← Go back to Home
+     
+      

@@ -1,88 +1,124 @@
+//- Define the document type as HTML5.
 doctype html
+//- Start the HTML document.
 html
+  //- Head section containing meta-information about the document.
   head
+    //- Set the character encoding to UTF-8 for proper text display.
     meta(charset="UTF-8")
+    //- Set the title of the page to "Peerly - Create Post".
     title Peerly - Create Post
-    // Link to your CSS (using user-settings.css)
+    //- Link to the CSS file for styling the user settings (or similar pages).
     link(rel="stylesheet", href="/stylesheets/user-settings.css")
+  //- Begin the body of the document.
   body
-    
+    //- Main container for the explore page layout.
     .explore-container
-      // LEFT NAVIGATION – identical to your other pages
+      //- LEFT NAVIGATION: This section is consistent with other pages in the app.
       nav.left-nav
+        //- Display the logo or site name.
         h2.logo Peerly
+        //- Unordered list to hold the navigation links.
         ul.nav-list
+          //- Navigation item for Home.
           li.nav-item
+            //- Icon container showing a circle with an informational symbol.
             .icon-circle ℹ
+            //- Link to the home page.
             a(href="/api/home") Home
+          //- Navigation item for Explore.
           li.nav-item 
             .icon-circle ℹ
             a(href="/api/users") Explore
+          //- Navigation item for Messages.
           li.nav-item 
             .icon-circle ℹ
             span Messages
+          //- Navigation item for Notifications.
           li.nav-item 
             .icon-circle ℹ
             span Notifications
+          //- Navigation item for Profile, only displayed if a user is logged in.
           li.nav-item
             .icon-circle ℹ
+            //- Check if sessionUserId exists (user is logged in).
             if sessionUserId
+              //- Link to the user's profile page using the session user_id.
               a(href=`/api/users/${sessionUserId}`) Profile
+          //- Navigation item for Settings, only displayed if a user is logged in.
           li.nav-item
             .icon-circle ℹ
             if sessionUserId
+              //- Link to the user's settings page using the session user_id.
               a(href=`/api/users/${sessionUserId}/settings`) Settings
-        
-
-        // Logged in user info at the bottom of left nav
+        //- Display logged in user info at the bottom of the left navigation.
         .logged-in
+          //- If a profile picture exists in the session, display it.
           if sessionProfilePic
             .avatar-circle.logged-in-avatar
               img(src=sessionProfilePic, alt="User Avatar")
+          //- If no profile picture is available but a user is logged in, display a fallback.
           else if sessionUserId
             .avatar-circle.logged-in-avatar
-              // Fallback: display first character of the sessionUserId
+              //- Fallback: display the first character of the sessionUserId.
               | #{sessionUserId[0]}
+          //- Display the user's session ID or a default message if not logged in.
           if sessionUserId
             span #{sessionUserId}
           else
             span Not logged in.
-
       
-      // MAIN CONTENT – similar "card" layout as the settings page
+      //- MAIN CONTENT: This section uses a "card" layout similar to the settings page.
       main.settings-content
         .settings-card
+          //- Page heading for creating a new post.
           h1 Create a New Post
           
+          //- Form to create a new post, with POST method and multipart encoding for file uploads.
           form(method="POST", action="/api/home/create/NewPost", enctype="multipart/form-data")
-            // Hidden field for user_id (populated from session)
+            //- Hidden input field to store the user_id from the session.
             input(type="hidden", name="user_id", value=sessionUserId)
 
+            //- Label for the post description field.
             label(for="description") Post Description:
+            //- Textarea for entering the post description, required and with a placeholder.
             textarea#description(name="description", required, placeholder="Write something interesting...")
 
+            //- Label for the optional image upload field.
             label(for="postImage") Upload Image (Optional):
+            //- File input field for uploading an image; accepts only image file types.
             input#postImage(type="file", name="postImage", accept="image/*")
 
+            //- Line breaks to create space between form sections.
             <br>
             <br>
+            //- Label for the tag selection dropdown.
             label(for="tag_ids") Select Tags:
-            // Drop down list with multiple selection enabled
+            //- A dropdown list that allows multiple selections; required field.
             select#tag_ids(name="tag_ids", multiple, required)
+              //- Default option prompting the user to select at least one tag (disabled and pre-selected).
               option(value="", disabled selected) -- Select at least one tag --
+              //- Loop through each tag (if available) to create an option element.
               each tag in (tags || [])
+                //- Set the option value to the tag's ID and display the tag's name.
                 option(value=tag.tag_id)= tag.tag_name
 
+            //- Additional line breaks for spacing.
             <br>
-            <br>  
-            // Wrap the submit button in its own container to force a new line
+            <br>
+            //- Container for the submit button to force it onto a new line.
             .button-container
+              //- Submit button labeled "Create Post".
               button(type="submit") Create Post
 
-      // RIGHT SIDEBAR – identical to your other pages if you’d like
+      //- RIGHT SIDEBAR: Optional sidebar similar to other pages (e.g., for quick links).
       aside.right-sidebar
         .widget
+          //- Heading for the quick links section.
           h3 Quick Links
+          //- Unordered list of quick link items.
           ul
+            //- List item linking to the home page.
             li: a(href="/api/home") Home
+            //- List item linking to the explore page.
             li: a(href="/api/users") Explore
