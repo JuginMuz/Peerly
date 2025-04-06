@@ -18,6 +18,7 @@ app.use(
 app.use((req, res, next) => {
   // If there's a user_id in the session it will set it to res.locals; otherwise null
   res.locals.sessionUserId = req.session.user_id || null;
+  res.locals.sessionProfilePic = req.session.profile_picture || null;
   next();
 });
 
@@ -28,6 +29,7 @@ const postRoutes = require('./routes/postRoutes');
 const LoginRoutes = require('./routes/authRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const homeRoutes = require('./routes/homeRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 //sets up the pug template
 app.set('view engine', 'pug');
@@ -44,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // sets up the routes alongside there urls
 app.use('/api/users', userRoutes);
 app.use('/api/home', postRoutes);
-// app.use('/api/comments', commentRoutes);
+app.use('/api/comments', commentRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api', homeRoutes);
 app.use('/api/auth', LoginRoutes);
@@ -65,6 +67,7 @@ app.use((err, req, res, next) => {
     status: err.status || 500
   });
 });
+
 
 
 

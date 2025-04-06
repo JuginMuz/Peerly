@@ -9,6 +9,9 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    volumes:
+      - ./:/src
+      - ./public/images:/src/public/images
 
   db:
     image: mysql

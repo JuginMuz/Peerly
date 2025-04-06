@@ -3,12 +3,10 @@ html
   head
     meta(charset="UTF-8")
     title Peerly - Create Post
-    // Link to your CSS (use the same or a similar stylesheet that the settings page uses)
+    // Link to your CSS (using user-settings.css)
     link(rel="stylesheet", href="/stylesheets/user-settings.css")
   body
-    // Show the sessionUserId if you want (optional for debugging)
-    p Logged in as: #{sessionUserId}
-
+    
     .explore-container
       // LEFT NAVIGATION – identical to your other pages
       nav.left-nav
@@ -17,13 +15,13 @@ html
           li.nav-item
             .icon-circle ℹ
             a(href="/api/home") Home
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             a(href="/api/users") Explore
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Messages
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Notifications
           li.nav-item
@@ -34,30 +32,52 @@ html
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
+        
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+
       
       // MAIN CONTENT – similar "card" layout as the settings page
       main.settings-content
         .settings-card
           h1 Create a New Post
           
-          form(method="POST", action="/api/home/create/NewPost")
-            // Hidden field for user_id (replace with actual session-based user_id)
-            input(type="hidden" name="user_id" value=sessionUserId)
+          form(method="POST", action="/api/home/create/NewPost", enctype="multipart/form-data")
+            // Hidden field for user_id (populated from session)
+            input(type="hidden", name="user_id", value=sessionUserId)
 
             label(for="description") Post Description:
-            textarea#description(name="description" required placeholder="Write something interesting...")
+            textarea#description(name="description", required, placeholder="Write something interesting...")
 
-            label(for="media_url") Image URL (Optional):
-            input#media_url(type="text" name="media_url" placeholder="Paste an image URL here")
+            label(for="postImage") Upload Image (Optional):
+            input#postImage(type="file", name="postImage", accept="image/*")
 
-            label Select Tags:
-            .tags-list
+            <br>
+            <br>
+            label(for="tag_ids") Select Tags:
+            // Drop down list with multiple selection enabled
+            select#tag_ids(name="tag_ids", multiple, required)
+              option(value="", disabled selected) -- Select at least one tag --
               each tag in (tags || [])
-                label.tag-checkbox
-                  input(type="checkbox", name="tag_ids" value=tag.tag_id)
-                  = tag.tag_name
-            
-            button(type="submit") Create Post
+                option(value=tag.tag_id)= tag.tag_name
+
+            <br>
+            <br>  
+            // Wrap the submit button in its own container to force a new line
+            .button-container
+              button(type="submit") Create Post
 
       // RIGHT SIDEBAR – identical to your other pages if you’d like
       aside.right-sidebar

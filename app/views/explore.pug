@@ -30,6 +30,21 @@ html
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
 
       // MAIN FEED (CENTER COLUMN)
       main.main-feed
@@ -50,8 +65,13 @@ html
               .profile-footer
                 button.friend-request-btn Send Friend Request
 
+    
       // RIGHT SIDEBAR
       aside.right-sidebar
+        .search-box
+          form(action="/api/users/search/byword", method="GET")
+            .icon-circle X
+            input(type="text", name="q", placeholder="Search users...", required)
         .widget
           h3 See what's trending
           ul

@@ -27,6 +27,8 @@ router.post('/login', async (req, res, next) => {
     // If valid, stores user info in the session
     req.session.user_id = user.user_id; // user_id from the DB
     req.session.email = user.email_id;  // for quick reference
+    req.session.profile_picture = user.profile_picture; // Make sure this value is available from your DB
+
 
     //Redirects to home page
     return res.redirect('/api/home');

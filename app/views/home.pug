@@ -5,10 +5,10 @@ html
     title= title
     link(rel="stylesheet", href="/stylesheets/home.css")
   body
-  p Logged in as: #{sessionUserId}
+   
 
     .explore-container
-      // LEFT NAVIGATION
+      // LEFT NAVIGATION (unchanged)
       nav.left-nav
         h2.logo Peerly
         ul.nav-list
@@ -32,7 +32,22 @@ html
             .icon-circle ℹ
             if sessionUserId
               a(href=`/api/users/${sessionUserId}/settings`) Settings
-          button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+
 
       // MIDDLE CONTENT
       main.main-feed
@@ -59,22 +74,29 @@ html
                 .post-body
                   if post.media_url
                     img.post-media(src=post.media_url, alt="Post Media")
+                  h4= post.first_name + ' ' + post.last_name  
                   p= post.description
                 .post-footer
-                  button.like-btn
-                    .icon-circle X
-                    span Like
-                  button.comment-btn
-                    .icon-circle X
-                    span Comment
+                  // Like section with like count above buttons
+                  .like-section
+                    p.like-count #{post.likeCount} Likes
+                    .button-row
+                      form.like-form(action=`/api/home/${post.post_id}/like`, method="POST")
+                        button.like-btn(type="submit")
+                          .icon-circle X
+                          span #{post.likedByUser ? 'Unlike' : 'Like'}
+                      button.comment-btn
+                        .icon-circle X
+                        span Comment
           else
-            p No posts associated with this tag
+            p No posts available.
 
-      // RIGHT SIDEBAR
+      // RIGHT SIDEBAR (unchanged)
       aside.right-sidebar
         .search-box
-          .icon-circle X
-          input(type="text", placeholder="Search")
+          form(action="/api/home/posts/search", method="GET")
+            .icon-circle X
+            input(type="text", name="q", placeholder="Search posts...", required)
         .widget
           h3 See what's trending
           ul
@@ -87,3 +109,42 @@ html
             li
               .icon-circle X
               span Account Name
+
+    // Client-side JavaScript to intercept the like form submission and update UI without redirect
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const likeForms = document.querySelectorAll('.like-form');
+        likeForms.forEach(form => {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const action = form.getAttribute('action');
+            try {
+              const res = await fetch(action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+              });
+              const data = await res.json();
+              if (res.ok) {
+                // Update the like count text in the closest .like-section
+                const likeSection = form.closest('.like-section');
+                if (likeSection) {
+                  const likeCountElem = likeSection.querySelector('.like-count');
+                  if (likeCountElem) {
+                    likeCountElem.textContent = data.likeCount + ' Likes';
+                  }
+                }
+                // Update the button text
+                const btnTextElem = form.querySelector('.like-btn span');
+                if (btnTextElem) {
+                  btnTextElem.textContent = data.likedByUser ? 'Unlike' : 'Like';
+                }
+              } else {
+                console.error('Error toggling like:', data.error);
+              }
+            } catch (err) {
+              console.error('Fetch error:', err);
+            }
+          });
+        });
+      });

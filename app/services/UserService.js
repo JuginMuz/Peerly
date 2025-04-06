@@ -109,53 +109,7 @@ class UserService {
     const [rows] = await pool.query(sql, [email]);
     return rows.length ? new User(rows[0]) : null;
   }
-   //GET USER PROFILE
- /* static async findByUserId(user_id) {
-    const sql = `
-      SELECT 
-        u.first_name, u.last_name, u.email_id, u.profile_picture, u.gender, 
-        u.bio, f.field_name, u.dob, u.city, u.work_at, u.went_to, 
-        u.goes_to, u.relationship_status,
-        p.media_url, p.description, p.created_at
-      FROM users u
-      LEFT JOIN fields_of_study f ON u.field_id = f.field_id
-      LEFT JOIN posts p ON u.user_id = p.user_id
-      WHERE u.user_id = ?;
-    `;
-  
-    const [rows] = await pool.query(sql, [user_id]);
-  
-    if (!rows.length) return null;
-  
-    // Extract user info from the first row
-    const userInfo = {
-      first_name: rows[0].first_name,
-      last_name: rows[0].last_name,
-      email_id: rows[0].email_id,
-      profile_picture: rows[0].profile_picture,
-      gender: rows[0].gender,
-      bio: rows[0].bio,
-      field_id: rows[0].field_name,
-      dob: this.formatDate(rows[0].dob),
-      city: rows[0].city,
-      work_at: rows[0].work_at,
-      went_to: rows[0].went_to,
-      goes_to: rows[0].goes_to,
-      relationship_status: rows[0].relationship_status,
-      
-      // Collect all posts, ensuring an empty array if there are no posts
-      posts: rows.some(row => row.media_url || row.description)
-        ? rows.map(row => ({
-            media_url: row.media_url,
-            description: row.description,
-            created_at: row.created_at
-          }))
-        : []
-    };
-  
-    return userInfo;
-  } */
-
+   
     
     static async findByUserId(user_id) {
       const sql = `
@@ -208,18 +162,25 @@ class UserService {
   
   
     static async updateUserProfile(user_id, updatedData) {
-      // Build SET clause dynamically from updatedData keys
-      const fields = Object.keys(updatedData)
-        .map(key => `${key} = ?`)
-        .join(', ');
-      const values = Object.values(updatedData);
-      // Add user_id as the last parameter
+      // Get keys for the fields to update
+      const fields = Object.keys(updatedData);
+      
+      // If there are no fields, simply return without executing an update.
+      if (fields.length === 0) {
+        return { affectedRows: 0 };
+      }
+      
+      // Build the SET clause dynamically, e.g., "first_name = ?, last_name = ?"
+      const setClause = fields.map(field => `${field} = ?`).join(', ');
+      const values = fields.map(field => updatedData[field]);
+      // Append user_id for the WHERE clause
       values.push(user_id);
     
-      const sql = `UPDATE users SET ${fields} WHERE user_id = ?`;
+      const sql = `UPDATE users SET ${setClause} WHERE user_id = ?`;
       const [result] = await pool.query(sql, values);
       return result;
     }
+    
     
     
   
@@ -258,9 +219,33 @@ class UserService {
         connection.release();
       }
     } 
+
+    static async searchUsers(query) {
+      const wildcard = `%${query}%`;
+    
+      const [rows] = await pool.query(`
+        SELECT 
+          user_id, first_name, last_name, profile_picture, bio, city
+        FROM users 
+        WHERE 
+          first_name LIKE ? OR 
+          last_name LIKE ? OR 
+          user_id LIKE ? OR
+          bio LIKE ? OR
+          city LIKE ?
+      `, [wildcard, wildcard, wildcard, wildcard, wildcard]);
+    
+      return rows;
+    }
+    
+    static async getAllFields() {
+      const sql = `SELECT field_id, field_name FROM fields_of_study`; // Adjust table name if needed
+      const [rows] = await pool.query(sql);
+      return rows;
+    }
+    
+    
   }
-
-
 
 
 module.exports = UserService;

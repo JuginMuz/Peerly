@@ -1,79 +1,42 @@
 // controllers/UserController.js
 const UserService = require('../services/UserService');
 const PostService = require('../services/PostService');
+const { query } = require('../models/db');
 
 
 class UserController {
 
-  //REGISTER
-  /* static async register(req, res) {
-    try {
-      const newUser = await UserService.register(req.body);
-      res.status(201).json({ message: 'User registered successfully', user: newUser });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
- */
-
-  //LOGIN
-  /* static async login(req, res) {
-    try {
-      const { email, plainTextPassword } = req.body;
-      const user = await UserService.login(email, plainTextPassword);
-      res.status(200).json({ message: 'Login successful', user });
-    } catch (error) {
-      res.status(401).json({ error: error.message });
-    }
-  } */
-
-
   
   // UPDATE PROFILE
-static async updateProfile(req, res) {
-  try {
-    const userId = req.params.user_id;
-    const updatedData = req.body; // The fields to update
-
-    // Update the user profile in the database
-    await UserService.updateUserProfile(userId, updatedData);
-    
-    // Fetch the updated user data from the DB
-    const updatedUser = await UserService.findByUserId(userId);
-    
-    res.status(200).json({ 
-      message: 'Profile updated successfully', 
-      updatedUser 
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  static async updateProfile(req, res) {
+    try {
+      const userId = req.params.user_id;
+      // Get form fields from req.body
+      let updatedData = { ...req.body };
+  
+      // Check if a profile picture file was uploaded
+      if (req.file) {
+        // Build the relative file path (assuming your public folder is served)
+        const filePath = '/images/' + req.file.filename;
+        // Include the profile picture in the update data
+        updatedData.profile_picture = filePath;
+      }
+  
+      // Update the user profile in the database
+      await UserService.updateUserProfile(userId, updatedData);
+      
+      // Optionally, fetch updated user data if needed:
+      // const updatedUser = await UserService.findByUserId(userId);
+      
+      // Redirect back to the settings page (or any page you prefer)
+      return res.redirect('/api/users/' + userId + '/settings');
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      return res.status(500).json({ error: error.message });
+    }
   }
-}
   
 
-
-
-
-  //GET PROFILE
-  /* static async getProfile(req, res) {
-    try {
-      const { user_id } = req.params; // Get userId from the URL
-      const user = await UserService.findByUserId(user_id); // Fetch user details
-      if (!user) {
-        return res.status(404).render('error', { 
-          title: 'User Not Found',
-          message: `User with ID ${user_id} not found.`
-        });
-      }
-      res.render('user-account', { 
-        title: 'Peerly - Account',
-        user // Pass user data to Pug template
-      });
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    
-    }
-  } */
 
 
 
@@ -132,11 +95,40 @@ static async getAllUsers(req, res) {
     });
   }
 }
+
+static async search(req, res) {
+  try {
+    const query = req.query.q;
+
+    if (!query) {
+      return res.status(400).render('error', {
+        title: 'Missing Query',
+        message: 'Please enter a search term.'
+      });
+    }
+
+    const users = await UserService.searchUsers(query);
+
+    res.render('explore', { 
+      title: `Search: ${query}`,
+      users: users
+    });
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).render('error', { 
+      title: 'Server Error', 
+      message: error.message 
+    });
+  }
+}
+
+
 static async getSettingsPage(req, res) {
   try {
     const userId = req.params.user_id;
     // Fetch user data from the DB
     const userData = await UserService.findByUserId(userId);
+    const fields = await UserService.getAllFields(); // Or however you fetch available fields
 
     if (!userData) {
       return res.status(404).render('error', {
@@ -147,7 +139,7 @@ static async getSettingsPage(req, res) {
 
     // Render the Pug template for user settings
     // Pass the user object so Pug can prefill the form fields
-    res.render('user-settings', { user: userData });
+    res.render('user-settings', { user: userData, fields });
   } catch (error) {
     console.error('Error in getSettingsPage:', error);
     res.status(500).render('error', {
@@ -169,7 +161,7 @@ static async getSettingsPage(req, res) {
         return res.status(404).json({ error: 'User not found or already deleted.' });
       }
       
-      res.status(200).json({ message: 'Account and related records deleted successfully.' });
+      return res.redirect('/api/login');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
