@@ -1,51 +1,68 @@
 // routes/authRoutes.js
+
+// Import Express and create a new router instance.
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const Authentication = require('../models/Authentication'); // For verifyPassword (used in login)
-const pool = require('../models/db'); // Database connection
-const UserService = require('../services/UserService'); // New registration service
 
-// POST /login route 
+// Import bcrypt for password hashing and comparison.
+const bcrypt = require('bcryptjs');
+
+// Import the Authentication model to verify passwords.
+const Authentication = require('../models/Authentication');
+
+// Import the database connection pool.
+const pool = require('../models/db');
+
+// Import UserService for handling new user registration and fetching user details.
+const UserService = require('../services/UserService');
+
+// POST /login route: handles user login.
 router.post('/login', async (req, res, next) => {
   try {
+    // Extract email and password from the request body.
     const { email, password } = req.body;
 
-    // Finds the user by email
+    // Attempt to find a user with the provided email.
     const user = await UserService.findByEmail(email);
     if (!user) {
+      // If no user is found, respond with a 401 Unauthorized status.
       return res.status(401).send('Invalid email or password.');
     }
 
-    // Verify's password
+    // Verify that the provided password matches the stored hashed password.
     const validPassword = await Authentication.verifyPassword(user.user_id, password);
     if (!validPassword) {
+      // If the password doesn't match, respond with a 401 Unauthorized status.
       return res.status(401).send('Invalid email or password.');
     }
 
-    // If valid, stores user info in the session
-    req.session.user_id = user.user_id; // user_id from the DB
-    req.session.email = user.email_id;  // for quick reference
-    req.session.profile_picture = user.profile_picture; // Make sure this value is available from your DB
+    // If authentication is successful, store user details in the session.
+    req.session.user_id = user.user_id; // Store user ID from the database.
+    req.session.email = user.email_id;   // Store email for quick reference.
+    req.session.profile_picture = user.profile_picture; // Store profile picture path.
 
-
-    //Redirects to home page
+    // Redirect the user to the home page after successful login.
     return res.redirect('/api/home');
   } catch (err) {
+    // Pass any errors to the next middleware (error handler).
     next(err);
   }
 });
 
-// POST /register route 
+// POST /register route: handles new user registration.
 router.post('/register', async (req, res) => {
   try {
+    // Register a new user using the details provided in the request body.
     await UserService.register(req.body);
-    // Redirects to login after successful registration
+    // After successful registration, redirect the user to the login page.
     return res.redirect('/api/login');
   } catch (err) {
+    // Log any registration errors to the console for debugging.
     console.error("Registration error:", err);
+    // Respond with a 500 status code and a generic error message.
     return res.status(500).send("Server error during registration");
   }
 });
 
+// Export the router so it can be used in the main app.
 module.exports = router;
