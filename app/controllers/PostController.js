@@ -26,44 +26,6 @@ class PostController {
     }
   }
 
-  // CREATE A NEW POST (POST ROUTE)
-  /*static async createPost(req, res) {
-    try {
-      // (You can optionally fetch tags again if needed, 
-      //  but it's not strictly required for creating the post)
-      const { user_id, description, media_url, tag_ids } = req.body;
-
-      // Convert tag_ids from the request into an array of IDs (numbers)
-      const selectedTagIds = Array.isArray(tag_ids)
-        ? tag_ids.map(id => parseInt(id, 10)).filter(id => !isNaN(id))
-        : [];
-
-      // Create the post using PostService
-      const result = await PostService.createPost(
-        user_id, 
-        description, 
-        media_url, 
-        selectedTagIds
-      );
-
-      if (result.success) {
-        // If successful, redirect to home (or wherever you want)
-        res.redirect('/api/home');
-      } else {
-        // If not successful, display an error
-        res.status(400).render('error', { 
-          title: 'Error', 
-          message: 'Failed to create post' 
-        });
-      }
-    } catch (error) {
-      console.error('Error creating post:', error);
-      res.status(500).render('error', { 
-        title: 'Server Error', 
-        message: 'Could not create post' 
-      });
-    }
-  }*/
 
   static async createPost(req, res) {
     try {
@@ -114,12 +76,18 @@ class PostController {
 
       // Retrieve all comments for this post
       const comments = await CommentService.getByPostId(postId);
-
+      const posts = await PostService.getAllPosts();
+      const commentcount = await CommentService.countComments(postId);
+      const likecount = await PostService.countLikes(postId);
+      
       // Render the post details page
       res.render('posts_details', { 
         title: 'Post Details', 
         post, 
-        comments 
+        comments, 
+        posts,
+        commentcount,
+        likecount
       });
     } catch (error) {
       res.status(500).render('error', {
@@ -132,6 +100,7 @@ class PostController {
   // LISTING PAGE
   static async getAllPosts(req, res) {
     try {
+      
       // Fetch all posts and tags
       const posts = await PostService.getAllPosts();
       const tags = await TagService.getAllTags();
@@ -178,26 +147,24 @@ class PostController {
   
 
   // DELETE A POST
-  static async deletePost(req, res) {
-    try {
-      const postId = req.params.post_id;
-      const result = await PostService.deletePost(postId);
+static async deletePost(req, res) {
+  try {
+    const { user_id, post_id } = req.params;
+    // You might want to add authorization checks here
+    // For example: if (req.session.userId !== user_id) { return res.status(403).send("Not allowed"); }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ 
-          error: 'Post not found or already deleted.' 
-        });
-      }
-
-      res.status(200).json({ 
-        message: 'Post deleted successfully.' 
-      });
-    } catch (error) {
-      res.status(500).json({ 
-        error: error.message 
-      });
+    const result = await PostService.deletePost(post_id, user_id);
+    if (result.affectedRows > 0) {
+      res.redirect('/api/users/' + user_id + '/settings'); // Or wherever you want to redirect after deletion
+    } else {
+      res.status(404).send('Post not found or could not be deleted.');
     }
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).send("Server error while deleting post.");
   }
+}
+
 
 
    // Toggle like for a post
