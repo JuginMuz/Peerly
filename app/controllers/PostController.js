@@ -173,16 +173,20 @@ class PostController {
       // Get the search query from the URL query parameters.
       const query = req.query.q;
       // Retrieve matching posts using the PostService.
-      const posts = await PostService.searchPosts(query);
+      const post = await PostService.searchPosts(query);
       // Fetch available tags to display alongside search results.
       const tags = await TagService.getAllTags();
+      // Also fetch posts to display alongside users.
+      const posts = await PostService.getAllPosts();
+
 
       // Render the 'home' page with the search results.
-      res.render('home', {
+      res.render('searchpost', {
         title: `Search Results for "${query}"`,
         query,
         posts,
-        tags
+        tags,
+        post
       });
     } catch (error) {
       console.error('Search error:', error);
