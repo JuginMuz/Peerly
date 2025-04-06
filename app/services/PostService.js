@@ -70,6 +70,16 @@ class PostService {
     return null;
   }
   
+  static async countLikes(post_id) {
+    const sql = `
+      SELECT COUNT(*) AS likeCount
+      FROM likes
+      WHERE post_id = ?
+    `;
+    const [rows] = await pool.query(sql, [post_id]);
+    return rows[0].likeCount;
+  }
+  
   
 
   //LISTING PAGE
@@ -99,6 +109,7 @@ class PostService {
     return rows.map(row => ({
       ...row,
       created_at: formatDate(row.created_at),
+      likeCount: row.likeCount || 0,
       likedByUser: row.userLiked > 0
     }));
 
@@ -144,6 +155,7 @@ class PostService {
     if (currentUserId) {
       sql = `
         SELECT 
+          p.user_id,
           p.post_id,
           p.description,
           p.media_url,
@@ -159,6 +171,7 @@ class PostService {
     } else {
       sql = `
         SELECT 
+          p.user_id,
           p.post_id,
           p.description,
           p.media_url,
