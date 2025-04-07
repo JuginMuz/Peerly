@@ -1,0 +1,31 @@
+//- Main layout for the page that includes both left branding and a signup card on the right.
+html
+  head
+    //- Dynamically set the page title using the 'title' variable.
+    title= title
+    //- Define the character encoding as UTF-8.
+    meta(charset="utf-8")
+    //- Link to the main CSS file for site-wide styling.
+    link(rel="stylesheet" href="/stylesheets/main.css")
+  body
+    //- Main container that wraps the entire content.
+    .container 
+      //- LEFT SIDE: Contains the logo.
+      .left-side
+        //- Display the logo image with alternative text.
+        img.logo-box(src="/images/Peerly-Logo.png" alt="Peerly Logo")
+      //- RIGHT SIDE: Contains the signup card with options to log in or create an account.
+      .right-side
+        .signup-card
+          //- Main heading with the brand name.
+          h1 Peerly
+          //- Secondary heading prompting users to sign up.
+          h2 Sign up now
+          //- Login button wrapped in a link; clicking redirects to the login page.
+          a(href="/api/login")
+            button.sign-google Login
+          //- A paragraph acting as a separator between the login and signup options.
+          p.or OR
+          //- Create Account button wrapped in a link; clicking redirects to the registration page.
+          a(href="/api/register")
+            button.create-account Create account
