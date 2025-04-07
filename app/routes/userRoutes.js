@@ -1,44 +1,47 @@
-// Import Express framework to create and manage routes
-const express = require("express");
-// Creates a new Express Router instance to define routes separately
+// routes/userRoutes.js
+
+// Import Express to create our router.
+const express = require('express');
+// Create a new router instance for user-related routes.
 const router = express.Router();
-// Imports the database service to interact with the database
-const db = require("../services/db");
 
-router.get('/', async (req, res) => { //route for getting all users which is asynchronous
-    try {
-        const sql = 'SELECT * FROM users'; //basic sql query
-        const [users] = await db.query(sql);  // calls the database with a sql query 
-        //but this will wait for the database to return the result before moving onto the next
-        //line and thats done using await . what should be outputted is a array of users
-        res.json(users); // this sends the list of users back to the client in json format
-    } catch (err) { // then i have basic error handling that shows the specific error as 
-        // I had trouble getting the database to work so i needed to know specifically
-        console.error("Query Failed:", err.message);
-        res.status(500).json({ error: err.message });  // Show real error
-    }
-});
-router.get('/:id', async (req, res) => { //route to get specific user by id
-    try {
-        const sql = 'SELECT * FROM users WHERE user_id = ?'; // sql query that will select the whole list of users but
-        //only return the first user that has the specified id. the sql query is also parameterized 
-        //in order to prevent a sql injection 
-        const user_id = req.params.id; // I had a issue here where i wrote user_id instead of id
-        // but I found out that since express does not automatically extract parameters based on your query string variable names
-        // i had to replace it with id instead 
-        const [users] =  await db.query(sql, [user_id]); //calls db and runs a query with the sql and userid
-        //however the user id is passed as a array becuase msql expects parameters in a array
-        if (users.length === 0) { // basic valadation to find out if the query is looking for a user 
-            //that does not exist
-            console.log("User not found!"); // Log if the user isn't in the database
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.json(users[0]);
-    }
-    catch(err) {
-        console.error("Query Failed:" , err.message);
-        res.status(500).json({error: err.message })
-    }
+// Import the UserController which handles logic for user operations.
+const UserController = require('../controllers/UserController');
+// Import the PostController to handle operations related to posts.
+const PostController = require('../controllers/PostController');
+// Import the profileUpload middleware to handle profile picture uploads.
+const { profileUpload } = require('../models/upload');
 
-});
+// Route to display the settings page for a specific user.
+// This page typically shows user details, available fields, posts, etc.
+router.get('/:user_id/settings', UserController.getSettingsPage);
+
+// Route to display a single user's profile by user_id.
+router.get('/:user_id', UserController.getProfile);
+
+// Route to display all users, often used on an "explore" or "make friends" page.
+router.get('/', UserController.getAllUsers);
+
+// Route to update a user's profile.
+// Uses profileUpload middleware to handle a new profile picture upload (field name: 'profilePic').
+router.post('/:user_id/updateProfile', profileUpload.single('profilePic'), UserController.updateProfile);
+
+// Route to delete a user account.
+router.post('/:user_id/deleteAccount', UserController.deleteAccount);
+
+// Route to delete a specific post for a user.
+// Expects both user_id and post_id in the URL.
+router.post('/:user_id/deletePost/:post_id', PostController.deletePost);
+
+// Duplicate routes (Note: These duplicate routes might need to be removed to avoid conflicts)
+// They are re-defining getProfile and getAllUsers routes.
+// It is recommended to keep only one instance of each route.
+router.get('/:user_id', UserController.getProfile);
+router.get('/', UserController.getAllUsers);
+
+// Route to search for users by a search term.
+// The search term is expected to be provided as a query parameter (e.g., /search/byword?q=...).
+router.get('/search/byword', UserController.search);
+
+// Export the router so it can be mounted in the main application.
 module.exports = router;

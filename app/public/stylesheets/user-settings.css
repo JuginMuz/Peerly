@@ -1,0 +1,378 @@
+
+/* user-settings.css                               
+
+
+/* Base styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f7f4;  
+    color: #333;
+  }
+  
+  /*  same grid layout as the explore/account pages */
+  .explore-container {
+    display: grid;
+    grid-template-columns: 200px 1fr 250px;
+    gap: 2rem;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  /* nav bar on left hand side */
+  .left-nav {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .left-nav .logo {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+  
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .icon-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+  
+  /*main content area */
+  .settings-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .settings-card {
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Settings page header */
+  .settings-card h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Section headers */
+  .settings-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  
+  /* Form styling */
+  .settings-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .settings-card input[type="text"],
+  .settings-card textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .settings-card textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .settings-card select#field_id {
+    margin-bottom: 1rem; /* Adjust the value if you need more or less space */
+  }
+  
+  
+  /* Button styling */
+  .settings-card button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .settings-card button:hover {
+    background-color: #218838;
+  }
+
+  .deletebutton-row button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .settings-card button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Horizontal rule for separation */
+  .settings-card hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+  }
+  
+  
+  /* Delete Account button styling */
+  .settings-card button.danger {
+    background-color: #dc3545;
+  }
+  
+  .settings-card button.danger:hover {
+    background-color: #c82333;
+  }
+  
+  .right-sidebar {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    height: fit-content;
+  }
+  
+  .right-sidebar .widget {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .right-sidebar .widget h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .right-sidebar .widget ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .right-sidebar .widget li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /* LEFT NAV */
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-self: start; /* This makes it only as tall as its content */
+  padding: 2rem;
+}
+
+/* Styling for the logged-in section */
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+/* Avatar styling for the logged-in user */
+.logged-in .logged-in-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged-in .logged-in-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-btn {
+  background-color: #6FCF97; /* Green color for emphasis */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem; /* Some spacing above */
+}
+
+.post-btn:hover {
+  background-color: #218838 !important; /* Darker green on hover */
+}
+  
+  /* css for responsive design */
+  @media (max-width: 600px) {
+    .explore-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    .settings-card {
+      padding: 1.5rem 2rem;
+    }
+  }
+
+  .nav-list a {
+    text-decoration: none; /* Removs underline */
+    color: inherit; /* Uses the same color as the parent element */
+    font-size: inherit; /* Keeps the same font size */
+    display: flex; /* Aligns with icon-circle */
+    align-items: center; /* Aligns text vertically */
+    gap: 8px; /* Spaces between icon and text */
+  }
+  
+  .nav-list a:hover {
+    opacity: 0.8; /* Add a slight hover effect */
+  }
+
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* Crops the image to fill the circle */
+    display: block;
+  }
+  
+  .avatar-circle {
+    width: 50px;        /* Small avatar size for fallback */
+    height: 50px;
+    border-radius: 50%; /* Round shape */
+    overflow: hidden;   /* Clips image to circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc; /* Fallback color if no image */
+  }
+
+   /* Circle placeholder for user avatar */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Account Name + short text */
+.post-user h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.post-user p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Body text */
+.post-body p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* Ensure media (if present) is displayed as a block element */
+.post-body img {
+  display: block;
+  height: auto;
+  max-width: 50%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Display the h4 and p inline within .post-body */
+.post-body h4,
+.post-body p {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+
+}
+
+.post-body h4 {
+  margin-right: 1rem; /* Space between user_id and description */
+  font-size: 1rem;
+}
+
+.post-body p {
+  font-size: 1rem;
+  color: #333;
+}
+  
+.post-footer {
+  padding: 0.5rem 0;
+ 
+  margin-top: 1rem;
+}
+
+.interaction-counts {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.like-count,
+.comment-count {
+  display: inline-block;
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}

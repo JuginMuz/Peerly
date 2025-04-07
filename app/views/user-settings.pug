@@ -1,0 +1,149 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title User Settings
+    link(rel="stylesheet", href="/stylesheets/user-settings.css")
+  body
+
+    .explore-container
+      // LEFT NAVIGATION – identical to your other pages
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item 
+            .icon-circle ℹ
+            a(href="/api/users") Explore
+          li.nav-item 
+            .icon-circle ℹ
+            span Messages
+          li.nav-item 
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item
+            .icon-circle ℹ
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
+          li.nav-item
+            .icon-circle ℹ
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+      
+      // MAIN CONTENT – the Settings Card
+      main.settings-content
+        .settings-card
+          h1 Settings
+
+          // SECTION 1: Edit Profile
+          form.update-profile(method="POST", action="/api/users/" + user.user_id + "/updateProfile", enctype="multipart/form-data")
+            h2 Update Profile
+            label(for="first_name") First Name:
+            input#first_name(type="text", name="first_name", value=user.first_name)
+            
+            label(for="last_name") Last Name:
+            input#last_name(type="text", name="last_name", value=user.last_name)
+            
+            label(for="bio") Bio:
+            textarea#bio(name="bio") #{user.bio}
+            
+            label(for="city") City:
+            input#city(type="text", name="city", value=user.city)
+            
+            label(for="work_at") Work:
+            input#work_at(type="text", name="work_at", value=user.work_at)
+            
+            label(for="relationship_status") Relationship Status:
+            input#relationship_status(type="text", name="relationship_status", value=user.relationship_status)
+            
+            label(for="went_to") Went To:
+            input#went_to(type="text", name="went_to", value=user.went_to)
+            
+            label(for="goes_to") Goes To:
+            input#goes_to(type="text", name="goes_to", value=user.goes_to)
+            
+            // New dropdown for Field of Study
+            label(for="field_id") Field of Study:
+            select#field_id(name="field_id", required)
+              option(value="", disabled selected) -- Select Field of Study --
+              each field in (fields || [])
+                if user.field_of_study && user.field_of_study === field.field_name
+                  option(value=field.field_id, selected)= field.field_name
+                else
+                  option(value=field.field_id)= field.field_name
+                  
+            label(for="profile_picture") Upload Profile Picture:
+            input#profile_picture(type="file", name="profilePic", accept="image/*")
+            
+            <br>
+            <br>
+            button(type="submit") Save Changes
+          
+          hr
+
+
+          // SECTION 2: Display My Posts
+          h2 My Posts
+          if posts && posts.length > 0
+            each post in posts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if user.profile_picture
+                      img(src=user.profile_picture, alt=user.first_name + ' ' + user.last_name)
+                    else
+                      | #{user.first_name ? user.first_name[0] : ''}
+                  .post-user
+                    h3= user.first_name + ' ' + user.last_name
+                    p= 'Posted At: ' + post.created_at
+                .post-body
+                  if post.media_url
+                    img(src=post.media_url, alt="Post Image")
+                  h4= user.first_name + ' ' + user.last_name
+                  p= post.description
+
+                .post-footer
+                  .interaction-counts
+                    span.like-count #{post.likeCount || 0} Likes
+                    span.comment-count #{post.commentCount || 0} Comments
+
+                .deletebutton-row
+     
+                    // Delete Button
+                    form.delete-form(action=`/api/users/${sessionUserId}/deletePost/${post.post_id}`, method="POST")
+                      button.delete-btn(type="submit") Delete
+                
+                hr
+          else
+            p You haven't created any posts yet.
+
+            hr
+          
+          // SECTION 3: Danger Zone – Delete Entire Account
+          h2 Danger Zone
+          form.delete-account(method="POST", action="/api/users/" + user.user_id + "/deleteAccount")
+            button(type="submit", class="danger") Delete My Entire Account
+      
+      // RIGHT SIDEBAR – Optional widget area
+      aside.right-sidebar.widget
+        h3 Quick Links
+        ul
+          li: a(href="/api/home") Home
+          li: a(href="/api/users") Explore

@@ -1,0 +1,179 @@
+//- Define the document type as HTML5.
+doctype html
+html
+  head
+    //- Set the character encoding.
+    meta(charset="UTF-8")
+    //- Set the title to "Account Page".
+    title Account Page
+    //- Link to the CSS stylesheet specific to user accounts.
+    link(rel="stylesheet", href="/stylesheets/user-accounts.css")
+  body
+    .container
+      //- LEFT NAVIGATION: Sidebar with navigation links and user info.
+      nav.left-nav
+        h2.logo Peerly
+        ul.nav-list
+          li.nav-item
+            .icon-circle ℹ
+            a(href="/api/home") Home
+          li.nav-item 
+            .icon-circle ℹ
+            a(href="/api/users") Explore
+          li.nav-item 
+            .icon-circle ℹ
+            span Messages
+          li.nav-item 
+            .icon-circle ℹ
+            span Notifications
+          li.nav-item
+            .icon-circle ℹ
+            //- If the user is logged in, show a link to their profile.
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
+          li.nav-item
+            .icon-circle ℹ
+            //- If the user is logged in, show a link to their settings.
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
+        //- Button to navigate to the Create Post page.
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        //- Logged in user info displayed at the bottom of the sidebar.
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              //- Fallback: display the first character of the sessionUserId.
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+
+      //- MAIN CONTENT: Displays user profile details and their posts.
+      main.profile-content
+        //- PROFILE HEADER SECTION: Contains the cover photo and profile info.
+        .profile-header.widget
+          .cover-photo
+            //- (Optional) Cover photo can be added here.
+          .profile-info
+            //- If the user exists and has a profile picture, display it.
+            if user && user.profile_picture
+            img.profile-pic(src=user.profile_picture, alt="Profile Picture")
+            //- Display the user's full name along with their user ID.
+            if user
+              h2= user.first_name + " " + user.last_name + " (" + user.user_id + ")"
+            else 
+              h2 User Not Found
+
+        //- PROFILE BODY: Contains additional info and the user's post feed.
+        .profile-body
+          //- Info Widget: Displays user details.
+          .info-widget.widget
+            h3 Info
+            if user
+              ul
+                li Bio: #{user.bio}
+                li DOB: #{user.dob}
+                li City: #{user.city}
+                li Work: #{user.work_at}
+                li Relationship: #{user.relationship_status}
+                li Field of Study: #{user.field_of_study}
+                li Went To: #{user.went_to}
+                li Goes To: #{user.goes_to}
+      
+            else 
+              p User data is not available.
+              
+          //- Post Feed: Displays the posts made by the user.
+          .post-feed
+            if user && user.posts.length
+              //- Loop over each post in the user's posts array.
+              each post in user.posts
+                .post-card
+                  //- Wrap the entire post card in a link to its details page.
+                  a.post-link(href=`/api/home/${post.post_id}`, style="text-decoration: none; color: inherit;")
+                    .post-header
+                      .avatar-circle
+                        //- Display user's profile picture if available; otherwise, show initials.
+                        if user.profile_picture
+                          img(src=user.profile_picture, alt=user.first_name + " " + user.last_name)
+                        else
+                          | #{user.first_name[0]}#{user.last_name[0]}
+                      .post-user
+                        h3= user.first_name + " " + user.last_name
+                        p= 'Posted At: ' + post.created_at
+                    .post-body
+                      //- If the post has an image, display it.
+                      if post.media_url
+                        .post-image
+                          img(src=post.media_url, alt="User Post Image")
+                      //- Show the post description.
+                      p= post.description
+                    //- Post Footer: Contains like and comment actions.
+                    .post-footer
+                      .like-section
+                        //- Display the number of likes.
+                        p.like-count #{post.likeCount} Likes
+                        .button-row
+                          //- Form to toggle like status.
+                          form.like-form(action=`/api/home/${post.post_id}/like`, method="POST")
+                            button.like-btn(type="submit")
+                              .icon-circle X
+                              span #{post.likedByUser ? 'Unlike' : 'Like'}
+                          //- Button to comment on the post.
+                          button.comment-btn
+                            .icon-circle X
+                            span Comment
+            else
+              p No posts available.
+      
+      //- RIGHT SIDEBAR: Contains additional widgets (e.g., a chat widget).
+      aside.right-sidebar.widget
+        h3 Chat
+        ul
+          li
+            .icon-circle ℹ
+            span Account Name
+
+    //- Client-side JavaScript: Intercepts like form submissions to update the like count without reloading the page.
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const likeForms = document.querySelectorAll('.like-form');
+        likeForms.forEach(form => {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const action = form.getAttribute('action');
+            try {
+              const res = await fetch(action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+              });
+              const data = await res.json();
+              if (res.ok) {
+                //- Update the like count displayed in the like section.
+                const likeSection = form.closest('.like-section');
+                if (likeSection) {
+                  const likeCountElem = likeSection.querySelector('.like-count');
+                  if (likeCountElem) {
+                    likeCountElem.textContent = data.likeCount + ' Likes';
+                  }
+                }
+                //- Update the text of the like button.
+                const btnTextElem = form.querySelector('.like-btn span');
+                if (btnTextElem) {
+                  btnTextElem.textContent = data.likedByUser ? 'Unlike' : 'Like';
+                }
+              } else {
+                console.error('Error toggling like:', data.error);
+              }
+            } catch (err) {
+              console.error('Fetch error:', err);
+            }
+          });
+        });
+      });
