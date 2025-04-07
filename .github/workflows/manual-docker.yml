@@ -3,48 +3,48 @@
 name: Manual workflow for docker
 
 on:
-  workflow_dispatch:  # triggers only when you click “Run workflow”
+  workflow_dispatch:  # triggers only when I click “Run workflow”
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Quick check to show the workflow is running
+      # Quickly checks to show the workflow is running
       - name: check
         run: echo "First job done!"
 
-      # Pull down your repo code
+      # Pull down the repo code
       - uses: actions/checkout@v4
 
-      # Install Node
+      # Installs Node
       - uses: actions/setup-node@v4
 
-      # Confirm Node is set up
+      # Confirms Node is set up
       - name: check node
         run: node --version
 
       - name: check dir
         run: ls
 
-      # Create .env from your secret
+      # Creates .env from your secret
       - name: Create the .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # (Optional) Show the .env content for debugging
+      # Shows the .env content for debugging purposes
       - name: Check
         run: cat .env
 
-      # Install dependencies (Node packages)
+      # Installs dependencies (Node packages)
       - name: Install dependencies
         run: npm install
 
-      # Spin up containers using the alternative compose file
+      # Spins up containers using the alternative compose file
       - uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: "./docker-compose.yml"
 
-      # If you have Nightwatch or other tests:
+      # runs the nightwatch tests:
       - name: get dependencies for tests
         run: sudo apt-get install -y xvfb
 
