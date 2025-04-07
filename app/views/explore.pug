@@ -22,12 +22,29 @@ html
           li.nav-item 
             .icon-circle ℹ
             span Notifications
-          li.nav-item 
+          li.nav-item
             .icon-circle ℹ
-            span Profile
-          li.nav-item 
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
+          li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
+
+        // Logged in user info at the bottom of left nav
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              // Fallback: display first character of the sessionUserId
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
 
       // MAIN FEED (CENTER COLUMN)
       main.main-feed
@@ -48,17 +65,27 @@ html
               .profile-footer
                 button.friend-request-btn Send Friend Request
 
+    
       // RIGHT SIDEBAR
       aside.right-sidebar
+        .search-box
+          form(action="/api/users/search/byword", method="GET")
+            .icon-circle X
+            input(type="text", name="q", placeholder="Search users...", required)
         .widget
           h3 See what's trending
-          ul
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-        .widget
-          h3 Chat
-          ul
-            li
-              .icon-circle X
-              span Account Name
+          - // Sort posts by likeCount in descending order and take the first 5
+          - var trendingPosts = posts.sort((a, b) => b.likeCount - a.likeCount).slice(0, 5);
+
+          ul.trending-list
+            each post in trendingPosts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if post.profile_picture
+                      img(src=post.profile_picture, alt="User Avatar")
+                    else
+                      | #{post.first_name[0]}
+                  h2= post.first_name + " " + post.last_name
+                p.post-description= post.description
+        

@@ -20,12 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Create Database: `sd2_db`
 --
-CREATE DATABASE sd2_db;
+-- CREATE DATABASE sd2_db;
 
 -- 
 -- Selecting sd2_db
 --
-USE sd2_db;
+-- USE sd2_db;
 --
 -- Table structure for table `authentication`
 --

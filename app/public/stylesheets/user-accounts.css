@@ -187,11 +187,25 @@ body {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+
 /* Post header: Ensures the avatar and username sit neatly in one row */
 .post-header {
   display: flex;
   align-items: center; /* Keeps the avatar and name aligned */
-  gap: 10px; /* Adds a bit of spacing between them */
+  margin-bottom: 0.9rem;
+}
+
+/* Circle placeholder for user avatar */
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Post header avatar: Making sure the image is round and sized appropriately */
@@ -200,13 +214,21 @@ body {
   height: 40px; /* Ensures the image remains square */
   border-radius: 50%; /* Rounds the image into a circle */
   object-fit: cover; /* Makes sure the image fills the circle properly */
+  
 }
 
 /* Styling for the username in the post header */
 .post-user h3 {
-  font-size: 1.1rem; /* A bit larger for clarity */
-  margin: 0; /* Removes default margins for a cleaner look */
+  margin: 0;
+  font-size: 1.1rem;
 }
+
+.post-user p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
 
 .post-image img {
   width: 100%;         /* Ensures the image fills its container */
@@ -227,4 +249,263 @@ body {
 
 .nav-list a:hover {
   opacity: 0.8; /* A gentle hover effect for better user feedback */
+}
+
+/* ---------------------------------------- */
+/* Post Card and Footer Styles            */
+/* ---------------------------------------- */
+
+/* Each post card */
+.post-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem; /* New block spacing for each post card */
+}
+
+/* Post body text */
+.post-body p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* Post footer: Like count and buttons */
+.post-footer {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Like section: groups like count and button row */
+.like-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+/* Like count styling (displayed above buttons) */
+.like-count {
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 0.3rem;
+}
+
+/* Button row: displays like and comment buttons on the same line */
+.button-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* -- Override Like Button Styles to Appear Green and Inline -- */
+.like-btn {
+  display: inline-flex;       /* Ensure icon and text appear in one line */
+  align-items: center;
+  gap: 0.5rem;                /* Optional spacing between icon and text */
+  background-color: #6FCF97 !important; /* Bright green background */
+  color: #fff !important;                /* White text */
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  font-weight: bold;
+  transition: background-color 0.3s ease !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.like-btn:hover {
+  background-color: #218838 !important; /* Darker green on hover */
+}
+
+/* Comment button styling */
+.comment-btn {
+  display: inline-flex;       /* Ensure icon and text appear in one line */
+  align-items: center;
+  gap: 0.5rem;                /* Optional spacing between icon and text */
+  background-color: #6FCF97 !important; /* Bright green background */
+  color: #fff !important;                /* White text */
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  font-weight: bold;
+  transition: background-color 0.3s ease !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.comment-btn:hover {
+  background-color: #218838 !important; /* Darker green on hover */
+}
+
+/* ---------------------------------------- */
+/* Right Sidebar Styles                   */
+/* ---------------------------------------- */
+
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space between sections */
+}
+
+/* Search box: icon + input inside a white container */
+.search-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-box .icon-circle {
+  margin-right: 0.5rem;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+/* Generic white widget box for trending + chat */
+.widget {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.widget h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget li {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* If a widget list item has an icon */
+.widget li .icon-circle {
+  margin-right: 0.5rem;
+}
+
+/* ---------------------------------------- */
+/* Responsive Styles                      */
+/* ---------------------------------------- */
+
+@media (max-width: 992px) {
+  .explore-container {
+    grid-template-columns: 1fr; /* single column */
+  }
+  .post-grid {
+    grid-template-columns: 1fr; /* single column for posts */
+  }
+}
+
+/* ---------------------------------------- */
+/* Media and Link Styles                  */
+/* ---------------------------------------- */
+
+.post-media {
+  max-width: 400px;
+  height: auto;
+}
+
+.nav-list a {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Inherits parent color */
+  font-size: inherit; /* Keeps same font size as parent */
+  display: flex; /* Aligns with icon circles */
+  align-items: center; /* Vertically centers text and icons */
+  gap: 8px; /* Space between icon and text */
+}
+
+.nav-list a:hover {
+  opacity: 0.8; /* Slight hover effect */
+}
+
+/* Ensures the avatar image fits within its circle */
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* Crops image to fill circle */
+  display: block;
+}
+
+.avatar-circle {
+  width: 50px;        /* Small avatar size for fallback */
+  height: 50px;
+  border-radius: 50%; /* Round shape */
+  overflow: hidden;   /* Clips image to circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc; /* Fallback color if no image */
+}
+
+/* LEFT NAV */
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-self: start; /* This makes it only as tall as its content */
+  padding: 2rem;
+}
+
+/* Styling for the logged-in section */
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+/* Avatar styling for the logged-in user */
+.logged-in .logged-in-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged-in .logged-in-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-btn {
+  background-color: #6FCF97; /* Green color for emphasis */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem; /* Some spacing above */
+}
+
+.post-btn:hover {
+  background-color: #218838 !important; /* Darker green on hover */
 }

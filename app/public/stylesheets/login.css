@@ -1,0 +1,119 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Used min height so contents can grow */
+  }
+  
+  .login-container {
+    /* Used a fluid width plus a max-width for responsiveness */
+    width: 90%;
+    max-width: 400px;
+    background: #FFFFFF;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  
+  .logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+  
+  .brand-text {
+    font-size: 24px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .form-group {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #17B8B2; /* teal/green brand color */
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .login-btn:hover {
+    background: #13938E; /* slightly darker hover */
+  }
+  
+  .signup-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .signup-link a {
+    color: #17B8B2;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 360px) {
+    .brand-text {
+      font-size: 20px;
+    }
+  }
+
+  /* Terms and Conditions Section */
+.form-group.terms .terms {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group.terms input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.form-group.terms label {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.form-group.terms label a {
+  color: #6FCF97;
+  text-decoration: underline;
+}
+  

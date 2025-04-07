@@ -1,9 +1,31 @@
 // models/User.js
+
+// Import the database connection pool from the 'db' module.
+// This can be used later for any database operations related to users.
 const pool = require('./db');
 
+// The User class models a user in our application.
+// It holds all relevant user details, such as name, email, profile info, and more.
 class User {
-  // This User class represents a user in our application, holding all the details we need.
-  constructor({ user_seq, user_id, first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status }) {
+  // The constructor initializes a new User instance with properties provided as an object.
+  constructor({
+    user_seq,              // A sequential identifier for the user.
+    user_id,               // A unique identifier for the user.
+    first_name,            // The user's first name.
+    last_name,             // The user's last name.
+    email_id,              // The user's email address.
+    profile_picture,       // URL/path to the user's profile picture.
+    gender,                // The user's gender.
+    bio,                   // A short biography or description of the user.
+    field_id,              // An identifier for the user's field or area of expertise.
+    dob,                   // The user's date of birth.
+    city,                  // The city where the user lives.
+    work_at,               // The workplace of the user.
+    went_to,               // The educational institution the user attended.
+    goes_to,               // The educational institution the user is currently attending.
+    relationship_status    // The user's relationship status.
+  }) {
+    // Assign each property to the User instance.
     this.user_seq = user_seq;
     this.user_id = user_id;
     this.first_name = first_name;
@@ -20,34 +42,7 @@ class User {
     this.goes_to = goes_to;
     this.relationship_status = relationship_status;
   }
-
-
-  /* static async create(userData) {
-    const sql = `
-      INSERT INTO users 
-      (first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [
-      userData.first_name,
-      userData.last_name,
-      userData.email_id,
-      userData.profile_picture,
-      userData.gender,
-      userData.bio,
-      userData.field_id,
-      userData.dob,
-      userData.city,
-      userData.work_at,
-      userData.went_to,
-      userData.goes_to,
-      userData.relationship_status
-    ];
-    await pool.query(sql, values);
-    // Retrieve the inserted user by email (or use LAST_INSERT_ID logic)
-    const [rows] = await pool.query('SELECT first_name, last_name, email_id, profile_picture, gender, bio, field_id, dob, city, work_at, went_to, goes_to, relationship_status FROM users WHERE email_id = ?', [userData.email_id]);
-    return rows.length ? new User(rows[0]) : null;
-  } */
 }
 
+// Export the User class so it can be imported and used in other parts of the application.
 module.exports = User;

@@ -74,6 +74,10 @@ body {
     margin-top: 1rem;
     /* Button styling for post actions */
   }
+
+  .post-btn:hover {
+    background-color: #218838 !important; /* Darker green on hover */
+  }
   
   /* MAIN FEED (CENTER COLUMN) */
   .main-feed {
@@ -81,41 +85,6 @@ body {
     flex-direction: column;
   }
   
-  .top-bar {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* Top bar containing filters, tags, or search options */
-  }
-  
-  .tag-buttons {
-    display: flex;
-    gap: 0.5rem;
-    /* Container for tag filter buttons */
-  }
-  
-  .tag-btn {
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 20px;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-    /* Individual tag button styling */
-  }
-  
-  .filter-btn {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 0.9rem;
-    cursor: pointer;
-    /* Minimalist styling for filter buttons */
-  }
   
   /* PROFILES CONTAINER */
   .profiles-grid {
@@ -140,14 +109,15 @@ body {
   }
   
   .avatar-circle {
-    width: 50px;        /* Styling and size for small avatar; ensures fallback styling if no image is available */
-    height: 50px;
-    border-radius: 50%; /* Creates a round shape */
-    overflow: hidden;   /* Clips the image to maintain the circular shape */
-    display: flex;     
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ccc; /* Fallback background color when no image is provided */
   }
   
   .avatar-circle img {
@@ -211,40 +181,81 @@ body {
     /* Input field styling: borderless and flexible to fill available space */
   }
   
-  .widget {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    /* General widget container styling for sidebar elements */
-  }
-  
-  .widget h3 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    /* Widget title styling */
-  }
-  
-  .widget ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    /* Resets list styling for widget content */
-  }
-  
-  .widget li {
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    /* Styling for each list item within widgets */
-  }
-  
-  .widget li .icon-circle {
-    margin-right: 0.5rem;
-    /* Spacing for icons inside widget list items */
-  }
+  /* Trending Section in Right Sidebar */
+.widget {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.widget h3 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0rem;
+}
+
+.trending-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.trending-list a.post-card {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  margin-bottom: 0.2rem;
+}
+
+.trending-list li.post-card:last-child {
+  border-bottom: none;
+}
+
+.trending-list .post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.trending-list .avatar-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trending-list .avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trending-list h2 {
+  font-size: 0.9rem;
+  margin: 0;
+  display: block; 
+  gap: 1rem;
+}
+
+.trending-list .post-description {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0.5rem 0 0 0;  /* Top margin to separate from username */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* Limit text to 2 lines */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   
   /* Responsive: stack columns on smaller screens */
   @media (max-width: 992px) {
@@ -346,5 +357,76 @@ body {
   height: 100%;
   object-fit: cover; /* Ensures the comment avatar image covers the container */
   display: block;
+}
+
+
+/* COMMENT FORM TEXTAREA STYLING */
+.comment-form textarea {
+  width: 100%;               /* Full width of its container */
+  min-height: 70px;          /* Adequate height for comments */
+  border: 1px solid #ccc;    /* Light gray border */
+  border-radius: 4px;        /* Slightly rounded corners */
+  padding: 0.5rem;           /* Internal padding for better readability */
+  font-size: 0.9rem;         /* Consistent font size */
+  resize: vertical;          /* Allow vertical resizing only */
+  box-sizing: border-box;    /* Ensures padding is included in the width */
+}
+
+.comment-form textarea:focus {
+  outline: none;             /* Remove default focus outline */
+  border-color: #28a745;     /* Green border on focus to match the button */
+}
+
+/* COMMENT BUTTON STYLING */
+.comment-btn {
+  background-color: #28a745; /* Bright green background */
+  color: #fff;               /* White text */
+  border: none;              /* No border */
+  padding: 0.5rem 1rem;       /* Comfortable padding */
+  border-radius: 4px;        /* Rounded corners */
+  cursor: pointer;           /* Pointer cursor on hover */
+  font-size: 0.9rem;         /* Consistent font size */
+  font-weight: bold;         /* Bold text */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.comment-btn:hover {
+  background-color: #218838; /* Slightly darker green on hover */
+}
+
+/* LEFT NAV */
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-self: start; /* This makes it only as tall as its content */
+  padding: 2rem;
+}
+
+/* Styling for the logged-in section */
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+/* Avatar styling for the logged-in user */
+.logged-in .logged-in-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged-in .logged-in-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 

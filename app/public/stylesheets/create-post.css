@@ -1,0 +1,205 @@
+/* ==========================================================================
+   LAYOUT / CONTAINER STYLES
+   ========================================================================== */
+
+/* Wraps the entire page content (nav, main content, and sidebar) */
+.explore-container {
+    display: flex;
+    min-height: 100vh; /* Ensures full screen height if needed */
+    font-family: Arial, sans-serif; /* Example font */
+    background-color: #f5f5f5;
+    margin: 0;
+  }
+  
+  /* ==========================================================================
+     LEFT NAVIGATION STYLES
+     ========================================================================== */
+  .left-nav {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 1rem;
+  }
+  
+  .left-nav .logo {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .left-nav .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .left-nav .nav-item {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-circle {
+    margin-right: 0.5rem;
+    background-color: #ccc;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* LEFT NAV */
+.left-nav {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-self: start; /* This makes it only as tall as its content */
+  padding: 2rem;
+}
+
+/* Styling for the logged-in section */
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+/* Avatar styling for the logged-in user */
+.logged-in .logged-in-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged-in .logged-in-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+  
+  
+  /* ==========================================================================
+     MAIN CONTENT AREA (similar structure to "settings-content")
+     ========================================================================== */
+  .settings-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+  
+  /* The card that holds our form (similar to "settings-card") */
+  .settings-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px; /* Restrict width so it’s nicely centered */
+    box-sizing: border-box;
+  }
+  
+  /* ==========================================================================
+     HEADINGS & TEXT
+     ========================================================================== */
+  .settings-card h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* ==========================================================================
+     FORMS (labels, inputs, textareas, checkboxes)
+     ========================================================================== */
+  .settings-card label {
+    display: block;
+    margin: 1rem 0 0.3rem;
+    font-weight: 600;
+  }
+  
+  .settings-card input[type="text"],
+  .settings-card input[type="url"],
+  .settings-card textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+  
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  .tag-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .tag-checkbox input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  
+  /* ==========================================================================
+     BUTTONS
+     ========================================================================== */
+  .settings-card button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .settings-card button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* ==========================================================================
+     RIGHT SIDEBAR
+     ========================================================================== */
+  .right-sidebar {
+    width: 280px;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    padding: 1rem;
+  }
+  
+  /* Simple "widget" container in the sidebar */
+  .right-sidebar .widget {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .right-sidebar .widget h3 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+  }
+  

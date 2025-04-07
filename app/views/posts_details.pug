@@ -1,90 +1,187 @@
+//- Define the document type as HTML5.
 doctype html
 html
   head
+    //- Set the character encoding to UTF-8.
     meta(charset="UTF-8")
+    //- Dynamically set the title using the 'title' variable.
     title= title
-    link(rel="stylesheet", href="/stylesheets/explore.css")
+    //- Link the CSS stylesheet for post details page.
+    link(rel="stylesheet", href="/stylesheets/post_details.css")
   body
+    //- Main container for the page layout.
     .explore-container
-      // LEFT NAVIGATION
+      //- LEFT NAVIGATION: Contains site navigation and user info.
       nav.left-nav
         h2.logo Peerly
         ul.nav-list
           li.nav-item
             .icon-circle ℹ
             a(href="/api/home") Home
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             a(href="/api/users") Explore
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Messages
-          li.nav-item
+          li.nav-item 
             .icon-circle ℹ
             span Notifications
           li.nav-item
             .icon-circle ℹ
-            span Profile
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}`) Profile
           li.nav-item
             .icon-circle ℹ
-            span Settings
+            if sessionUserId
+              a(href=`/api/users/${sessionUserId}/settings`) Settings
+        //- Button to navigate to the Create Post page.
+        button.post-btn(onclick="window.location.href='/api/home/create/Post'") Post
 
-      // MAIN FEED (CENTER COLUMN)
+        //- Display logged in user info at the bottom of the left nav.
+        .logged-in
+          if sessionProfilePic
+            .avatar-circle.logged-in-avatar
+              img(src=sessionProfilePic, alt="User Avatar")
+          else if sessionUserId
+            .avatar-circle.logged-in-avatar
+              //- Fallback: Display the first character of the sessionUserId.
+              | #{sessionUserId[0]}
+          if sessionUserId
+            span #{sessionUserId}
+          else
+            span Not logged in.
+
+      //- MAIN FEED (CENTER COLUMN): Displays post details and comments.
       main.main-feed
+        //- Check if a post object exists.
         if post
           .post-card
             .post-header
-              // AVATAR + User Info
+              //- User avatar and basic info section.
               .avatar-circle
                 if post.profile_picture
+                  //- Show the user's profile picture if available.
                   img(src=post.profile_picture, alt=post.first_name + ' ' + post.last_name)
                 else
-                  // Fallback that uses initials if no profile_picture
+                  //- Fallback: Display the user's initials.
                   | #{post.first_name ? post.first_name[0] : ''}#{post.last_name ? post.last_name[0] : ''}
-
-              .poster-info
-                // Shows the poster's name
+              .post-user
+                //- Display the full name of the post's author.
                 h3= post.first_name + ' ' + post.last_name
+                //- Display the post creation time.
+                p= 'Posted At: ' + post.created_at
 
             .post-body
-              p= post.description
-              p.posted-at Posted At: #{post.created_at}
-              // If there's a media URL:
+              //- If a media URL is provided, display the image.
               if post.media_url
                 img(src=post.media_url, alt="Post Image")
+              //- Re-display the author's name (could be for additional styling).
+              h4= post.first_name + ' ' + post.last_name
+              //- Display the post description.
+              p= post.description
 
-          // COMMENTS SECTION
+          .post-footer
+            //- Like section: shows like and comment counts.
+            .like-section
+              //- Display the like count (defaulting to 0 if not available).
+              p.like-count #{likecount || 0} Likes
+              //- Display the comment count (defaulting to 0 if not available).
+              p.comment-count #{commentcount || 0} Comments
+
+          //- COMMENTS SECTION: Display all comments for the post.
           .comments-section
             h3 Comments
+            //- If there are comments, iterate through them.
             if comments && comments.length
               each comment in comments
                 .comment-card
                   .comment-header
                     .comment-avatar-circle
                       if comment.profile_picture
+                        //- Show commenter's profile picture if available.
                         img(src=comment.profile_picture, alt=comment.first_name + ' ' + comment.last_name)
                       else
+                        //- Fallback: Display commenter's initials.
                         | #{comment.first_name ? comment.first_name[0] : ''}#{comment.last_name ? comment.last_name[0] : ''}
+                    //- Display the commenter's name.
                     h4= comment.first_name + ' ' + comment.last_name
+                  //- Display the comment text.
                   p= comment.description
+                  //- Show when the comment was posted.
                   p.posted-at Commented At: #{comment.created_at}
                   hr
             else
+              //- If no comments exist, show a message.
               p No comments yet.
+
+            //- COMMENT FORM: Allow users to post a new comment.
+            form(action=`/api/comments/${post.post_id}`, method="POST", class="comment-form")
+              //- Textarea for entering the comment.
+              textarea(name="description", placeholder="Write a comment...", required)
+              //- Submit button for the comment form.
+              button(type="submit") Post Comment
+
         else
+          //- If no post is found, display a fallback message.
           h2 No post found
 
-      // RIGHT SIDEBAR
+      //- RIGHT SIDEBAR: Contains a widget for trending posts.
       aside.right-sidebar
         .widget
           h3 See what's trending
-          ul
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-            li Lorem ipsum dolor
-        .widget
-          h3 Chat
-          ul
-            li
-              .icon-circle X
-              span Account Name
+          - //- Sort posts by likeCount in descending order and take the first 5.
+          - var trendingPosts = posts.sort((a, b) => b.likeCount - a.likeCount).slice(0, 5);
+          ul.trending-list
+            //- Iterate over each trending post.
+            each post in trendingPosts
+              a.post-card(href=`/api/home/${post.post_id}`, style="display: block; text-decoration: none; color: inherit;")
+                .post-header
+                  .avatar-circle
+                    if post.profile_picture
+                      img(src=post.profile_picture, alt="User Avatar")
+                    else
+                      //- Fallback: Display the first character of the author's first name.
+                      | #{post.first_name[0]}
+                  h2= post.first_name + " " + post.last_name
+                //- Display a snippet of the post description.
+                p.post-description= post.description
+
+    //- CLIENT-SIDE SCRIPT: Intercept like form submissions to update UI without a full page reload.
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const likeForms = document.querySelectorAll('.like-form');
+        likeForms.forEach(form => {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const action = form.getAttribute('action');
+            try {
+              const res = await fetch(action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+              });
+              const data = await res.json();
+              if (res.ok) {
+                //- Update the like count text in the closest .like-section.
+                const likeSection = form.closest('.like-section');
+                if (likeSection) {
+                  const likeCountElem = likeSection.querySelector('.like-count');
+                  if (likeCountElem) {
+                    likeCountElem.textContent = data.likeCount + ' Likes';
+                  }
+                }
+                //- Update the button text based on the new like status.
+                const btnTextElem = form.querySelector('.like-btn span');
+                if (btnTextElem) {
+                  btnTextElem.textContent = data.likedByUser ? 'Unlike' : 'Like';
+                }
+              } else {
+                console.error('Error toggling like:', data.error);
+              }
+            } catch (err) {
+              console.error('Fetch error:', err);
+            }
+          });
+        });
+      });

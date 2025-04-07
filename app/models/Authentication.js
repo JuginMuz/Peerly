@@ -1,32 +1,34 @@
 // models/Authentication.js
-const pool = require('./db');
 
-// This class handles authentication tasks like storing and fetching user passwords.
+const pool = require('./db'); // Database pool to execute SQL queries.
+const bcrypt = require('bcryptjs'); // Library for hashing and comparing passwords.
+
 class Authentication {
   constructor({ user_id, password }) {
-    // Initializes our Authentication instance with a user ID and password.
-    this.user_id = user_id;
-    this.password = password;
+    this.user_id = user_id; // Set the user ID.
+    this.password = password; // Set the user password.
   }
 
-  // Saves a hashed password for a user in the database.
+  // Save the hashed password for a user in the database.
   static async setPassword(user_id, hashedPassword) {
-    // SQL query to insert the user's ID and hashed password into the authentication table.
-    const sql = 'INSERT INTO authentication (user_id, password) VALUES (?, ?)';
-    // Executes the query using our database connection pool.
-    const [result] = await pool.query(sql, [user_id, hashedPassword]);
-    return result;
+    const sql = 'INSERT INTO authentication (user_id, password) VALUES (?, ?)'; // SQL query to insert data.
+    const [result] = await pool.query(sql, [user_id, hashedPassword]); // Run the query with provided parameters.
+    return result; // Return the query result.
   }
 
-  // Retrieve the hashed password for a given user.
+  // Retrieve the hashed password for a specific user.
   static async getPasswordByUserId(user_id) {
-    // SQL query to fetch the password for the specified user_id.
-    const sql = 'SELECT password FROM authentication WHERE user_id = ?';
-    // Runs the query with the provided user_id.
-    const [rows] = await pool.query(sql, [user_id]);
-    // Returns the password if found; otherwise, return null.
-    return rows.length ? rows[0].password : null;
+    const sql = 'SELECT password FROM authentication WHERE user_id = ?'; // SQL query to fetch password.
+    const [rows] = await pool.query(sql, [user_id]); // Execute the query.
+    return rows.length ? rows[0].password : null; // Return the password if found, otherwise null.
+  }
+
+  // Check if the provided plain password matches the stored hashed password.
+  static async verifyPassword(user_id, plainPassword) {
+    const hashedPassword = await this.getPasswordByUserId(user_id); // Get the stored hash.
+    if (!hashedPassword) return false; // Return false if no password is found.
+    return await bcrypt.compare(plainPassword, hashedPassword); // Compare and return the result.
   }
 }
 
-module.exports = Authentication;
+module.exports = Authentication; // Export the class for use in other files.
